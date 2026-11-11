@@ -1,5 +1,6 @@
 import React from 'react';
 import {AbsoluteFill, OffthreadVideo, staticFile, useCurrentFrame, useVideoConfig, interpolate, spring, Easing, Img} from 'remotion';
+// ZUHRA PARFUM design kit — brand tokens + reusable motion components (Remotion 4, 1080x1920, 30 fps)
 
 // ===== Zuhra Parfum brand =====
 const C = {bordo: '#4A0E1C', dark: '#2B0610', gold: '#C9A45C', lgold: '#E6CF97', cream: '#F6EBDD', vino: '#8C3A4B'};
@@ -226,188 +227,79 @@ const Swatch: React.FC<{start: number; end: number; color: string; label: string
   </Pop>
 );
 
-// =====================================================================
-// REEL A — "Tonalnik nega yuzda yaxshi turmaydi?"  (cut timeline, 89.9 s)
-// =====================================================================
-export const ReelA: React.FC = () => {
+const Sparkles: React.FC<{n?: number; seed?: number; area?: {x: number; y: number; w: number; h: number}; startFrame?: number; strength?: number}> =
+({n = 22, seed = 1, area = {x: 0, y: 0, w: 1080, h: 1920}, startFrame = 0, strength = 1}) => {
+  const frame = useCurrentFrame() - startFrame;
+  const rnd = (k: number) => {const x = Math.sin(k * 127.1 + seed * 311.7) * 43758.5453; return x - Math.floor(x);};
+  return (
+    <AbsoluteFill style={{pointerEvents: 'none'}}>
+      {Array.from({length: n}).map((_, k) => {
+        const period = 70 + rnd(k) * 80;
+        const ph = ((frame + rnd(k + 9) * period) % period) / period;
+        const x = area.x + rnd(k + 3) * area.w;
+        const y = area.y + rnd(k + 5) * area.h - ph * 60;
+        const o = Math.sin(ph * Math.PI) * (0.35 + rnd(k + 7) * 0.65) * strength;
+        const sz = 6 + rnd(k + 11) * 14;
+        return (
+          <div key={k} style={{position: 'absolute', left: x, top: y, width: sz, height: sz, opacity: o,
+            transform: `rotate(45deg) scale(${0.6 + Math.sin(ph * Math.PI) * 0.6})`}}>
+            <div style={{position: 'absolute', inset: 0, background: `radial-gradient(circle, #FFF6DA 0%, ${C.lgold} 35%, rgba(201,164,92,0) 70%)`}} />
+            <div style={{position: 'absolute', left: '45%', top: -sz * 0.6, width: '10%', height: sz * 2.2, background: '#FFF3D0', borderRadius: 4}} />
+          </div>
+        );
+      })}
+    </AbsoluteFill>
+  );
+};
+
+// ---------- header: PREMIUM vs BYUDJET ----------
+
+const Flash: React.FC<{at: number}> = ({at}) => {
   const frame = useCurrentFrame();
-  const t = frame / FPS;
-  const L = 89.9;
-  const depth = <>
-    <Depth start={0} end={6.0} top={13} size={16} small="QIZLAR,">TONAL<Gold>NIK</Gold></Depth>
-    <Depth start={5.6} end={22.6} top={12} size={32}>2 <Gold>XIL</Gold></Depth>
-    <Depth start={22.3} end={24.2} top={14} size={24}><Gold>SUYUQ</Gold></Depth>
-    <Depth start={24.1} end={38.2} top={14} size={25}><Gold>NEGA?</Gold></Depth>
-    <Depth start={67.9} end={75.8} top={10} size={29} small="BU XATO!"><span style={{color: '#E9B9C2'}}>XATO</span></Depth>
-    <Depth start={75.9} end={82.0} top={14} size={22}><Gold>TO'G'RI</Gold></Depth>
-    <Depth start={82.2} end={87.3} top={14} size={25}><Gold>FARQI</Gold></Depth>
-    <Depth start={87.4} end={L} top={10} size={24} small="OBUNA BO'LING"><Gold>Zuhra</Gold></Depth>
-  </>;
-  // knob for shade slider
-  const kS = T(77.2);
-  const knob = interpolate(frame, [kS, kS + 30, kS + 62], [6, 80, 47], {...clamp, easing: Easing.bezier(0.65, 0, 0.35, 1)});
-  return <AbsoluteFill style={{backgroundColor: '#000'}}>
-    <style>{fontCss}</style>
-    <Camera src="A_ret.mp4" person="A_person.webm" cuts={[74.75, 76.65, 82.25, 84.55]} depth={depth} />
-    <Vignette />
-    <LogoBadge start={5.8} end={87.3} />
-
-    {/* 0.0 hook */}
-    <Blob start={0.35} end={5.9} gold x={72} y={53} w={24} h={9} />
-    <Blob start={0.5} end={5.9} x={3} y={71} w={22} h={8} ph={1} />
-    <Glass start={0.2} end={5.9} style={{left: '7%', right: '7%', top: '56%', height: '19%', display: 'grid', placeItems: 'center', textAlign: 'center', padding: `0 ${5 * u}px`}}>
-      <div style={{fontFamily: SERIF, fontWeight: 800, fontSize: 7.4 * u, lineHeight: 1.08}}><Words text="Nega yuzda" start={0.45} /><Words text="yaxshi turmaydi?" start={1.0} em /></div>
-    </Glass>
-
-    {/* 6.25 two types */}
-    <Chip start={5.6} end={38.2} n="01" text="IKKI XIL TONALNIK" />
-    <Blob start={8.9} end={24.0} x={7} y={54} w={12} h={10} />
-    <Blob start={14.4} end={24.0} gold x={77} y={69} w={12} h={12} ph={2} />
-    {(() => {
-      const rec = interpolate(frame, [T(22.4), T(23.0)], [0, 1], {...clamp, easing: expo});
-      return <>
-        <Glass start={8.7} end={24.0} kind="left" dark style={{...pairCard(true), left: '5%', top: '56.5%', opacity: 1, transformOrigin: 'center'}}>
-          <div style={{opacity: 1 - rec * 0.45}}><Drop c={C.lgold} thick /><div style={nm}>QALIN</div><div style={dsS}>Quyuq, og'ir<br />qiyin yoyiladi</div></div>
-        </Glass>
-        <Glass start={14.3} end={24.0} kind="right" style={{...pairCard(false), right: '5%', top: '60%', overflow: 'visible'}}>
-          <div style={{transform: `scale(${1 + rec * 0.06})`}}><Drop c={C.bordo} /><div style={nm}>SUYUQ</div><div style={dsS}>Yengil, oson<br />yoyiladi</div></div>
-          <Pop start={22.4} end={24.0} style={{position: 'absolute', left: '50%', top: -5 * u, transform: 'translateX(-50%) rotate(-6deg)', padding: `${1.4 * u}px ${3.4 * u}px`, borderRadius: 99, background: GOLD, color: C.dark,
-            fontFamily: SANS, fontWeight: 800, fontSize: 3.2 * u, letterSpacing: '0.12em', whiteSpace: 'nowrap', boxShadow: `0 ${1.6 * u}px ${4 * u}px rgba(0,0,0,.35)`}}>✓ TAVSIYA</Pop>
-        </Glass>
-      </>;
-    })()}
-
-    {/* 24.1 why */}
-    <Glass start={26.5} end={38.2} kind="left" style={{left: '6%', width: '42.5%', top: '55%', padding: `${3.2 * u}px ${3.2 * u}px ${3.6 * u}px`}}>
-      <div style={{fontFamily: SANS, fontWeight: 800, fontSize: 3.2 * u, letterSpacing: '0.18em', marginBottom: 1 * u}}>✓ SUYUQ</div>
-      <Item start={26.8} end={38.2} ok text="Teriga singib ketadi" />
-      <Item start={27.7} end={38.2} ok text="Yuzda tekis turadi" />
-    </Glass>
-    <Glass start={28.8} end={38.2} kind="right" dark style={{right: '6%', width: '42.5%', top: '55%', padding: `${3.2 * u}px ${3.2 * u}px ${3.6 * u}px`}}>
-      <div style={{fontFamily: SANS, fontWeight: 800, fontSize: 3.2 * u, letterSpacing: '0.18em', marginBottom: 1 * u}}>✕ QALIN</div>
-      <Item start={29.9} end={38.2} ok={false} text="Surtish qiyin" />
-      <Item start={34.5} end={38.2} ok={false} text="Yuzda yaxshi turmaydi" />
-    </Glass>
-
-    {/* 38.4 hand test */}
-    <Chip start={38.4} end={43.0} n="✋" text="QO'LDA SINAB KO'RAMIZ" />
-
-    {/* 41.3 client story → mistake */}
-    <Chip start={43.1} end={75.8} n="02" text="KO'P UCHRAYDIGAN XATO" />
-    <Blob start={43.8} end={58.0} x={80} y={54} w={14} h={9} />
-    <Glass start={43.5} end={58.0} style={{left: '9%', right: '9%', top: '57%', height: '19%', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 5 * u, paddingBottom: 4 * u}}>
-      <Swatch start={43.7} end={58.0} color="#9C6845" label="TERINGIZ" />
-      <Pop start={47.2} end={58.0} style={{fontFamily: SERIF, fontWeight: 900, fontSize: 10 * u, color: C.vino}}>≠</Pop>
-      <Swatch start={47.4} end={58.0} color="#F2DDC8" label="OQ TONALNIK" />
-    </Glass>
-    <Glass start={68.1} end={75.8} dark style={{left: '14%', right: '14%', top: '58%', padding: `${3.6 * u}px ${4 * u}px`, display: 'flex', alignItems: 'center', gap: 3 * u}}>
-      <span style={{width: 11 * u, height: 11 * u, borderRadius: '50%', background: C.cream, display: 'grid', placeItems: 'center', flex: `0 0 ${11 * u}px`}}><Ico k="x" c={C.vino} s={6} /></span>
-      <div style={{fontFamily: SANS, fontWeight: 700, fontSize: 3.7 * u, lineHeight: 1.3}}><div style={{fontSize: 2.7 * u, letterSpacing: '0.16em', color: C.lgold, marginBottom: 0.6 * u}}>XATO TANLOV</div>Qoramag'iz teriga oq tonalnik</div>
-    </Glass>
-
-    {/* 76.65 the right shade */}
-    <Chip start={76.0} end={87.3} n="03" text="MOS TON" />
-    <Blob start={76.4} end={82.0} gold x={4} y={70} w={20} h={8} />
-    <Glass start={76.3} end={82.0} style={{left: '8%', right: '8%', top: '58%', padding: `${4.4 * u}px ${5 * u}px ${6 * u}px`, overflow: 'visible'}}>
-      <div style={{fontFamily: SANS, fontWeight: 800, fontSize: 3.2 * u, letterSpacing: '0.18em', textAlign: 'center', marginBottom: 8 * u}}>TERINGIZGA MOS TON</div>
-      <div style={{position: 'relative', height: 8 * u, borderRadius: 99, background: 'linear-gradient(90deg,#F4D9C2,#E8C3A0,#D7A47C,#BF8660,#9C6845,#6E4630)', boxShadow: `inset 0 ${0.4 * u}px ${u}px rgba(0,0,0,.18)`}}>
-        <div style={{position: 'absolute', top: '50%', left: `${knob}%`, width: 11 * u, height: 11 * u, margin: `${-5.5 * u}px 0 0 ${-5.5 * u}px`, borderRadius: '50%', border: `${0.8 * u}px solid #fff`, background: '#BF8660', boxShadow: `0 ${u}px ${3 * u}px rgba(0,0,0,.35)`}} />
-        <Pop start={79.4} end={82.0} style={{position: 'absolute', left: '47%', bottom: 10 * u, transform: 'translateX(-50%)'}}>
-          <div style={{...glassBase(true), position: 'relative', borderRadius: 99, padding: `${1.4 * u}px ${3 * u}px`, fontFamily: SANS, fontWeight: 800, fontSize: 2.8 * u, letterSpacing: '0.12em', whiteSpace: 'nowrap'}}>✓ MOS</div>
-        </Pop>
-      </div>
-    </Glass>
-
-    {/* 82.3 difference? bubbles like the reference */}
-    <Glass start={82.4} end={87.3} style={{left: '7%', top: '55%', padding: `${3 * u}px ${4.4 * u}px`, fontFamily: SERIF, fontWeight: 800, fontSize: 6 * u, lineHeight: 1.1}}>Farqini ko'ryapsizmi?</Glass>
-    <Pop start={83.6} end={87.3} style={{position: 'absolute', right: '9%', top: '64%', padding: `${3 * u}px ${4.4 * u}px`, borderRadius: 4 * u, background: GOLD, color: C.dark, fontFamily: SANS, fontWeight: 800, fontSize: 3.8 * u, boxShadow: `0 ${2 * u}px ${5 * u}px rgba(30,4,12,.35)`}}>Mundaymi?</Pop>
-    <Glass start={84.4} end={87.3} dark style={{left: '14%', top: '72%', padding: `${3 * u}px ${4.4 * u}px`, display: 'flex', alignItems: 'center', gap: 2 * u, fontFamily: SANS, fontWeight: 700, fontSize: 3.8 * u}}>
-      <Ico k="chat" c={C.lgold} s={5} />{'Kommentda yozing'.slice(0, Math.max(0, Math.floor((frame - T(84.7)) / 2)))}<span style={{color: C.lgold, opacity: frame % 16 < 8 ? 1 : 0}}>|</span>
-    </Glass>
-    <Blob start={84.8} end={87.3} x={78} y={78} w={10} h={5} ph={3} />
-
-    <Outro start={87.5} end={L + 1} />
-  </AbsoluteFill>;
+  const a = T(at);
+  const o = interpolate(frame, [a - 4, a, a + 10], [0, 0.75, 0], clamp);
+  if (o <= 0) return null;
+  const x = interpolate(frame, [a - 4, a + 10], [-30, 130], clamp);
+  return <AbsoluteFill style={{opacity: o, mixBlendMode: 'screen',
+    background: `radial-gradient(ellipse 60% 90% at ${x}% 40%, rgba(255,238,200,1) 0%, rgba(230,180,120,0.6) 35%, rgba(140,58,75,0) 70%)`}} />;
 };
 
-// =====================================================================
-// REEL B — "Qalin yoki suyuq?"  (cut timeline, 58.5 s)
-// =====================================================================
-export const ReelB: React.FC = () => {
-  const L = 58.5;
-  const depth = <>
-    <Depth start={0} end={5.2} top={11} size={26} small="SUYUQ YOKI"><Gold>QALIN?</Gold></Depth>
-    <Depth start={26.4} end={39.3} top={14} size={18}><Gold>QACHON?</Gold></Depth>
-    <Depth start={47.6} end={51.8} top={14} size={20}><Gold>TONLAR</Gold></Depth>
-    <Depth start={51.9} end={55.9} top={14} size={22}><Gold>XULOSA</Gold></Depth>
-    <Depth start={56.0} end={L} top={10} size={24} small="OBUNA BO'LING"><Gold>Zuhra</Gold></Depth>
-  </>;
-  const arrow = (start: number, end: number, d: string, color: string) => {
-    const frame = useCurrentFrame();
-    if (frame < T(start) || frame > T(end)) return null;
-    const off = interpolate(frame, [T(start + 0.3), T(start + 1.0)], [140, 0], {...clamp, easing: expo});
-    const op = interpolate(frame, [T(end) - 8, T(end)], [1, 0], clamp);
-    return <svg viewBox="0 0 100 177.8" style={{position: 'absolute', inset: 0, width: '100%', height: '100%', opacity: op}}>
-      <path d={d} fill="none" stroke={color} strokeWidth="0.9" strokeLinecap="round" strokeDasharray="140" strokeDashoffset={off} style={{filter: 'drop-shadow(0 0 1px rgba(0,0,0,.5))'}} />
-    </svg>;
-  };
-  const lab: React.CSSProperties = {padding: `${2.4 * u}px ${4 * u}px`, borderRadius: 3.4 * u};
-  const lt: React.CSSProperties = {fontFamily: SANS, fontWeight: 800, fontSize: 4.4 * u, letterSpacing: '0.12em'};
-  const ls: React.CSSProperties = {fontFamily: SANS, fontWeight: 600, fontSize: 2.9 * u, marginTop: 0.6 * u};
-  return <AbsoluteFill style={{backgroundColor: '#000'}}>
-    <style>{fontCss}</style>
-    <Camera src="B_ret.mp4" person="B_person.webm" cuts={[6.75, 22.2]} depth={depth} />
-    <Vignette />
-    <LogoBadge start={5.0} end={55.9} />
+// ---------- CTA: question + comment ----------
 
-    {/* hook */}
-    <Glass start={1.5} end={5.2} kind="left" dark style={{left: '17%', top: '60%', borderRadius: 99, padding: `${2.4 * u}px ${4.6 * u}px`, ...lt, fontSize: 3.8 * u}}>QALIN</Glass>
-    <Glass start={3.2} end={5.2} kind="right" style={{right: '17%', top: '60%', borderRadius: 99, padding: `${2.4 * u}px ${4.6 * u}px`, ...lt, fontSize: 3.8 * u}}>SUYUQ</Glass>
-
-    {/* hand test */}
-    <Chip start={5.3} end={26.2} n="01" text="QO'LDA SINOV" />
-    <Glass start={7.6} end={26.2} kind="left" style={{...lab, left: '5%', top: '56%'}}><div style={lt}>SUYUQ</div><div style={ls}>{useCurrentFrame() >= T(13.9) ? 'yuzda zo\'r turadi' : 'tabiiy, yengil'}</div></Glass>
-    {arrow(7.6, 26.2, 'M38 104 C 42 110, 45 113, 49 114', C.cream)}
-    <Glass start={17.9} end={26.2} kind="right" dark style={{...lab, right: '5%', top: '62%', textAlign: 'right'}}><div style={lt}>QALIN</div><div style={ls}>zich, og'ir turadi</div></Glass>
-    {arrow(17.9, 26.2, 'M62 114 C 59 118, 57 119, 54 119', C.lgold)}
-
-    {/* when which */}
-    <Chip start={26.4} end={47.4} n="02" text="QACHON QAYSI BIRI?" />
-    <Blob start={29.5} end={39.3} gold x={80} y={51} w={15} h={8} />
-    <Glass start={29.3} end={39.3} kind="left" dark style={{left: '5%', right: '5%', top: '55%', display: 'flex', alignItems: 'center', gap: 3 * u, padding: `${3.2 * u}px ${3.6 * u}px`}}>
-      <Ico k="moon" c={C.lgold} s={11} /><div style={{flex: 1, fontFamily: SANS, fontWeight: 700, fontSize: 3.8 * u, lineHeight: 1.3}}><div style={{fontSize: 2.7 * u, letterSpacing: '0.16em', opacity: 0.8, marginBottom: 0.6 * u}}>KECHKI TADBIR</div>To'y, marosim</div>
-      <div style={{fontFamily: SANS, fontWeight: 800, fontSize: 3.4 * u, letterSpacing: '0.1em', padding: `${1.6 * u}px ${2.8 * u}px`, borderRadius: 99, background: GOLD, color: C.dark}}>QALIN</div>
-    </Glass>
-    <Glass start={35.4} end={39.3} kind="right" style={{left: '5%', right: '5%', top: '66%', display: 'flex', alignItems: 'center', gap: 3 * u, padding: `${3.2 * u}px ${3.6 * u}px`}}>
-      <Ico k="sun" c={C.bordo} s={11} /><div style={{flex: 1, fontFamily: SANS, fontWeight: 700, fontSize: 3.8 * u, lineHeight: 1.3}}><div style={{fontSize: 2.7 * u, letterSpacing: '0.16em', opacity: 0.8, marginBottom: 0.6 * u}}>HAR KUNI</div>Kundalik makiyaj</div>
-      <div style={{fontFamily: SANS, fontWeight: 800, fontSize: 3.4 * u, letterSpacing: '0.1em', padding: `${1.6 * u}px ${2.8 * u}px`, borderRadius: 99, background: BORDO, color: C.cream}}>YUPQA</div>
-    </Glass>
-
-    {/* spots */}
-    <Blob start={39.9} end={47.4} x={3} y={53} w={18} h={8} />
-    <Glass start={39.8} end={47.4} dark style={{left: '5%', right: '5%', top: '57%', display: 'flex', alignItems: 'center', gap: 3 * u, padding: `${3.2 * u}px ${3.6 * u}px`}}>
-      <Ico k="spot" c={C.lgold} s={11} /><div style={{flex: 1, fontFamily: SANS, fontWeight: 700, fontSize: 3.8 * u, lineHeight: 1.3}}><div style={{fontSize: 2.7 * u, letterSpacing: '0.16em', opacity: 0.8, marginBottom: 0.6 * u}}>DOG' YOKI HUSNBUZAR</div>Qalin tonalnik yaxshi yopadi</div>
-    </Glass>
-    <Glass start={44.2} end={47.4} kind="up" style={{left: '22%', right: '22%', top: '69%', borderRadius: 99, padding: `${2.4 * u}px ${3 * u}px`, textAlign: 'center', fontFamily: SANS, fontWeight: 800, fontSize: 3.1 * u, letterSpacing: '0.12em'}}>LEKIN HAR KUNI EMAS</Glass>
-
-    {/* shades */}
-    <Blob start={48.0} end={51.8} gold x={76} y={53} w={18} h={8} />
-    <Glass start={47.8} end={51.8} style={{left: '7%', right: '7%', top: '56%', padding: `${4.6 * u}px ${4 * u}px`, textAlign: 'center'}}>
-      <div style={{fontFamily: SERIF, fontWeight: 800, fontSize: 6.4 * u, lineHeight: 1.12}}>Zuhra Parfum'da<br /><span style={{fontStyle: 'italic', color: C.vino}}>barcha tonlar bor</span></div>
-      <div style={{display: 'flex', justifyContent: 'center', gap: 2.2 * u, marginTop: 3.4 * u}}>
-        {['#F4D9C2', '#E8C3A0', '#D7A47C', '#BF8660', '#9C6845', '#6E4630'].map((c, i) =>
-          <Pop key={i} start={48.3 + i * 0.12} end={51.8} style={{width: 9 * u, height: 9 * u, borderRadius: '50%', background: c, border: `${0.5 * u}px solid rgba(255,255,255,.95)`, boxShadow: `0 ${u}px ${2 * u}px rgba(0,0,0,.2)`}} />)}
-      </div>
-    </Glass>
-
-    {/* summary */}
-    <Glass start={52.0} end={55.9} kind="left" style={{left: '6%', width: '42.5%', top: '57%', padding: `${3.4 * u}px`, textAlign: 'center'}}>
-      <Ico k="sun" c={C.bordo} s={9} /><div style={{fontFamily: SANS, fontWeight: 700, fontSize: 2.8 * u, letterSpacing: '0.14em', marginTop: u}}>HAR KUNI</div><div style={{...lt, fontSize: 4.6 * u, marginTop: 0.6 * u}}>YUPQA</div>
-    </Glass>
-    <Glass start={52.4} end={55.9} kind="right" dark style={{right: '6%', width: '42.5%', top: '57%', padding: `${3.4 * u}px`, textAlign: 'center'}}>
-      <Ico k="moon" c={C.lgold} s={9} /><div style={{fontFamily: SANS, fontWeight: 700, fontSize: 2.8 * u, letterSpacing: '0.14em', marginTop: u}}>TADBIRGA</div><div style={{...lt, fontSize: 4.6 * u, marginTop: 0.6 * u}}>QALIN</div>
-    </Glass>
-
-    <Outro start={56.0} end={L + 1} />
-  </AbsoluteFill>;
+// ===== CAPTIONS (subtitles) =====
+// words: [{w: 'Tonalnik', s: 1.20, e: 1.62, em?: true}] in seconds (from whisper word timestamps)
+// Pages of up to `per` words; the spoken word turns gold and lifts; `em` words are Playfair italic gold.
+export type CapWord = {w: string; s: number; e: number; em?: boolean};
+const Captions: React.FC<{words: CapWord[]; per?: number; top?: number; variant?: 'clean' | 'glass'}> = ({words, per = 4, top = 68, variant = 'glass'}) => {
+  const frame = useCurrentFrame();
+  const {fps} = useVideoConfig();
+  const t = frame / fps;
+  const pages: CapWord[][] = [];
+  for (let i = 0; i < words.length; i += per) pages.push(words.slice(i, i + per));
+  const pg = pages.find((p, k) => t >= p[0].s - 0.05 && t < (pages[k + 1]?.[0].s ?? p[p.length - 1].e + 0.4) - 0.05);
+  if (!pg) return null;
+  const p0 = T(pg[0].s - 0.05);
+  const inS = spring({frame: frame - p0, fps, config: {damping: 16, mass: 0.6}});
+  const box: React.CSSProperties = variant === 'glass'
+    ? {...glassBase(true), position: 'relative', borderRadius: 3.2 * u, padding: `${1.6 * u}px ${3.4 * u}px`}
+    : {position: 'relative'};
+  return <div style={{position: 'absolute', left: '7%', right: '7%', top: `${top}%`, display: 'flex', justifyContent: 'center'}}>
+    <div style={{...box, transform: `translateY(${(1 - inS) * 3 * u}px) scale(${0.94 + 0.06 * inS})`, opacity: Math.min(1, inS * 1.5), textAlign: 'center', lineHeight: 1.18}}>
+      {pg.map((w, k) => {
+        const on = t >= w.s - 0.03;
+        const cur = on && t < w.e + 0.05;
+        const ws = spring({frame: frame - T(w.s - 0.03), fps, config: {damping: 14, mass: 0.5}});
+        const base: React.CSSProperties = w.em
+          ? {fontFamily: SERIF, fontStyle: 'italic', fontWeight: 800, fontSize: 6.6 * u, backgroundImage: GOLD, WebkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent'}
+          : {fontFamily: SANS, fontWeight: 800, fontSize: 5.2 * u, color: cur ? C.lgold : C.cream, textTransform: 'none'};
+        return <span key={k} style={{display: 'inline-block', margin: `0 ${0.9 * u}px`, ...base,
+          opacity: on ? 1 : 0.45, transform: `translateY(${on ? (1 - Math.min(1, ws)) * 1.6 * u : 0}px) scale(${cur ? 1.06 : 1})`,
+          textShadow: variant === 'clean' && !w.em ? `0 ${0.4 * u}px ${1.6 * u}px rgba(43,6,16,.85)` : undefined,
+          filter: variant === 'clean' && w.em ? `drop-shadow(0 ${0.4 * u}px ${1.2 * u}px rgba(43,6,16,.8))` : undefined}}>{w.w}</span>;
+      })}
+    </div>
+  </div>;
 };
+
+export {C, GOLD, BORDO, SANS, SERIF, FPS, u, T, clamp, expo, fontCss, useAnim, glassBase, Sheen, Glass, Blob, Words, Depth, Gold, Chip, LogoBadge,
+  Drop, Ico, Pop, Camera, Vignette, Item, Outro, Swatch, Sparkles, Flash, Captions};
