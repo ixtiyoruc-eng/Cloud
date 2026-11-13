@@ -41,10 +41,13 @@ Kerak: Python + Playwright, Google Chrome, ffmpeg.
 
 ## Diktor ovozi (ElevenLabs)
 - Matn va vaqtlar: `voice/script.json` (`[boshlanish_soniyasi, matn]`, 9 qator, ~620 belgi).
-- Ovoz: Sarah (`EXAVITQu4vr4xnSDxMaL`), model `eleven_v4` (o'zbek tilini qo'llaydi), `language_code=uz`.
+- Ovoz: Lily (`pFZP5JQG7iQjIQuC4Bku`, mayin, shoshilmaydigan ayol ovozi — kutish zalida takror eshitilganda bezdirmasligi uchun tanlangan), model `eleven_v4`, `language_code=uz`, stability 0.65, style 0.
+- Sinalganlar: Sarah, Alice, Matilda (premade). Kutubxonadagi o'zbek ayol ovozi "Javohir" (`AgD9yC0DyOI1g9AP3l45`) faqat pullik tarifda API orqali ishlaydi.
+- 5-qatorda "Mehr ulashamiz" "Me ulashamiz" bo'lib eshitilgani uchun "Mehrimizni ulashamiz" qilindi.
 - Qayta yaratish: `XI=<kalit> python3 scripts/tts.py EXAVITQu4vr4xnSDxMaL eleven_v4 [qator raqamlari]` → `seg<i>.mp3`.
   Talaffuzni tekshirish: `XI=<kalit> bash scripts/stt_check.sh seg*.mp3` (scribe_v1 orqali qayta matnga).
 - Bepul tarifda faqat `mp3_44100_128` formati ishlaydi. Bepul tarifda tijorat litsenziyasi yo'q — klinika reklamasi uchun Starter yoki undan yuqori tarifda qayta yaratish kerak (skript o'sha).
 - `voice/voice.wav` — barcha qatorlar o'z vaqtiga joylangan 97 s trek (loudnorm -16).
+- Yig'ish: `python3 scripts/mix_voice.py voice mix.wav <chiqish_papka>` → `voice.wav` + `final_audio.wav`.
 - Yakuniy audio: musiqa (`music.py`, -24 LUFS) ovoz ostida `sidechaincompress` bilan pasaytiriladi, keyin `loudnorm=I=-16:TP=-1.5`.
 - Render muhitida (ochiq Chromium) H.264 dekod yo'q bo'lsa: `muruvvat.mp4` ni VP9 `.webm` ga o'girib, nusxadagi `index.html` da src ni almashtiring.
