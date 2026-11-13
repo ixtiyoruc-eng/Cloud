@@ -1,0 +1,1 @@
+for f in "$@"; do echo "$f: $(curl -sS https://api.elevenlabs.io/v1/speech-to-text -H "xi-api-key: $XI" -F model_id=scribe_v1 -F language_code=uzb -F file=@$f | python3 -c 'import json,sys;d=json.load(sys.stdin);print(d.get("text",d))')"; done

@@ -27,7 +27,7 @@ Ichkarida: `render(t)` 52–74 oralig'ini muruvvat sahnasi uchun ajratadi; asosi
 - Ixlos opaning rasmi videoda **bo'lmasin** (olib tashlangan). Ism kerak bo'lsa "Ixlos" deb yoziladi, "Ixlos opa" emas.
 - Logo bo'lsin; video silliq, zeriktirmaydigan bo'lsin; oldin/keyin rasmlari bo'lsin.
 - Muruvvat videosi o'rtaga qo'shildi.
-- ElevenLabs ovozi rejada: diktor matnini yozish, foydalanuvchi audio faylni beradi. API kalitni kodga yoki repoga YOZMANG.
+- ElevenLabs diktor ovozi qo'shildi (pastga qarang). API kalitni kodga yoki repoga YOZMANG.
 
 ## Render
 Kerak: Python + Playwright, Google Chrome, ffmpeg.
@@ -38,3 +38,13 @@ Kerak: Python + Playwright, Google Chrome, ffmpeg.
 - `scripts/test_frames.py t1 t2 ...` — tekshirish uchun alohida kadrlar.
 
 `old_v1_light.html` — oldingi (1-uslub) versiya, kerak bo'lsa.
+
+## Diktor ovozi (ElevenLabs)
+- Matn va vaqtlar: `voice/script.json` (`[boshlanish_soniyasi, matn]`, 9 qator, ~620 belgi).
+- Ovoz: Sarah (`EXAVITQu4vr4xnSDxMaL`), model `eleven_v4` (o'zbek tilini qo'llaydi), `language_code=uz`.
+- Qayta yaratish: `XI=<kalit> python3 scripts/tts.py EXAVITQu4vr4xnSDxMaL eleven_v4 [qator raqamlari]` → `seg<i>.mp3`.
+  Talaffuzni tekshirish: `XI=<kalit> bash scripts/stt_check.sh seg*.mp3` (scribe_v1 orqali qayta matnga).
+- Bepul tarifda faqat `mp3_44100_128` formati ishlaydi. Bepul tarifda tijorat litsenziyasi yo'q — klinika reklamasi uchun Starter yoki undan yuqori tarifda qayta yaratish kerak (skript o'sha).
+- `voice/voice.wav` — barcha qatorlar o'z vaqtiga joylangan 97 s trek (loudnorm -16).
+- Yakuniy audio: musiqa (`music.py`, -24 LUFS) ovoz ostida `sidechaincompress` bilan pasaytiriladi, keyin `loudnorm=I=-16:TP=-1.5`.
+- Render muhitida (ochiq Chromium) H.264 dekod yo'q bo'lsa: `muruvvat.mp4` ni VP9 `.webm` ga o'girib, nusxadagi `index.html` da src ni almashtiring.
