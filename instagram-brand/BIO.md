@@ -30,7 +30,7 @@ Kosmetolog Urganch | Dr. Nasiba
 
 **Bio — A (tavsiya, 147 belgi — 150 ga sig'adi):**
 ```
-👩‍⚕️ Shifokor-kosmetolog · 10+ yil
+👩‍⚕️ Shifokor-kosmetolog · 8 yil
 ✨ Akne · Pigment · Yasharish
 💉 In'ektsion va apparat muolajalar
 📍 Urganch · 📲 +998919558585
@@ -45,7 +45,7 @@ Teringizning sababini topaman, niqoblamayman ✨
 📲 Konsultatsiya 👇
 ```
 
-> "10+ yil" ni o'z tajribangizga moslang.
+> Tajriba: 8 yil.
 
 **Havola:** `wa.me/998919558585` (WhatsApp) yoki Telegram.
 Edit profile → Links → Add external link.
