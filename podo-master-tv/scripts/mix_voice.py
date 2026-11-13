@@ -8,5 +8,5 @@ n=len(d); f.append(''.join(f'[v{i}]' for i in range(n))+f'amix=inputs={n}:normal
 vw=os.path.join(out,'voice.wav')
 subprocess.run(['ffmpeg','-loglevel','error','-y',*ins,'-filter_complex',';'.join(f),'-map','[vo]','-ac','2','-ar','48000',vw],check=True)
 subprocess.run(['ffmpeg','-loglevel','error','-y','-i',music,'-i',vw,'-filter_complex',
- '[0:a]aresample=48000,atrim=0:97,loudnorm=I=-24[m];[1:a]asplit[vk][vm];[m][vk]sidechaincompress=threshold=0.03:ratio=6:attack=40:release=600[md];[md][vm]amix=inputs=2:normalize=0,loudnorm=I=-16:TP=-1.5[o]',
+ '[0:a]aresample=48000,atrim=0:97,loudnorm=I=-22[m];[1:a]asplit[vk][vm];[m][vk]sidechaincompress=threshold=0.03:ratio=8:attack=30:release=500[md];[md][vm]amix=inputs=2:normalize=0,loudnorm=I=-16:TP=-1.5[o]',
  '-map','[o]','-ar','48000',os.path.join(out,'final_audio.wav')],check=True)
