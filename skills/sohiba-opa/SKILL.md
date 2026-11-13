@@ -1,6 +1,6 @@
 ---
 name: "sohiba-opa"
-description: "Use when the user says \"Sohiba opa\" / \"Sohiba opa dizaynda qil\" / \"kosmetolog opa videosi\", or sends another talking-head video of the cosmetologist Sohiba opa (woman with glasses talking in a car): cut it into a tight advice reel, retouch lightly, add smooth kinetic-type motion graphics in colours taken from the footage, and make a cover. Saved from the approved \"Qalb go'zal bo'lishi kerak\" reel."
+description: "Use when the user says \"Sohiba opa\" / \"Sohiba opa dizaynda qil\" / \"kosmetolog opa videosi\", or sends another talking-head video of the cosmetologist Sohiba opa (woman with glasses talking in a car): cut it into a tight advice reel, retouch lightly, add smooth kinetic-type motion graphics in the fixed wine-gold-cream palette, and make a cover. Saved from the approved \"Qalb go'zal bo'lishi kerak\" reel."
 ---
 
 # Sohiba opa — kosmetolog maslahat reel
@@ -10,7 +10,7 @@ The user's saved style, built and approved on the reel "Qalb go'zal bo'lishi ker
 ## The user's rules (learned on the first reel)
 1. **It is advice, not an interview.** Label it "Maslahat" / "Kosmetolog maslahati", never "Intervyu".
 2. **Cut hard ("cutham qilish kerak").** Remove off-camera questions from the person filming (e.g. "Nima bilan? Aytingchi?"), repeats, false starts, "e-e", long pauses, side stories. Keep: hook → problem → her story → turn → moral. Target 40–50 s from ~2 min. Nothing extra may stay in the speech ("gapda ortiqcha narsa bo'lmasin").
-3. **Colours come from her footage**, not from the reference. First reel: wine knit #8E2A45 / deep #1B0A10, black leather, gold earring #F1C97B / #C9963F, cream #FBF5EF, blush #F4D6CE, rose #E9B7AE, ink #2B0D16. If she wears different colours next time, re-derive the palette the same way (outfit main colour = dark theme, jewellery/accent = highlight, cream = light theme).
+3. **Colours are FIXED — always the approved palette, every video** (see `references/palette.md`, swatch `references/palette.png`): cream #FBF5EF, warm white #FFF7EE, blush #F4D6CE, rose #E9B7AE, gold #F1C97B, deep gold #C9963F, raspberry #B8475F, wine #8E2A45, burgundy #6E1B33, dark wine #3A0E1C, ink #2B0D16, deep wine #1B0A10. Light theme = cream + rose/raspberry/gold/blush blobs, wine highlights; dark theme = deep wine + burgundy/wine blobs, gold highlights. Do not change them even if she wears other clothes; only change if the user asks.
 4. **Light retouch with makeup** — smooth skin, de-shine, a little blush and lip colour, slightly warmer and brighter grade. Natural face: **no face slimming by default.** (A client once asked to slim her double chin and soften the car; the user rejected that version — "Bo'ldi, kerak emas". `--slim` exists only if the user asks again.)
 5. **Animations must be smooth** — ease-out curves, blur-in/blur-out, no hard pops.
 6. **Deliver high quality via GitHub**: commit the MP4 + cover to `videos/` (Git LFS) on the session branch and give the raw link `https://github.com/<owner>/<repo>/raw/<branch>/videos/<file>`. The user asks for this link for full quality ("Github linkni ber kachestvinisini"). Also send the file with SendUserFile.
@@ -19,7 +19,7 @@ The user's saved style, built and approved on the reel "Qalb go'zal bo'lishi ker
 9. Keep the user posted in one short Uzbek line while long renders run.
 
 ## Look of the reel (what "zo'r" meant here)
-Reference was a "finqube" SaaS promo: animated mesh-gradient backgrounds, word-by-word kinetic type with highlighted keywords inside a box with vertical bars, glowing neon squiggle strokes, floating UI cards. Same grammar, her colours:
+Reference was a "finqube" SaaS promo: animated mesh-gradient backgrounds, word-by-word kinetic type with highlighted keywords inside a box with vertical bars, glowing neon squiggle strokes, floating UI cards. Same grammar, in the fixed wine-gold palette (`references/palette.md`):
 - **Backgrounds:** two themes that crossfade — light (cream with drifting rose/wine/gold blobs) and dark (deep wine with drifting wine/burgundy blobs + vignette). Switch theme on story beats.
 - **Video layer** morphs between layouts: `full` (full-bleed, bottom gradient for captions), `card` (rounded 70 px card with thin gold border, floating, big shadow), `cardS` (smaller card), `hidden` (video gone → full-screen typography beat). Morph over ~0.75 s, ease-in-out. Slow 3.5 % push-in per segment; punch-in ×1.10–1.12 on emotional segments.
 - **Kinetic words:** each word rises 0.55 em + un-blurs over 0.42 s, timed to its spoken word; keyword gets a highlight box that wipes in from the left with bars at both ends (gold on dark, wine on light). Blocks leave by fading, rising 46 px and blurring.
