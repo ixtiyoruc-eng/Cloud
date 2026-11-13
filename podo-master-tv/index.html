@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1920px;height:1080px;overflow:hidden;background:#F2F5F5;font-family:"Inter Display","Inter",sans-serif;color:#1d292d}
+.abs{position:absolute}
+.scene{position:absolute;inset:0;transform-origin:50% 50%}
+.line{position:absolute;z-index:5;left:0;width:1920px;text-align:center;white-space:nowrap;font-weight:600;font-size:118px;letter-spacing:-.045em;line-height:1.15}
+.line span.tk{display:inline-block;vertical-align:middle;will-change:transform,filter}
+.acc{background:linear-gradient(100deg,#19CFCD 0%,#00A9A8 45%,#007D79 100%);-webkit-background-clip:text;background-clip:text;color:transparent;padding:0 .02em}
+.tile{display:inline-flex!important;align-items:center;justify-content:center;width:124px;height:124px;border-radius:34px;margin:0 22px;
+ background:linear-gradient(150deg,#6FF0EE 0%,#14C4C3 40%,#008A87 100%);
+ box-shadow:0 26px 50px rgba(0,110,108,.35),inset 0 3px 0 rgba(255,255,255,.65),inset 0 -6px 14px rgba(0,60,58,.35)}
+.card3{position:absolute;border-radius:34px;overflow:hidden;background:#fff;box-shadow:0 30px 60px rgba(0,60,60,.18);backface-visibility:hidden}
+.card3 img{width:100%;height:100%;object-fit:cover;display:block}
+.glass{position:absolute;border-radius:40px;background:linear-gradient(180deg,rgba(60,230,228,.30),rgba(0,140,138,.16));border:2px solid rgba(127,240,238,.55);
+ box-shadow:0 0 50px rgba(0,193,192,.35),inset 0 2px 0 rgba(255,255,255,.35);backdrop-filter:blur(6px)}
+.pill{display:inline-flex;align-items:center;gap:16px;border-radius:999px;padding:20px 32px;font-weight:600;font-size:36px;letter-spacing:-.02em}
+.wm{font-weight:700;letter-spacing:.06em;color:#3d4a52;white-space:nowrap}
+.wm span{display:inline-block}
+.sub{font-weight:600;letter-spacing:.34em;color:#6f8088;white-space:nowrap}
+.face{position:absolute;inset:0;border-radius:40px;overflow:hidden;backface-visibility:hidden;box-shadow:0 40px 90px rgba(0,70,68,.28)}
+.face img{width:100%;height:100%;object-fit:cover}
+.lab{position:absolute;top:26px;left:26px;padding:12px 26px;border-radius:999px;font-size:30px;font-weight:800;letter-spacing:.12em}
+.tilegrid{position:absolute;border-radius:28px;background:rgba(255,255,255,.6);border:2px solid rgba(0,193,192,.22);box-shadow:0 14px 30px rgba(0,110,108,.10)}
+</style></head>
+<body>
+<div id="bg" class="abs" style="inset:0;background:radial-gradient(ellipse at 50% 45%,#FFFFFF 0%,#F2F6F6 55%,#E3EEEE 100%)"></div>
+<div id="bgb1" class="abs" style="width:900px;height:900px;border-radius:50%;background:#AFEDEC;filter:blur(140px);opacity:.45"></div>
+<div id="bgb2" class="abs" style="width:700px;height:700px;border-radius:50%;background:#D5F6F5;filter:blur(120px);opacity:.6"></div>
+<div id="dark" class="abs" style="inset:0;background:radial-gradient(ellipse at 50% 60%,#0B4A4A 0%,#062F31 45%,#021819 100%);opacity:0"></div>
+
+<!-- S0/S7 LOGO -->
+<div id="logo" class="abs" style="left:510px;top:200px;width:900px;height:560px;transform-origin:50% 45%">
+  <div id="lring" class="abs" style="left:290px;top:-10px;width:320px;height:320px;border-radius:50%;border:3px solid rgba(0,193,192,0)"></div>
+  <svg class="abs" style="left:345px;top:20px" width="210" height="270" viewBox="0 0 200 260">
+   <defs><linearGradient id="fg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2FD6D4"/><stop offset="1" stop-color="#007D79"/></linearGradient></defs>
+   <g fill="url(#fg)"><ellipse id="t0" cx="58" cy="62" rx="9" ry="10"/><ellipse id="t1" cx="74" cy="44" rx="10.5" ry="11.5"/><ellipse id="t2" cx="96" cy="33" rx="12" ry="13"/><ellipse id="t3" cx="121" cy="29" rx="13" ry="14"/><ellipse id="t4" cx="152" cy="40" rx="19" ry="22"/></g>
+   <path id="sole" d="M150 82 C 182 112, 160 140, 128 158 C 98 175, 84 200, 98 224 C 110 244, 140 240, 146 220" fill="none" stroke="url(#fg)" stroke-width="30" stroke-linecap="round" pathLength="1" stroke-dasharray="1"/>
+  </svg>
+  <div class="abs" style="left:0;top:315px;width:900px;text-align:center"><div id="wm" class="wm" style="font-size:96px"></div></div>
+  <div id="lline" class="abs" style="left:250px;top:440px;width:400px;height:5px;border-radius:5px;background:linear-gradient(90deg,transparent,#00C1C0,transparent);transform-origin:50% 50%"></div>
+  <div id="lsub" class="abs sub" style="left:0;top:468px;width:900px;text-align:center;font-size:30px">ПЕДИКЮРА И ПОДОЛОГИИ</div>
+  <div class="abs" style="left:0;top:0;width:900px;height:520px;overflow:hidden;mix-blend-mode:screen"><div id="sw" class="abs" style="top:-200px;left:-400px;width:160px;height:1000px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.95),transparent);transform:rotate(18deg)"></div></div>
+</div>
+<div id="ltag" class="abs" style="left:0;top:830px;width:1920px;text-align:center"><span class="pill" style="background:#007D79;color:#fff;font-size:38px">Podologiya &nbsp;•&nbsp; Tibbiy manikyur &nbsp;•&nbsp; Pedikyur</span></div>
+
+<!-- S1 -->
+<div id="S1" class="scene"></div>
+
+<!-- S2 tunnel -->
+<div id="S2" class="scene">
+ <div id="tun" class="abs" style="inset:0;z-index:1;perspective:1000px;perspective-origin:50% 50%">
+  <div id="world" class="abs" style="left:960px;top:540px;width:0;height:0;transform-style:preserve-3d"></div>
+ </div>
+ <div id="plate" class="abs" style="z-index:2;left:160px;top:330px;width:1600px;height:420px;border-radius:120px;background:radial-gradient(ellipse at 50% 50%,rgba(250,253,253,.98) 45%,rgba(250,253,253,0) 70%)"></div>
+</div>
+
+<!-- S3 dark glass -->
+<div id="S3" class="scene">
+ <div id="gstage" class="abs" style="inset:0;perspective:1400px;perspective-origin:50% 30%">
+  <div id="gstack" class="abs" style="left:410px;top:330px;width:1100px;height:620px;transform-style:preserve-3d"></div>
+ </div>
+ <svg id="star" class="abs" style="left:1440px;top:280px" width="150" height="150" viewBox="0 0 100 100"><defs><radialGradient id="sg"><stop offset="0" stop-color="#E9FFFF"/><stop offset=".5" stop-color="#3EE6E4"/><stop offset="1" stop-color="#00A9A8"/></radialGradient><filter id="sgl"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><path d="M50 0 C55 35 65 45 100 50 C65 55 55 65 50 100 C45 65 35 55 0 50 C35 45 45 35 50 0Z" fill="url(#sg)" filter="url(#sgl)"/></svg>
+ <svg id="star2" class="abs" style="left:380px;top:820px" width="80" height="80" viewBox="0 0 100 100"><path d="M50 0 C55 35 65 45 100 50 C65 55 55 65 50 100 C45 65 35 55 0 50 C35 45 45 35 50 0Z" fill="url(#sg)" filter="url(#sgl)"/></svg>
+</div>
+
+<!-- S4 before/after flip -->
+<div id="S4" class="scene">
+ <div id="flipstage" class="abs" style="inset:0;perspective:1800px">
+  <div id="fcards"></div>
+ </div>
+ <div id="labO" class="abs" style="left:260px;top:520px;width:420px;text-align:right;font-size:72px;font-weight:700;letter-spacing:-.04em">Oldin</div>
+ <div id="labK" class="abs" style="left:1240px;top:520px;width:420px;text-align:left;font-size:72px;font-weight:700;letter-spacing:-.04em">Keyin</div>
+</div>
+
+<!-- S5 grid + counter -->
+<div id="S5" class="scene">
+ <div class="abs" style="inset:0;perspective:1500px;perspective-origin:50% 40%"><div id="grid" class="abs" style="left:960px;top:540px;width:0;height:0;transform-style:preserve-3d"></div></div>
+ <div class="abs" style="left:360px;top:300px;width:1200px;height:480px;border-radius:200px;background:radial-gradient(ellipse at 50% 50%,rgba(242,250,250,.98) 35%,rgba(242,250,250,0) 72%)"></div>
+ <div id="cnt" class="abs" style="left:0;top:330px;width:1920px;text-align:center;font-size:250px;font-weight:700;letter-spacing:-.06em"><span class="acc" id="cntv">0</span></div>
+</div>
+
+
+<!-- SM muruvvat -->
+<div id="SM" class="scene" style="display:none">
+ <video id="vb" src="muruvvat.mp4" muted preload="auto" style="position:absolute;left:-100px;top:-100px;width:2120px;height:1280px;object-fit:cover;filter:blur(60px) saturate(1.3);opacity:.32"></video>
+ <div class="abs" style="inset:0;perspective:1600px">
+  <div id="ph" class="abs" style="left:690px;top:66px;width:540px;height:948px;border-radius:64px;overflow:hidden;border:12px solid #fff;background:#cfe;box-shadow:0 50px 110px rgba(0,70,68,.35),0 0 0 2px rgba(0,193,192,.25)">
+   <video id="vf" src="muruvvat.mp4" muted preload="auto" style="width:100%;height:100%;object-fit:cover;display:block"></video>
+  </div>
+ </div>
+</div>
+<!-- S6 contacts -->
+<div id="S6" class="scene">
+ <div id="pills" class="abs" style="left:0;top:720px;width:1920px;text-align:center"></div>
+</div>
+
+<!-- persistent small brand + phone -->
+<div id="mini" class="abs" style="left:64px;top:52px;display:flex;align-items:center;gap:14px">
+ <svg width="40" height="52" viewBox="0 0 200 260"><g fill="#00B3B2"><ellipse cx="58" cy="62" rx="9" ry="10"/><ellipse cx="74" cy="44" rx="10.5" ry="11.5"/><ellipse cx="96" cy="33" rx="12" ry="13"/><ellipse cx="121" cy="29" rx="13" ry="14"/><ellipse cx="152" cy="40" rx="19" ry="22"/></g><path d="M150 82 C 182 112, 160 140, 128 158 C 98 175, 84 200, 98 224 C 110 244, 140 240, 146 220" fill="none" stroke="#00B3B2" stroke-width="30" stroke-linecap="round"/></svg>
+ <div id="miniw" style="font-weight:700;font-size:30px;letter-spacing:.06em;color:#3d4a52">PODO <span style="color:#00A9A8">MASTER</span></div>
+</div>
+<div id="foot" class="abs" style="left:0;top:1000px;width:1920px;text-align:center;font-size:32px;font-weight:600;letter-spacing:-.01em;color:#6b7c82">+998 50 103 40 45 &nbsp;·&nbsp; @podolog_urganch &nbsp;·&nbsp; Xorazm, Urganch</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const P=(t,a,d)=>cl((t-a)/d);
+const eox=x=>x>=1?1:1-Math.pow(2,-10*x);
+const eix=x=>x<=0?0:Math.pow(2,10*x-10);
+const eio=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const ess=x=>x*x*x*(x*(x*6-15)+10);
+const back=x=>{const c1=1.5,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)};
+const L=(a,b,x)=>a+(b-a)*x;
+const TT=97, TAU=Math.PI*2;
+const BL=(el,b)=>{el.style.filter=b>.3?`blur(${b.toFixed(2)}px)`:'none'};
+
+const IC={
+ foot:`<svg width="70" height="80" viewBox="0 0 200 230"><g fill="#fff"><circle cx="44" cy="62" r="11"/><circle cx="62" cy="44" r="12"/><circle cx="84" cy="34" r="13"/><circle cx="108" cy="30" r="14"/><circle cx="138" cy="42" r="19"/></g><path d="M134 82 C 166 112, 140 136, 112 150 C 84 164, 72 186, 84 206 C 94 222, 120 220, 124 202" fill="none" stroke="#fff" stroke-width="24" stroke-linecap="round"/></svg>`,
+ nail:`<svg width="70" height="80" viewBox="0 0 200 230"><g fill="none" stroke="#fff" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"><path d="M64 205 V 112 C 64 64, 136 64, 136 112 V 205"/><path d="M64 140 C 84 152, 116 152, 136 140"/><path d="M158 58 l 26 -26 M166 84 l 24 -8 M146 44 l 8 -22"/></g></svg>`,
+ brace:`<svg width="70" height="80" viewBox="0 0 200 230"><g fill="none" stroke="#fff" stroke-width="16" stroke-linecap="round"><path d="M62 205 V 122 C 62 76, 138 76, 138 122 V 205"/><path d="M36 120 C 70 96, 130 96, 164 120"/></g><g fill="#fff"><circle cx="36" cy="120" r="15"/><circle cx="164" cy="120" r="15"/></g></svg>`,
+ check:`<svg width="70" height="70" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+ phone:`<svg width="64" height="64" viewBox="0 0 24 24"><path d="M6.6 10.8a15.2 15.2 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z" fill="#fff"/></svg>`,
+ heart:`<svg width="66" height="66" viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-9.5-9.2C1 8.3 3.2 4.5 7 4.5c2 0 3.5 1.1 5 3 1.5-1.9 3-3 5-3 3.8 0 6 3.8 4.5 7.3C19.5 16.4 12 21 12 21z" fill="#fff"/></svg>`,
+};
+
+// ---------- kinetic lines ----------
+const LINES={};
+function mkLine(id,parent,spec,top,size,pos){
+  const d=document.createElement('div'); d.className='line'; d.id=id; d.style.top=top+'px'; if(size) d.style.fontSize=size+'px';
+  if(pos){d.style.left=pos[0]+'px'; d.style.width=pos[1]+'px'; d.style.textAlign=pos[2];}
+  const toks=[];
+  spec.forEach((s,i)=>{
+    let sp=document.createElement('span'); sp.className='tk';
+    if(s.startsWith('@')){sp.className='tk tile'; sp.innerHTML=IC[s.slice(1)]; sp.dataset.icon=1;}
+    else if(s.startsWith('*')){sp.innerHTML=`<span class="acc">${s.slice(1)}</span>`;}
+    else sp.textContent=s;
+    d.appendChild(sp); toks.push(sp);
+    if(i<spec.length-1) d.appendChild(document.createTextNode(' '));
+  });
+  $(parent).appendChild(d); LINES[id]={el:d,toks}; return d;
+}
+// opt: gap, din, exit:'up'|'left'|'zoom'
+function line(id,t,a,b,o={}){
+  const {el,toks}=LINES[id]; const gap=o.gap??.13, din=o.din??1.1, dout=o.dout??.7, ex=o.exit||'up';
+  if(t<a-.01||t>b+.6){el.style.visibility='hidden';return}
+  el.style.visibility='visible';
+  const n=toks.length;
+  toks.forEach((s,i)=>{
+    const ip=eox(P(t,a+i*gap,din)); const op=eio(P(t,b-dout+(ex==='left'?i*.035:i*.03),dout));
+    let x=0,y=(1-ip)*42,sc=.94+.06*ip,r=0,bl=(1-ip)*22;
+    if(s.dataset.icon){ const k=back(P(t,a+i*gap,.9)); sc=Math.max(0,k); r=(1-cl(k))*-30; y=(1-ip)*30; bl=(1-ip)*10;
+      sc*=1+.03*Math.sin(TAU*(t-a)/1.6); }
+    if(ex==='up'){y-=op*40; bl+=op*18;}
+    if(ex==='left'){x-=eix(op)*260+op*40; bl+=op*20;}
+    if(ex==='zoom'){sc*=1+op*.25; bl+=op*24;}
+    s.style.opacity=ip*(1-op);
+    s.style.transform=`translate(${x}px,${y}px) scale(${sc}) rotate(${r}deg)`;
+    BL(s,bl);
+  });
+}
+// S1
+mkLine('l1','S1',['Oyoq','va','tirnoq','@foot','*salomatligi'],455);
+mkLine('l2','S1',['*Mutaxassis','qoʻlida','—','ishonch','bilan.'],455,108);
+// S2 center lines
+mkLine('l3','S2',['@foot','Tirnoq','*kasalliklarini','*davolash'],460,104);
+mkLine('l4','S2',['@nail','Tibbiy','*manikyur','va','*pedikyur'],460,104);
+mkLine('l5','S2',['@brace','*Brekets','va','*protez','tirnoq'],460,104);
+// S3
+mkLine('l6','S3',['Sizda','shu','belgilar','bormi?'],150,84);
+mkLine('l7','S3',['*Podologga','murojaat','qiling.'],880,72);
+// S4
+mkLine('l8','S4',['Natijalar','*oʻzi','*gapiradi.'],470,104);
+mkLine('l8b','S4',['Natijalar','*oʻzi','*gapiradi.'],90,64);
+// S5
+mkLine('l9','S5',['*obunachi','bizga','ishonadi','@heart'],640,70);
+// S6
+mkLine('l10','S6',['Qabulga','*yoziling'],250,90);
+mkLine('l11','S6',['*+998','*50','*103','*40','*45'],410,170);
+
+// ---------- logo ----------
+const WM='PODO MASTER';
+$('wm').innerHTML=[...WM].map((c,i)=>`<span id="wl${i}" style="${i>=5?'color:#00A9A8':''}">${c===' '?'&nbsp;':c}</span>`).join('');
+function renderLogo(t){
+  // visible 0..4.6 (exit) and 68.2..75 (build)
+  const lg=$('logo'), tg=$('ltag');
+  let build=1, ex=0;
+  if(t>=68.2){ build=P(t,68.4,3.2); }
+  if(t<5){ ex=eio(P(t,3.7,1.0)); }
+  const vis = t<4.8 || t>68.2;
+  lg.style.visibility=vis?'visible':'hidden'; tg.style.visibility=vis?'visible':'hidden';
+  if(!vis) return;
+  const fl=Math.sin(TAU*t/7.5)*6;
+  lg.style.transform=`translateY(${fl - ex*20}px) scale(${1-ex*.12})`; lg.style.opacity=1-ex; BL(lg,ex*18);
+  // pieces
+  const b=t>=68.2;
+  for(let i=0;i<5;i++){const e=$('t'+i); const k=b?Math.max(0,back(cl(P(t,68.5+i*.09,.7)))):1; e.style.transformBox='fill-box'; e.style.transformOrigin='center'; e.style.transform=`scale(${k})`;}
+  $('sole').style.strokeDashoffset=b?1-eio(P(t,68.9,1.3)):0;
+  [...WM].forEach((c,i)=>{const e=$('wl'+i); const k=b?eox(P(t,69.6+i*.06,1.0)):1; e.style.opacity=k; e.style.transform=`translateY(${(1-k)*50}px)`; BL(e,(1-k)*12); e.style.letterSpacing=b?`${(1-k)*.4}em`:'0'});
+  const ln=b?eox(P(t,70.6,1.0)):1; $('lline').style.transform=`scaleX(${ln})`; $('lline').style.opacity=ln;
+  const sb=b?eox(P(t,70.9,1.0)):1; $('lsub').style.opacity=sb; $('lsub').style.letterSpacing=`${.34+(1-sb)*.3}em`;
+  const sp=P(t,1.0,1.6), sp2=P(t,72.3,1.6); const s1=(sp>0&&sp<1)?sp:((sp2>0&&sp2<1)?sp2:-1);
+  $('sw').style.left=(s1<0?-400:L(-300,1100,ess(s1)))+'px';
+  const rp=P(t,72.0,2.2); $('lring').style.borderColor=`rgba(0,193,192,${rp>0&&rp<1?(1-rp)*.55:0})`; $('lring').style.transform=`scale(${1+rp*.9})`;
+  const tv=b?eox(P(t,71.4,1.1)):1-eio(P(t,3.4,.9)); tg.style.opacity=tv; tg.style.transform=`translateY(${(1-tv)*40}px)`; BL(tg,(1-tv)*14);
+}
+
+// ---------- S2 tunnel ----------
+const TC=[
+ // wall, along-depth z, offset, content
+ ['L',-200,0,'img:ba1_after.jpg'],['L',-1300,0,'svc:foot:Tirnoq davolash'],['L',-2400,0,'img:ba3_after.jpg'],['L',-3500,0,'logo'],
+ ['R',-750,0,'svc:nail:Manikyur · Pedikyur'],['R',-1850,0,'img:ba2_after.jpg'],['R',-2950,0,'svc:brace:Brekets tizimi'],['R',-4050,0,'img:ba1_after.jpg'],
+ ['T',-500,-330,'svc:check:Steril asboblar'],['T',-1600,330,'img:ba3_after.jpg'],['T',-2700,-330,'logo'],['T',-3800,330,'svc:foot:Podologiya'],
+ ['B',-1000,330,'img:ba2_after.jpg'],['B',-2100,-330,'svc:heart:Ehtiyotkor parvarish'],['B',-3200,330,'svc:nail:Pedikyur'],['B',-4300,-330,'img:ba1_after.jpg'],
+];
+// NOTE: replace claim-like text with neutral ones
+TC[8][3]='svc:check:Professional yondashuv';
+const LOGOMINI=`<div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;background:#fff">
+ <svg width="110" height="140" viewBox="0 0 200 260"><g fill="#00B3B2"><ellipse cx="58" cy="62" rx="9" ry="10"/><ellipse cx="74" cy="44" rx="10.5" ry="11.5"/><ellipse cx="96" cy="33" rx="12" ry="13"/><ellipse cx="121" cy="29" rx="13" ry="14"/><ellipse cx="152" cy="40" rx="19" ry="22"/></g><path d="M150 82 C 182 112, 160 140, 128 158 C 98 175, 84 200, 98 224 C 110 244, 140 240, 146 220" fill="none" stroke="#00B3B2" stroke-width="30" stroke-linecap="round"/></svg>
+ <div style="font-weight:700;font-size:54px;letter-spacing:.06em;color:#3d4a52">PODO <span style="color:#00A9A8">MASTER</span></div></div>`;
+const W3=620,H3=420;
+TC.forEach((c,i)=>{
+  const d=document.createElement('div'); d.className='card3'; d.id='tc'+i; d.style.width=W3+'px'; d.style.height=H3+'px'; d.style.left=(-W3/2)+'px'; d.style.top=(-H3/2)+'px';
+  const k=c[3];
+  if(k.startsWith('img:')) d.innerHTML=`<img src="${k.slice(4)}">`;
+  else if(k==='logo') d.innerHTML=LOGOMINI;
+  else {const [,ic,tx]=k.split(':'); d.innerHTML=`<div style="width:100%;height:100%;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:34px;padding:0 60px;background:linear-gradient(160deg,#fff,#EEF9F9)"><span class="tile" style="margin:0">${IC[ic]}</span><div style="font-weight:700;font-size:56px;letter-spacing:-.03em;color:#1d292d">${tx}</div></div>`;}
+  $('world').appendChild(d);
+});
+function renderTunnel(t){
+  const q=P(t,12.6,13.6);
+  const camZ=L(-300,2300,q);
+  $('world').style.transform=`translateZ(${camZ}px) rotateZ(${Math.sin(TAU*q*.5)*4}deg)`;
+  TC.forEach((c,i)=>{
+    const [w,z,off]=c; const e=$('tc'+i);
+    const D=1060; let tr='';
+    if(w==='L') tr=`translate3d(${-D}px,${off}px,${z}px) rotateY(72deg)`;
+    if(w==='R') tr=`translate3d(${D}px,${off}px,${z}px) rotateY(-72deg)`;
+    if(w==='T') tr=`translate3d(${off}px,${-D*0.62}px,${z}px) rotateX(-72deg)`;
+    if(w==='B') tr=`translate3d(${off}px,${D*0.62}px,${z}px) rotateX(72deg)`;
+    e.style.transform=tr;
+    const zz=z+camZ; // >0 means past camera
+    e.style.opacity=cl((zz+5200)/1400)*cl((500-zz)/500);
+  });
+}
+
+// ---------- S3 glass stack ----------
+const SG=['Tirnoq teriga botib ogʻriyaptimi?','Tirnoq rangi oʻzgarib, qalinlashdimi?','Tirnoq notekis oʻsyaptimi?'];
+SG.forEach((s,i)=>{const d=document.createElement('div'); d.className='glass'; d.id='gc'+i;
+  d.style.cssText+=`left:0;top:${i*180}px;width:1100px;height:150px;display:flex;align-items:center;gap:30px;padding:0 44px;color:#E9FFFF;font-weight:600;font-size:52px;letter-spacing:-.03em`;
+  d.innerHTML=`<span style="flex:none;width:76px;height:76px;border-radius:50%;background:linear-gradient(150deg,#6FF0EE,#00A9A8);display:flex;align-items:center;justify-content:center;box-shadow:0 0 24px rgba(0,230,228,.6)"><svg width="42" height="42" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>${s}`;
+  $('gstack').appendChild(d);});
+function renderGlass(t){
+  $('gstack').style.transform=`rotateX(${L(32,18,eio(P(t,26.2,8)))}deg) translateY(${L(40,-10,eio(P(t,26.2,8)))}px)`;
+  SG.forEach((s,i)=>{const e=$('gc'+i); const a=27.0+i*.9;
+    const ip=eox(P(t,a,1.2)), op=eio(P(t,34.4+i*.06,.7));
+    e.style.opacity=ip*(1-op); e.style.transform=`translate3d(0,${(1-ip)*160 - op*40}px,${(1-ip)*-300 + Math.sin(TAU*(t-a)/4+i)*8}px)`;
+    BL(e,(1-ip)*16+op*16);
+  });
+  [['star',27.4],['star2',28.6]].forEach(([id,a])=>{const e=$(id); const k=back(P(t,a,1.0)); const o=eio(P(t,34.3,.7));
+    e.style.opacity=cl(k)*(1-o); e.style.transform=`scale(${Math.max(0,k)*(1+.12*Math.sin(TAU*t/1.8))}) rotate(${(t-a)*40}deg)`;});
+}
+
+// ---------- S4 flip ----------
+const PAIRS=[[1,'5 kunda natija'],[2,'Brekets bilan toʻgʻrilash'],[3,'Tirnoq parvarishi']];
+$('fcards').innerHTML=PAIRS.map(([n,cap],i)=>`<div id="fc${i}" class="abs" style="left:700px;top:230px;width:520px;height:720px;transform-style:preserve-3d">
+ <div class="face"><img src="ba${n}_before.jpg"><div class="lab" style="background:rgba(20,30,34,.78);color:#fff">OLDIN</div><div class="abs" style="left:0;right:0;bottom:0;padding:26px 30px;background:linear-gradient(transparent,rgba(0,0,0,.55));color:#fff;font-size:36px;font-weight:700">${cap}</div></div>
+ <div class="face" style="transform:rotateY(180deg)"><img src="ba${n}_after.jpg"><div class="lab" style="background:#00C1C0;color:#fff">KEYIN</div><div class="abs" style="left:0;right:0;bottom:0;padding:26px 30px;background:linear-gradient(transparent,rgba(0,60,58,.6));color:#fff;font-size:36px;font-weight:700">${cap}</div></div>
+</div>`).join('');
+const PA=38.3, PD=4.5;
+function renderFlip(t){
+  let act=-1, flipK=0;
+  PAIRS.forEach((p,i)=>{const e=$('fc'+i); const a=PA+i*PD;
+    if(t<a-.01||t>a+PD+.05){e.style.visibility='hidden';return} e.style.visibility='visible';
+    const ip=eox(P(t,a,1.1)), op=eix(P(t,a+PD-.6,.6));
+    const f=eio(P(t,a+1.5,1.3));
+    const x=(1-ip)*900 - op*900, ry=(1-ip)*-55 + op*45 + f*180 + Math.sin(TAU*(t-a)/3.5)*5 - 6, rx=4+Math.sin(TAU*(t-a)/4.2)*3;
+    const lift=Math.sin(Math.PI*f)*-60;
+    e.style.transform=`translate3d(${x}px,${lift}px,${Math.sin(Math.PI*f)*120}px) rotateY(${ry}deg) rotateX(${rx}deg)`;
+    e.style.opacity=ip*(1-op); BL(e,(1-ip)*14+op*14);
+    if(t>a&&t<a+PD){act=i; flipK=f;}
+  });
+  const vis=cl(eox(P(t,38.2,1.0)))*(1-eio(P(t,51.4,.6)));
+  [['labO',1-flipK],['labK',flipK]].forEach(([id,k])=>{const e=$(id); e.style.opacity=vis*(.25+.75*k); e.style.color=k>.5?'#00A9A8':'#1d292d'; e.style.transform=`scale(${.9+.1*k}) translateX(${(1-vis)*(id==='labO'?-60:60)}px)`; BL(e,(1-vis)*14);});
+}
+
+// ---------- S5 grid ----------
+for(let r=0;r<5;r++)for(let c=0;c<7;c++){const d=document.createElement('div'); d.className='tilegrid'; d.id=`g${r}_${c}`;
+  d.style.cssText+=`width:250px;height:160px;left:${(c-3)*290-125}px;top:${(r-2)*200-80}px`;
+  d.innerHTML=`<div style="margin:22px;width:${60+((r*7+c)*37)%90}px;height:14px;border-radius:7px;background:rgba(0,193,192,.35)"></div><div style="margin:0 22px;width:${120+((r*5+c)*53)%80}px;height:10px;border-radius:5px;background:rgba(0,125,121,.15)"></div><div style="margin:12px 22px;width:${80+((r*3+c)*29)%60}px;height:10px;border-radius:5px;background:rgba(0,125,121,.12)"></div>`;
+  $('grid').appendChild(d);}
+function renderGrid(t){
+  const q=P(t,51.8,6.8);
+  $('grid').style.transform=`rotateX(${L(38,22,eio(q))}deg) rotateZ(${L(-8,-3,eio(q))}deg) translateZ(${L(-200,80,eio(q))}px)`;
+  for(let r=0;r<5;r++)for(let c=0;c<7;c++){const e=$(`g${r}_${c}`); const d=Math.hypot(c-3,r-2); const a=52.0+d*.12;
+    const ip=eox(P(t,a,1.0)); e.style.opacity=ip*(.55+.45*cl(1-d/4)); e.style.transform=`translateZ(${(1-ip)*-260 + Math.sin(TAU*t/3+r+c)*14}px)`;}
+  const n=Math.round(14700*eio(P(t,52.6,2.8))); $('cntv').textContent=n.toLocaleString('ru-RU').replace(/ /g,' ')+(n>=14700?'+':'');
+  const cv=eox(P(t,52.4,1.0)); const co=eio(P(t,57.7,.7)); const e=$('cnt'); e.style.opacity=cv*(1-co); e.style.transform=`scale(${.9+.1*cv+co*.15})`; BL(e,(1-cv)*20+co*20);
+}
+
+// ---------- S6 pills ----------
+const PL=[['phone','Qoʻngʻiroq qiling','#00A9A8','#fff'],['tg','Telegram kanalimiz','#fff','#1d292d'],['ig','@podolog_urganch','#fff','#1d292d'],['pin','Xorazm, Urganch','#fff','#1d292d']];
+const PIC={phone:IC.phone.replace('width="64" height="64"','width="40" height="40"'),
+ tg:`<svg width="42" height="42" viewBox="0 0 24 24"><path d="M21.5 3.6 2.9 10.8c-1 .4-1 1.2-.2 1.5l4.7 1.5 1.8 5.6c.2.6.4.8.9.8.4 0 .6-.2.9-.4l2.3-2.2 4.8 3.5c.9.5 1.5.2 1.7-.8l3.1-14.6c.3-1.3-.5-1.9-1.4-1.5z" fill="#00A9A8"/></svg>`,
+ ig:`<svg width="42" height="42" viewBox="0 0 24 24"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5" fill="none" stroke="#00A9A8" stroke-width="2.2"/><circle cx="12" cy="12" r="4.3" fill="none" stroke="#00A9A8" stroke-width="2.2"/><circle cx="17.4" cy="6.6" r="1.3" fill="#00A9A8"/></svg>`,
+ pin:`<svg width="42" height="42" viewBox="0 0 24 24"><path d="M12 22s7-6.3 7-12a7 7 0 1 0-14 0c0 5.7 7 12 7 12z" fill="#00A9A8"/><circle cx="12" cy="10" r="2.6" fill="#fff"/></svg>`};
+$('pills').innerHTML=PL.map(([ic,tx,bg,fg],i)=>`<span id="pl${i}" class="pill" style="margin:0 10px;background:${bg};color:${fg};box-shadow:0 18px 40px rgba(0,110,108,.16);border:2px solid rgba(0,193,192,.18)">${PIC[ic].replace(i===0?'#fff':'@@','#fff')}${tx}</span>`).join('');
+function renderPills(t){
+  PL.forEach((p,i)=>{const e=$('pl'+i); const a=61.6+i*.18; const k=back(P(t,a,.9)); const ip=eox(P(t,a,1.0)); const op=eio(P(t,67.6+i*.05,.6));
+    e.style.display='inline-flex'; e.style.opacity=ip*(1-op); e.style.transform=`translateY(${(1-ip)*50-op*30}px) scale(${Math.max(0,k)*(1-op*.1)})`; BL(e,(1-ip)*12+op*14);});
+  // pulse first pill
+  const e=$('pl0'); if(t>63&&t<67.6){e.style.boxShadow=`0 18px 40px rgba(0,110,108,.2),0 0 0 ${8+8*Math.sin(TAU*(t-63)/1.4)}px rgba(0,193,192,.18)`}
+}
+
+// ---------- scenes ----------
+const SC=[['S1',4.2,12.9],['S2',12.6,26.0],['S3',25.7,35.2],['S4',34.9,52.0],['S5',52.0,58.5],['S6',58.2,68.4]];
+function sceneT(id,t,a,b){
+  const e=$(id); if(t<a||t>b){e.style.display='none';return false}
+  e.style.display='';
+  const ip=eox(P(t,a,1.0)), op=eix(P(t,b-.75,.75)), q=P(t,a,b-a);
+  e.style.opacity=Math.min(1,ip*1.2)*(1-op);
+  e.style.transform=`scale(${(.93+.07*ip)*(1+.035*ess(q))*(1+op*.12)})`;
+  BL(e,(1-ip)*14+op*18);
+  return true;
+}
+
+function renderMain(t,rt){
+  const w=TAU*rt/TT;
+  $('bgb1').style.transform=`translate(${-150+Math.sin(w)*200}px,${-300+Math.cos(w)*140}px)`;
+  $('bgb2').style.transform=`translate(${1250+Math.cos(w*2)*160}px,${520+Math.sin(w)*120}px)`;
+  // dark mode window
+  const dk=eio(P(t,25.6,.9))*(1-eio(P(t,34.8,.9)));
+  $('dark').style.opacity=dk;
+  $('foot').style.color=dk>.5?'rgba(200,245,244,.7)':'#6b7c82';
+  $('miniw').style.color=dk>.5?'#E9FFFF':'#3d4a52';
+  const mv=eox(P(t,4.4,1))*(1-eio(P(t,67.8,.7))); $('mini').style.opacity=mv; $('foot').style.opacity=mv;
+  $('mini').style.transform=`translateY(${(1-mv)*-20}px)`;
+
+  renderLogo(t);
+  SC.forEach(([id,a,b])=>sceneT(id,t,a,b));
+  // S1
+  line('l1',t,4.5,8.6,{exit:'left'});
+  line('l2',t,8.5,12.8,{exit:'zoom'});
+  // S2
+  if(t>12.5&&t<26.1){renderTunnel(t);}
+  line('l3',t,13.3,17.6,{exit:'left'});
+  line('l4',t,17.5,21.8,{exit:'left'});
+  line('l5',t,21.7,25.9,{exit:'zoom'});
+  // S3
+  if(t>25.6&&t<35.3) renderGlass(t);
+  line('l6',t,26.2,35.0,{});
+  line('l7',t,31.0,35.0,{});
+  $('l6').style.color='#E9FFFF'; $('l7').style.color='#E9FFFF';
+  // S4
+  line('l8',t,35.2,38.0,{exit:'up',dout:.6});
+  line('l8b',t,37.8,51.9,{gap:.06});
+  if(t>34.8&&t<52.1) renderFlip(t);
+  // S5
+  if(t>51.6&&t<58.6) renderGrid(t);
+  line('l9',t,53.2,58.4,{gap:.12});
+  // S6
+  line('l10',t,58.6,68.2,{});
+  line('l11',t,59.4,68.2,{gap:.16,din:1.2});
+  if(t>58&&t<68.5) renderPills(t);
+}
+
+mkLine('m1','SM',['Mehr'],360,124,[60,560,'right']);
+mkLine('m2','SM',['*ulashamiz'],500,124,[60,560,'right']);
+mkLine('m3','SM',['Muruvvat','uyiga'],390,78,[1300,600,'left']);
+mkLine('m4','SM',['*tashrifimiz'],485,110,[1300,600,'left']);
+mkLine('m5','SM',['Podo','Master','jamoasi'],640,56,[1300,600,'left']);
+const VS=[$('vb'),$('vf')];
+function seekAll(vt){
+  return Promise.all(VS.map(v=>new Promise(res=>{
+    const go=()=>{ if(Math.abs(v.currentTime-vt)<0.001 && v.readyState>=2){res();return}
+      const h=()=>{v.removeEventListener('seeked',h);res()}; v.addEventListener('seeked',h); v.currentTime=vt; };
+    if(v.readyState>=1) go(); else v.addEventListener('loadedmetadata',go,{once:true});
+  })));
+}
+window.vidReady=Promise.resolve();
+function renderSM(t){
+  const on=t>=52.0&&t<74.0; const e=$('SM');
+  if(!on){e.style.display='none';return 0}
+  e.style.display='';
+  const ip=eox(P(t,52.0,1.0)), op=eix(P(t,73.25,.75));
+  e.style.opacity=Math.min(1,ip*1.2)*(1-op); e.style.transform=`scale(${(.93+.07*ip)*(1+op*.12)})`; BL(e,(1-ip)*14+op*18);
+  const pe=eox(P(t,52.1,1.4));
+  $('ph').style.transform=`translateY(${(1-pe)*260}px) rotateX(${(1-pe)*28}deg) rotateY(${Math.sin(TAU*(t-52)/7)*5}deg) scale(${.9+.1*pe})`;
+  line('m1',t,52.9,73.4,{});
+  line('m2',t,53.2,73.4,{});
+  line('m3',t,53.5,73.4,{});
+  line('m4',t,53.9,73.4,{});
+  line('m5',t,54.6,73.4,{gap:.1});
+  const vt=Math.min(19.7,Math.max(0,t-52.7));
+  window.vidReady=seekAll(vt);
+  return Math.min(1,ip*1.2)*(1-op);
+}
+function render(t){
+  t=((t%TT)+TT)%TT;
+  const mt= t<52 ? t : (t<74 ? 52.0 : t-22);
+  renderMain(mt,t);
+  const sv=renderSM(t);
+  if(sv>0){ $('foot').style.opacity=(1-sv)*parseFloat($('foot').style.opacity||1); }
+}
+window.render=render; render(0);
+</script></body></html>

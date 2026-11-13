@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1920px;height:1080px;overflow:hidden;background:#F5FBFB;font-family:"Inter Display","Inter",sans-serif;color:#2c3a40}
+#stage{position:absolute;inset:0;overflow:hidden}
+.abs{position:absolute}
+.blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:.55}
+.scene{position:absolute;inset:0}
+.lead{font-weight:600;font-size:64px;letter-spacing:-.03em;color:#2c3a40}
+.key{font-weight:800;font-size:170px;letter-spacing:-.05em;color:#00B3B2;text-shadow:0 0 40px rgba(0,193,192,.35)}
+.tail{font-weight:600;font-size:56px;letter-spacing:-.02em;color:#5b6b72}
+.pill{display:inline-flex;align-items:center;gap:18px;border-radius:999px;padding:18px 34px;font-weight:700}
+.card{position:absolute;background:rgba(255,255,255,.82);border-radius:44px;box-shadow:0 30px 80px rgba(0,110,108,.14),0 2px 0 rgba(255,255,255,.9) inset;border:2px solid rgba(0,193,192,.18)}
+.wm{font-weight:700;letter-spacing:.06em;color:#3d4a52;white-space:nowrap}
+.wm span{display:inline-block}
+.sub{font-weight:600;letter-spacing:.34em;color:#6f8088;white-space:nowrap}
+.dk{top:21px;width:108px;height:108px;border-radius:50%;background:#2c3d43;display:flex;align-items:center;justify-content:center}
+.bacard{position:absolute;left:760px;top:150px;width:1000px;height:760px;border-radius:48px;overflow:hidden;box-shadow:0 50px 120px rgba(0,80,78,.3);background:#cfdede}
+.bacard img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.lab{position:absolute;top:30px;padding:12px 26px;border-radius:999px;font-size:32px;font-weight:800;letter-spacing:.12em}
+</style></head>
+<body><div id="stage">
+ <!-- background -->
+ <div id="bg" class="abs" style="inset:0;background:linear-gradient(135deg,#FAFEFE 0%,#E9F8F8 55%,#DDF4F4 100%)"></div>
+ <div id="b1" class="blob" style="width:900px;height:900px;background:#7FE3E2"></div>
+ <div id="b2" class="blob" style="width:700px;height:700px;background:#B9EFEF"></div>
+ <div id="b3" class="blob" style="width:600px;height:600px;background:#00C1C0;opacity:.18"></div>
+ <svg id="waves" class="abs" width="1920" height="1080" style="inset:0;opacity:.5">
+  <path id="w1" fill="none" stroke="#00C1C0" stroke-opacity=".25" stroke-width="2"/>
+  <path id="w2" fill="none" stroke="#00C1C0" stroke-opacity=".15" stroke-width="2"/>
+  <path id="w3" fill="none" stroke="#007D79" stroke-opacity=".10" stroke-width="2"/>
+ </svg>
+ <div id="dots" class="abs" style="inset:0;background-image:radial-gradient(rgba(0,125,121,.12) 2px,transparent 2.5px);background-size:48px 48px;opacity:.5"></div>
+
+ <!-- LOGO (centre / corner) -->
+ <div id="logo" class="abs" style="left:0;top:0;width:900px;height:640px;transform-origin:0 0">
+  <div id="lring" class="abs" style="left:290px;top:-10px;width:320px;height:320px;border-radius:50%;border:3px solid rgba(0,193,192,.0)"></div>
+  <svg id="foot" class="abs" style="left:345px;top:20px" width="210" height="270" viewBox="0 0 200 260">
+   <defs><linearGradient id="fg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#2FD6D4"/><stop offset="1" stop-color="#007D79"/></linearGradient>
+   <filter id="fglow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+   <g id="toes" fill="url(#fg)">
+    <ellipse id="t0" cx="58" cy="62" rx="9" ry="10"/>
+    <ellipse id="t1" cx="74" cy="44" rx="10.5" ry="11.5"/>
+    <ellipse id="t2" cx="96" cy="33" rx="12" ry="13"/>
+    <ellipse id="t3" cx="121" cy="29" rx="13" ry="14"/>
+    <ellipse id="t4" cx="152" cy="40" rx="19" ry="22"/>
+   </g>
+   <path id="sole" d="M150 82 C 182 112, 160 140, 128 158 C 98 175, 84 200, 98 224 C 110 244, 140 240, 146 220" fill="none" stroke="url(#fg)" stroke-width="30" stroke-linecap="round"/>
+  </svg>
+  <div id="wmrow" class="abs" style="left:0;top:315px;width:900px;text-align:center">
+   <div id="wm" class="wm" style="font-size:96px"></div>
+  </div>
+  <div id="lline" class="abs" style="left:250px;top:440px;width:400px;height:5px;border-radius:5px;background:linear-gradient(90deg,transparent,#00C1C0,transparent)"></div>
+  <div id="lsub" class="abs sub" style="left:0;top:468px;width:900px;text-align:center;font-size:30px">ПЕДИКЮРА И ПОДОЛОГИИ</div>
+  <div id="lsweep" class="abs" style="left:0;top:0;width:900px;height:520px;overflow:hidden;mix-blend-mode:screen">
+   <div id="sw" class="abs" style="top:-200px;width:160px;height:1000px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.95),transparent);transform:rotate(18deg)"></div>
+  </div>
+ </div>
+
+ <!-- S1 tagline under logo -->
+ <div id="s1tag" class="abs" style="left:0;top:820px;width:1920px;text-align:center">
+  <div class="pill" style="background:#007D79;color:#fff;font-size:38px;font-weight:600;letter-spacing:.01em">Podologiya &nbsp;•&nbsp; Tibbiy manikyur &nbsp;•&nbsp; Pedikyur</div>
+ </div>
+
+ <!-- S2 -->
+ <div id="s2" class="scene">
+  <div id="s2a" class="abs lead" style="left:220px;top:300px;font-size:84px">Oyoq va tirnoq</div>
+  <div id="s2b" class="abs key" style="left:208px;top:395px;font-size:190px">SALOMATLIGI</div>
+  <div id="s2c" class="abs tail" style="left:220px;top:640px;font-size:68px">mutaxassis qoʻlida</div>
+  <div id="s2d" class="abs" style="left:220px;top:770px"><div class="pill" style="background:#fff;color:#007D79;font-size:40px;box-shadow:0 14px 40px rgba(0,125,121,.15)"><svg width="40" height="40" viewBox="0 0 24 24"><path d="M12 22s7-6.3 7-12a7 7 0 1 0-14 0c0 5.7 7 12 7 12z" fill="#00C1C0"/><circle cx="12" cy="10" r="2.6" fill="#fff"/></svg>PODOLOG · Xorazm, Urganch</div></div>
+  <svg id="s2trail" class="abs" width="1920" height="1080" style="inset:0">
+   <defs><filter id="tg" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="9"/></filter></defs>
+   <path id="tr1g" d="M-50 1010 C 500 990, 900 960, 1250 880 S 1720 620, 1640 330 S 1330 260, 1430 520 S 1800 660, 1990 560" fill="none" stroke="#00C1C0" stroke-width="22" stroke-linecap="round" filter="url(#tg)" opacity=".7"/>
+   <path id="tr1" d="M-50 1010 C 500 990, 900 960, 1250 880 S 1720 620, 1640 330 S 1330 260, 1430 520 S 1800 660, 1990 560" fill="none" stroke="#E0F7F7" stroke-width="6" stroke-linecap="round"/>
+  </svg>
+  <svg id="s2foot" class="abs" style="left:1440px;top:230px" width="400" height="520" viewBox="0 0 200 260">
+   <path d="M150 82 C 182 112, 160 140, 128 158 C 98 175, 84 200, 98 224 C 110 244, 140 240, 146 220" fill="none" stroke="#00C1C0" stroke-opacity=".18" stroke-width="30" stroke-linecap="round"/>
+   <g fill="#00C1C0" fill-opacity=".18"><ellipse cx="58" cy="62" rx="9" ry="10"/><ellipse cx="74" cy="44" rx="10.5" ry="11.5"/><ellipse cx="96" cy="33" rx="12" ry="13"/><ellipse cx="121" cy="29" rx="13" ry="14"/><ellipse cx="152" cy="40" rx="19" ry="22"/></g>
+  </svg>
+ </div>
+
+ <!-- S3 services -->
+ <div id="s3" class="scene">
+  <div id="s3h" class="abs" style="left:160px;top:110px"><div class="pill" style="background:#E0F7F7;color:#007D79;font-size:40px;border:2px solid rgba(0,193,192,.35)">Xizmatlarimiz</div></div>
+  <div id="s3prog" class="abs" style="left:160px;top:900px;width:600px;height:8px;border-radius:8px;background:rgba(0,125,121,.12)"><div id="s3bar" style="height:100%;width:0;border-radius:8px;background:#00C1C0"></div></div>
+ </div>
+
+ <!-- S4 signs -->
+ <div id="s4" class="scene">
+  <div id="s4a" class="abs lead" style="left:160px;top:150px;font-size:76px">Sizda shu belgilar bormi?</div>
+  <div id="s4list"></div>
+  <div id="s4cta" class="abs" style="left:160px;top:820px"><div class="pill" style="background:#00C1C0;color:#fff;font-size:50px;padding:24px 44px;box-shadow:0 20px 50px rgba(0,193,192,.35)">Podologga murojaat qiling →</div></div>
+ </div>
+
+ <!-- S5 counter -->
+ <div id="s5" class="scene">
+  <div id="s5ring" class="abs" style="left:660px;top:240px;width:600px;height:600px;border-radius:50%"></div>
+  <div id="s5num" class="abs key" style="left:0;top:330px;width:1920px;text-align:center;font-size:230px">0</div>
+  <div id="s5lab" class="abs lead" style="left:0;top:610px;width:1920px;text-align:center;font-size:68px">obunachi bizga ishonadi</div>
+  <div id="s5ig" class="abs" style="left:0;top:740px;width:1920px;text-align:center"><div class="pill" style="background:#fff;color:#2c3a40;font-size:42px;box-shadow:0 14px 40px rgba(0,125,121,.15)">
+   <svg width="44" height="44" viewBox="0 0 24 24"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5" fill="none" stroke="#00A9A8" stroke-width="2.2"/><circle cx="12" cy="12" r="4.3" fill="none" stroke="#00A9A8" stroke-width="2.2"/><circle cx="17.4" cy="6.6" r="1.3" fill="#00A9A8"/></svg>@podolog_urganch</div></div>
+ </div>
+
+ <!-- S6 contacts -->
+ <div id="s6" class="scene">
+  <div id="s6a" class="abs lead" style="left:160px;top:150px;font-size:80px">Qabulga yoziling</div>
+  <div id="s6card" class="card" style="left:160px;top:300px;width:1600px;height:300px">
+   <div class="abs" style="left:60px;top:60px;width:180px;height:180px;border-radius:50%;background:#00C1C0;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 14px rgba(0,193,192,.15)">
+    <svg id="s6ph" width="96" height="96" viewBox="0 0 24 24"><path d="M6.6 10.8a15.2 15.2 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z" fill="#fff"/></svg>
+   </div>
+   <div class="abs tail" style="left:300px;top:62px;font-size:40px;color:#6f8088">Telefon</div>
+   <div id="s6num" class="abs" style="left:296px;top:110px;font-size:120px;font-weight:800;letter-spacing:-.03em;color:#2c3a40;white-space:nowrap"></div>
+  </div>
+  <div id="s6tg" class="card" style="left:160px;top:650px;width:770px;height:200px">
+   <div class="abs" style="left:46px;top:46px;width:108px;height:108px;border-radius:50%;background:#E0F7F7;display:flex;align-items:center;justify-content:center"><svg width="58" height="58" viewBox="0 0 24 24"><path d="M21.5 3.6 2.9 10.8c-1 .4-1 1.2-.2 1.5l4.7 1.5 1.8 5.6c.2.6.4.8.9.8.4 0 .6-.2.9-.4l2.3-2.2 4.8 3.5c.9.5 1.5.2 1.7-.8l3.1-14.6c.3-1.3-.5-1.9-1.4-1.5zM8.3 13.4l9.6-6.1c.5-.3.9-.1.5.2l-8 7.3-.3 3.4z" fill="#00A9A8"/></svg></div>
+   <div class="abs tail" style="left:190px;top:48px;font-size:36px;color:#6f8088">Telegram</div>
+   <div class="abs" style="left:190px;top:92px;font-size:54px;font-weight:700;color:#2c3a40">Kanalimizga qoʻshiling</div>
+  </div>
+  <div id="s6ig" class="card" style="left:990px;top:650px;width:770px;height:200px">
+   <div class="abs" style="left:46px;top:46px;width:108px;height:108px;border-radius:50%;background:#E0F7F7;display:flex;align-items:center;justify-content:center"><svg width="58" height="58" viewBox="0 0 24 24"><rect x="2.5" y="2.5" width="19" height="19" rx="5.5" fill="none" stroke="#00A9A8" stroke-width="2.2"/><circle cx="12" cy="12" r="4.3" fill="none" stroke="#00A9A8" stroke-width="2.2"/><circle cx="17.4" cy="6.6" r="1.3" fill="#00A9A8"/></svg></div>
+   <div class="abs tail" style="left:190px;top:48px;font-size:36px;color:#6f8088">Instagram</div>
+   <div class="abs" style="left:190px;top:92px;font-size:54px;font-weight:700;color:#2c3a40">@podolog_urganch</div>
+  </div>
+  <div id="s6loc" class="abs" style="left:160px;top:900px"><div class="pill" style="background:#007D79;color:#fff;font-size:38px"><svg width="38" height="38" viewBox="0 0 24 24"><path d="M12 22s7-6.3 7-12a7 7 0 1 0-14 0c0 5.7 7 12 7 12z" fill="#fff"/><circle cx="12" cy="10" r="2.6" fill="#007D79"/></svg>Xorazm, Urganch shahri</div></div>
+ </div>
+
+ <!-- persistent bottom bar -->
+ <div id="bar" class="abs" style="left:60px;top:968px"><div class="pill" style="background:rgba(255,255,255,.9);color:#2c3a40;font-size:34px;padding:14px 30px;box-shadow:0 10px 30px rgba(0,125,121,.12)">
+  <svg width="34" height="34" viewBox="0 0 24 24"><path d="M6.6 10.8a15.2 15.2 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z" fill="#00A9A8"/></svg>
+  <b>+998 50 103 40 45</b><span style="color:#9aa8ae">|</span><span style="color:#007D79;font-weight:600">@podolog_urganch</span></div></div>
+
+
+ <!-- IXLOS scene -->
+ <div id="ix" class="scene">
+  <div id="ixtxt" class="abs" style="left:1010px;top:300px">
+   <div id="ixa" class="lead" style="font-size:66px">Sizni mutaxassisimiz</div>
+   <div id="ixb" class="key" style="font-size:230px;line-height:1.0;transform-origin:0 50%">Ixlos</div>
+   <div id="ixc" class="tail" style="font-size:56px;margin-top:10px">kutib oladi</div>
+   <div id="ixd" style="margin-top:44px"><div class="pill" style="background:#00C1C0;color:#fff;font-size:40px">Podolog · Podo Master</div></div>
+  </div>
+  <div id="ixcard" class="abs" style="left:0;top:0;width:620px;height:866px;transform-origin:50% 50%">
+   <div id="ixbg" class="abs" style="left:0;top:210px;width:620px;height:656px;border-radius:48px;overflow:hidden;background:radial-gradient(circle at 30% 20%,#4BE6E4,#00B3B2 55%,#007D79);box-shadow:0 50px 120px rgba(0,80,78,.35)">
+    <div class="abs" style="left:-120px;top:-120px;width:520px;height:520px;border-radius:50%;border:3px solid rgba(255,255,255,.25)"></div>
+    <div class="abs" style="left:300px;top:260px;width:520px;height:520px;border-radius:50%;border:3px solid rgba(255,255,255,.18)"></div>
+    <div class="abs" style="inset:0;background-image:radial-gradient(rgba(255,255,255,.18) 2px,transparent 2.5px);background-size:36px 36px"></div>
+   </div>
+   <img id="ixp" src="ixlos_cut.png" class="abs" style="left:-45px;top:31px;width:700px;height:835px;filter:drop-shadow(0 20px 30px rgba(0,60,60,.3))">
+   <div class="abs" style="left:0;top:666px;width:620px;height:200px;border-radius:0 0 48px 48px;background:linear-gradient(transparent,rgba(0,60,58,.75))"></div>
+   <div id="ixcap" class="abs" style="left:44px;bottom:40px;color:#fff">
+    <div style="font-size:60px;font-weight:800;letter-spacing:-.03em">Ixlos</div>
+    <div style="font-size:30px;font-weight:600;letter-spacing:.18em;color:#B9FFFE">PODOLOG</div>
+   </div>
+  </div>
+  <div id="dock" class="abs" style="left:610px;top:730px;width:700px;height:150px;border-radius:999px;background:#1d2b30;box-shadow:0 30px 70px rgba(0,40,40,.35)">
+   <div id="dk0" class="abs dk" style="left:40px"></div><div id="dk1" class="abs dk" style="left:205px"></div><div id="dk2" class="abs dk" style="left:370px"></div>
+   <div id="dk3" class="abs" style="left:535px;top:21px;width:108px;height:108px;border-radius:50%;overflow:hidden;border:4px solid #00C1C0"><img src="ixlos_av.jpg" style="width:100%;height:100%"></div>
+  </div>
+ </div>
+
+ <!-- BEFORE / AFTER -->
+ <div id="ba" class="scene">
+  <div id="bah" class="abs" style="left:160px;top:110px"><div class="pill" style="background:#E0F7F7;color:#007D79;font-size:40px;border:2px solid rgba(0,193,192,.35)">Oldin / Keyin</div></div>
+  <div id="bat" class="abs lead" style="left:160px;top:200px;font-size:84px;line-height:1.05">Bizning<br><span style="color:#00B3B2;font-weight:800">natijalar</span></div>
+  <div id="badots" class="abs" style="left:166px;top:420px;display:flex;gap:16px"></div>
+  <div id="bawrap"></div>
+ </div>
+
+ <!-- cursor -->
+ <svg id="cur" class="abs" width="64" height="64" viewBox="0 0 32 32" style="left:0;top:0;opacity:0;filter:drop-shadow(0 6px 8px rgba(0,0,0,.25))">
+  <path id="curA" d="M6 3 L6 25 L11.5 19.5 L15.5 28 L19 26.5 L15 18.2 L23 18.2 Z" fill="#111" stroke="#fff" stroke-width="2" stroke-linejoin="round"/>
+  <g id="curH" style="display:none"><path d="M3 16 h26 M3 16 l5 -5 M3 16 l5 5 M29 16 l-5 -5 M29 16 l-5 5" stroke="#fff" stroke-width="5" stroke-linecap="round" fill="none"/><path d="M3 16 h26 M3 16 l5 -5 M3 16 l5 5 M29 16 l-5 -5 M29 16 l-5 5" stroke="#111" stroke-width="2.4" stroke-linecap="round" fill="none"/></g>
+ </svg>
+ <div id="ripple" class="abs" style="width:120px;height:120px;border-radius:50%;border:5px solid #00C1C0;opacity:0"></div>
+ <!-- global light leak for transitions -->
+ <div id="leak" class="abs" style="inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(255,255,255,.95),rgba(224,247,247,.6) 40%,transparent 75%);opacity:0;pointer-events:none"></div>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const cl=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+const P=(t,a,d)=>cl((t-a)/d);
+const eo=x=>1-Math.pow(1-x,3);
+const eio=x=>x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;
+const ess=x=>x*x*x*(x*(x*6-15)+10); // smootherstep
+const back=x=>{const c1=1.25,c3=c1+1;return 1+c3*Math.pow(x-1,3)+c1*Math.pow(x-1,2)};
+const L=(a,b,x)=>a+(b-a)*x;
+const T=60, TT=75; const TAU=Math.PI*2;
+
+// visible window helper: returns {o,y,b} for element visible a..b
+function win(t,a,b,din=1.0,dout=.8){
+  const i=eo(P(t,a,din)), o=ess(P(t,b-dout,dout));
+  return {i,o,v:i*(1-o)};
+}
+const eox=x=>x>=1?1:1-Math.pow(2,-10*x);
+const eix=x=>x<=0?0:Math.pow(2,10*x-10);
+function showSplit(el,t,a,b,opt){
+  const din=opt.din||1.3,dout=opt.dout||.8,mode=el.dataset.split;
+  const ch=el._parts, n=ch.length;
+  const st=opt.st??(mode==='w'?0.09:0.045);
+  const vis=t>a-0.01&&t<b+0.2;
+  if(!vis){el.style.visibility='hidden';return 0}
+  el.style.visibility='visible';el.style.opacity=1;el.style.filter='none';el.style.transform='none';
+  let mx=0;
+  ch.forEach((c,i)=>{
+    const ip=eox(P(t,a+i*st,din)), op=eix(P(t,b-dout+i*st*.4,dout));
+    const v=ip*(1-op); mx=Math.max(mx,v);
+    let y=(1-ip)*(opt.dy??46) - op*30, x=0, r=0, sc=1;
+    if(mode==='l'){ x=(1-ip)*(i-(n-1)/2)*38 + op*(i-(n-1)/2)*20; }
+    if(mode==='arc'){ const k=1-ip; r=k*(-70+ (i/(n-1))*140); x=k*(i-(n-1)/2)*60; y=k*(140*Math.cos((i/(n-1)-.5)*2))-op*30; sc=1-k*.35; }
+    c.style.opacity=v;
+    c.style.transform=`translate(${x}px,${y}px) rotate(${r}deg) scale(${sc})`;
+    const bl=(1-ip)*(opt.blur??18)+op*14;
+    c.style.filter=bl>.3?`blur(${bl}px)`:'none';
+  });
+  return mx;
+}
+function show(el,t,a,b,opt={}){
+  if(el.dataset&&el.dataset.split) return showSplit(el,t,a,b,opt);
+  const din=(opt.din||1.0)*1.25,dout=opt.dout||.8,dy=opt.dy??40,blur=opt.blur??14,sc=opt.sc||0,dx=opt.dx||0;
+  const i=eox(P(t,a,din)*1.0), o=eix(P(t,b-dout,dout));
+  const v=i*(1-o);
+  if(v<=0.001){el.style.opacity=0;el.style.visibility='hidden';return 0}
+  el.style.visibility='visible';
+  el.style.opacity=v;
+  const y=(1-i)*dy - o*dy*.5, x=(1-i)*dx;
+  const s=1+(sc?((1-i)*-sc + o*sc*.5):0);
+  el.style.transform=`translate(${x}px,${y}px) scale(${s})`;
+  const bl=(1-i)*blur+o*blur;
+  el.style.filter=bl>0.2?`blur(${bl}px)`:'none';
+  return v;
+}
+
+// wordmark letters
+const WM='PODO MASTER';
+$('wm').innerHTML=[...WM].map((c,i)=>`<span id="wl${i}" style="${i>=5?'color:#00A9A8':''}">${c===' '?'&nbsp;':c}</span>`).join('');
+
+// services
+const SV=[
+ {n:'01',t:'Tirnoq kasalliklarini<br>davolash',d:'Tirnoq ichiga oʻsishi, zamburugʻ,<br>qalinlashish va boshqa muammolar',ic:'foot'},
+ {n:'02',t:'Tibbiy manikyur<br>va pedikyur',d:'Toza, ehtiyotkor va<br>professional parvarish',ic:'nail'},
+ {n:'03',t:'Brekets tizimlari<br>va protez tirnoq',d:'Nit tizimi bilan tirnoq shaklini<br>toʻgʻrilash va tiklash',ic:'brace'},
+];
+const ICONS={
+ foot:`<g fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"><path class="dr" d="M118 70 C 150 100, 130 125, 104 140 C 78 155, 66 178, 78 200 C 88 218, 114 214, 118 196"/></g><g fill="#fff"><circle class="pp" cx="44" cy="62" r="8"/><circle class="pp" cx="58" cy="46" r="9"/><circle class="pp" cx="77" cy="36" r="10"/><circle class="pp" cx="98" cy="32" r="11"/><circle class="pp" cx="124" cy="42" r="15"/></g><g stroke="#fff" stroke-width="9" stroke-linecap="round"><path class="dr" d="M160 130 v40 M140 150 h40"/></g>`,
+ nail:`<g fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"><path class="dr" d="M70 200 V 110 C 70 70, 130 70, 130 110 V 200"/><path class="dr" d="M70 140 C 85 150, 115 150, 130 140"/><path class="dr" d="M150 60 l 30 -30 M160 80 l 26 -10 M140 46 l 8 -24"/></g>`,
+ brace:`<g fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"><path class="dr" d="M62 205 V 120 C 62 72, 138 72, 138 120 V 205"/><path class="dr" d="M40 118 C 70 96, 130 96, 160 118"/></g><g fill="#fff"><circle class="pp" cx="40" cy="118" r="11"/><circle class="pp" cx="160" cy="118" r="11"/><circle class="pp" cx="100" cy="101" r="8"/></g>`
+};
+let h='';
+SV.forEach((s,i)=>{h+=`<div id="sv${i}" class="abs" style="left:0;top:0;width:1920px;height:1080px">
+ <div id="svc${i}" class="abs" style="left:160px;top:250px;width:520px;height:520px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#3BE0DE,#00A9A8 60%,#007D79);box-shadow:0 40px 90px rgba(0,125,121,.35)">
+  <div id="svr${i}" class="abs" style="inset:-34px;border-radius:50%;border:3px solid rgba(0,193,192,.45)"></div>
+  <svg class="abs" style="left:85px;top:80px" width="350" height="350" viewBox="0 0 200 230">${ICONS[s.ic]}</svg>
+ </div>
+ <div id="svn${i}" class="abs" style="left:800px;top:250px"><div class="pill" style="background:#00C1C0;color:#fff;font-size:40px;padding:14px 32px">${s.n} / 03</div></div>
+ <div id="svt${i}" class="abs" style="left:800px;top:350px;font-size:104px;font-weight:800;letter-spacing:-.04em;line-height:1.02;color:#2c3a40">${s.t}</div>
+ <div id="svd${i}" class="abs tail" style="left:804px;top:600px;font-size:50px;line-height:1.3">${s.d}</div>
+</div>`});
+$('s3').insertAdjacentHTML('beforeend',h);
+
+const SIGNS=['Tirnoq teriga botib, ogʻriyaptimi?','Tirnoq rangi oʻzgarib, qalinlashdimi?','Tirnoq shakli notekis oʻsyaptimi?'];
+$('s4list').innerHTML=SIGNS.map((s,i)=>`<div id="sg${i}" class="card" style="left:160px;top:${300+i*165}px;width:1400px;height:135px">
+ <svg class="abs" style="left:34px;top:24px" width="88" height="88" viewBox="0 0 88 88"><circle cx="44" cy="44" r="40" fill="#E0F7F7"/><path id="ck${i}" d="M26 45 l12 12 l24 -26" fill="none" stroke="#00A9A8" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1"/></svg>
+ <div class="abs" style="left:150px;top:34px;font-size:56px;font-weight:700;letter-spacing:-.02em;color:#2c3a40">${s}</div></div>`).join('');
+
+// prep path lengths
+document.querySelectorAll('.dr').forEach(p=>{p.setAttribute('pathLength','1');p.style.strokeDasharray='1';});
+['sole','tr1','tr1g'].forEach(id=>{$(id).setAttribute('pathLength','1');$(id).style.strokeDasharray='1';});
+
+const PHONE='+998 50 103 40 45';
+
+// logo placement: centre vs corner
+const LC={x:510,y:150,s:1};          // centre (900 wide box → 510 left)
+const LK={x:1655,y:905,s:.26};        // corner bug
+function setLogo(t){
+  // m: 0 = centre, 1 = corner
+  let m;
+  if(t<5.2) m=0; else if(t<7.0) m=eio(P(t,5.2,1.8)); else if(t<55.4) m=1; else m=1-eio(P(t,55.4,2.0));
+  const x=L(LC.x,LK.x,m), y=L(LC.y,LK.y,m), s=L(LC.s,LK.s,m);
+  // gentle float at centre
+  const fl=(1-m)*Math.sin(TAU*t/6)*6;
+  $('logo').style.transform=`translate(${x}px,${y+fl}px) scale(${s})`;
+  // corner: show only foot+wordmark; hide subline/line partially
+  $('lsub').style.opacity=1-cl(m*2);
+  $('lline').style.opacity=1-cl(m*2);
+  // sweep: at t 1.0-2.6 and 57.6-59.2? (keep loop identical at 0/60) -> sweep at 1.2..2.8
+  const sp=P(t,1.2,1.6), sp2=P(t,57.4,1.6);
+  const s1=(sp>0&&sp<1)?sp:((sp2>0&&sp2<1)?sp2:-1);
+  $('sw').style.left=(s1<0?-400:L(-300,1100,ess(s1)))+'px';
+  // ring pulse
+  const rp=P(t,0.3,2.2), rp2=P(t,56.6,2.2);
+  const r=(rp>0&&rp<1)?rp:((rp2>0&&rp2<1)?rp2:0);
+  $('lring').style.borderColor=`rgba(0,193,192,${r>0?(1-r)*.6:0})`;
+  $('lring').style.transform=`scale(${1+r*.8})`;
+  // letters: re-rise at end 56.2..58 ; at start already in place
+  const lr=P(t,55.8,1.8);
+  [...WM].forEach((c,i)=>{const e=$('wl'+i); if(!e)return;
+    const q=t>55.0? eo(cl(lr*1.8-i*.08)) : 1;
+    const out= t>54.6&&t<55.8 ? 1-ess(P(t,54.6,.8)):1;
+    const vv= t>55.6? q : out;
+    e.style.opacity=vv; e.style.transform=`translateY(${(1-vv)*30}px)`;
+  });
+  // toes / sole: pop again at end
+  const tp=P(t,56.0,1.4);
+  for(let i=0;i<5;i++){const e=$('t'+i);
+    let k=1; if(t>54.6&&t<55.8) k=1-ess(P(t,54.6,.8)); if(t>=55.8) k=back(cl(tp*1.6-i*.12));
+    e.style.transformBox='fill-box';e.style.transformOrigin='center';e.style.transform=`scale(${Math.max(0,k)})`;
+  }
+  let so=0; if(t>54.6&&t<55.8) so=ess(P(t,54.6,.8)); if(t>=55.8) so=1-eio(P(t,56.2,1.4));
+  $('sole').style.strokeDashoffset=so;
+  $('logo').style.opacity= (t>54.6&&t<55.8)? 1-0.0 : 1;
+}
+
+function renderOld(t,rt){
+  // background drift (loop-safe)
+  const w=TAU*rt/TT;
+  $('b1').style.transform=`translate(${-200+Math.sin(w)*160}px,${-250+Math.cos(w)*120}px)`;
+  $('b2').style.transform=`translate(${1300+Math.cos(w*2)*140}px,${450+Math.sin(w)*120}px)`;
+  $('b3').style.transform=`translate(${800+Math.sin(w*3)*220}px,${600+Math.cos(w*2)*90}px)`;
+  const wv=(ph,amp,y0)=>{let d=`M-20 ${y0}`;for(let x=0;x<=1960;x+=40){d+=` L${x} ${(y0+Math.sin(x/260+ph)*amp+Math.sin(x/97-ph*2)*amp*.25).toFixed(1)}`}return d};
+  $('w1').setAttribute('d',wv(w*2,40,860));$('w2').setAttribute('d',wv(-w*3+1,55,900));$('w3').setAttribute('d',wv(w*1+2,30,940));
+  $('dots').style.backgroundPosition=`${(rt/TT)*48*4}px ${(rt/TT)*48*2}px`;
+
+  setLogo(t);
+  show($('s1tag'),t,-1,5.4,{din:.01,dout:.9});
+  if(t<0.0001) $('s1tag').style.opacity=1;
+  // tagline also present at loop end
+  if(t>57.6){const v=eo(P(t,57.6,1.0));const e=$('s1tag');e.style.visibility='visible';e.style.opacity=v;e.style.transform=`translateY(${(1-v)*40}px)`;e.style.filter=v<1?`blur(${(1-v)*14}px)`:'none'}
+
+  // S2 7.0 - 14.2
+  show($('s2a'),t,7.2,14.0,{din:1.0});
+  show($('s2b'),t,7.6,14.0,{din:1.5,st:.05,blur:16});
+  show($('s2c'),t,8.5,14.0);
+  show($('s2d'),t,9.2,14.0,{dx:-60,dy:0});
+  { const p=P(t,7.0,3.2); const o=P(t,12.6,1.4);
+    const dash=eio(p), off=eio(o);
+    ['tr1','tr1g'].forEach(id=>{const e=$(id); e.style.strokeDasharray=`${dash} 2`; e.style.strokeDashoffset=-off; e.style.opacity= (t>7&&t<14.1)? (id=='tr1g'?.7:1):0;}); }
+  show($('s2foot'),t,7.4,14.0,{din:2.0,dy:0,sc:.08,blur:0});
+  $('s2foot').style.transform+=` rotate(${Math.sin(TAU*t/8)*3}deg)`;
+
+  // S3 services 14.2 - 32.4 ; each 6 s
+  show($('s3h'),t,14.3,32.2,{dx:-40,dy:0});
+  show($('s3prog'),t,14.3,32.2,{dy:0});
+  $('s3bar').style.width=(cl((t-14.3)/18)*100)+'%';
+  SV.forEach((s,i)=>{
+    const a=14.4+i*6, b=a+6;
+    const c=$('svc'+i);
+    const v=show(c,t,a,b,{din:1.2,dout:.9,dy:0,sc:.12,blur:10});
+    if(v>0) c.style.transform+=` translateY(${Math.sin(TAU*(t-a)/4)*10}px)`;
+    $('svr'+i).style.transform=`scale(${1+.05*Math.sin(TAU*(t-a)/2)})`;
+    $('svr'+i).style.opacity=.5+.5*Math.sin(TAU*(t-a)/2);
+    // icon draw
+    const dp=eio(P(t,a+.5,1.6));
+    c.querySelectorAll('.dr').forEach(p=>p.style.strokeDashoffset=1-dp);
+    c.querySelectorAll('.pp').forEach((p,k)=>{p.style.transformBox='fill-box';p.style.transformOrigin='center';p.style.transform=`scale(${Math.max(0,back(cl(P(t,a+.6,1.0)*1.6-k*.12)))})`});
+    show($('svn'+i),t,a+.3,b,{dx:-50,dy:0});
+    show($('svt'+i),t,a+.5,b,{din:1.1,blur:16});
+    show($('svd'+i),t,a+.9,b,{din:1.1});
+  });
+
+  // S4 32.4 - 41.0
+  show($('s4a'),t,32.6,40.8);
+  SIGNS.forEach((s,i)=>{const a=33.4+i*1.1; show($('sg'+i),t,a,40.8,{dx:-80,dy:0,blur:8}); $('ck'+i).style.strokeDashoffset=1-eio(P(t,a+.6,.7));});
+  { const e=$('s4cta'); const v=show(e,t,37.2,40.8,{sc:.06}); if(v>0&&t>38.2){e.style.transform+=` scale(${1+.025*Math.sin(TAU*(t-38.2)/1.4)})`;} }
+
+  // S5 41.0 - 47.2
+  { const v=show($('s5num'),t,41.2,47.0,{sc:.1,dy:0,blur:18});
+    const n=Math.round(14700*eio(P(t,41.3,2.6))); $('s5num').textContent=n.toLocaleString('ru-RU').replace(/ /g,' ')+(n>=14700?'+':'');
+    const r=$('s5ring'); const rp=((t-41.3)%2.2)/2.2;
+    r.style.opacity=(t>41.3&&t<46.8)?(1-rp)*.7*(1-ess(P(t,46.2,.6))):0; r.style.transform=`scale(${.6+rp*.9})`; r.style.border='4px solid #00C1C0';
+  }
+  show($('s5lab'),t,42.0,47.0);
+  show($('s5ig'),t,42.8,47.0);
+
+  // S6 47.2 - 55.0
+  show($('s6a'),t,47.4,54.8);
+  show($('s6card'),t,47.8,54.8,{dy:60,blur:10});
+  { const k=Math.floor(cl((t-48.6)/1.8)*PHONE.length); $('s6num').innerHTML=PHONE.slice(0,k)+(t>48.4&&t<54.8&&(k<PHONE.length||Math.floor(t*2)%2==0)?'<span style="color:#00C1C0;font-weight:300">|</span>':'');
+    $('s6ph').style.transform=`rotate(${(t>48&&t<52)?Math.sin(t*40)*8*Math.max(0,Math.sin(TAU*(t-48)/1.0)):0}deg)`; }
+  show($('s6tg'),t,49.0,54.8,{dy:60,blur:10});
+  show($('s6ig'),t,49.4,54.8,{dy:60,blur:10});
+  show($('s6loc'),t,50.2,54.8,{dx:-60,dy:0});
+
+  // bottom bar: 8 - 46.6
+  show($('bar'),t,8.0,46.8,{dy:30,blur:6});
+
+  // transition leaks (soft white bloom) at scene changes
+  const LK_T=[7.0,14.2,32.4,41.0,56.0,62.2,70.0];
+  let lk=0; LK_T.forEach(c=>{const d=Math.abs(rt-c); if(d<.7) lk=Math.max(lk,(1-d/.7)**2*.55)});
+  $('leak').style.opacity=lk;
+}
+
+// ---------- new scenes ----------
+const DKI=[ICONS.foot,ICONS.nail,ICONS.brace];
+DKI.forEach((g,i)=>{$('dk'+i).innerHTML=`<svg width="78" height="78" viewBox="0 0 200 230">${g.replace(/class="dr"/g,'').replace(/class="pp"/g,'')}</svg>`});
+const BA=[1,2,3];
+$('badots').innerHTML=BA.map((_,i)=>`<div id="bd${i}" style="width:18px;height:18px;border-radius:9px;background:rgba(0,125,121,.2)"></div>`).join('');
+const BAC=['5 kunda natija','Brekets bilan<br>toʻgʻrilash','Tirnoq<br>parvarishi'];
+$('bawrap').innerHTML=BA.map((n,i)=>`<div id="bac${i}" class="abs" style="left:0;top:0;width:1920px;height:1080px">
+ <div id="bcap${i}" class="abs" style="left:160px;top:500px;font-size:62px;font-weight:700;letter-spacing:-.03em;line-height:1.1;color:#2c3a40">${BAC[i]}</div>
+ <div id="bb${i}" class="bacard" style="left:720px;top:160px;width:500px;height:720px"><img src="ba${n}_before.jpg"><div class="lab" style="left:26px;background:rgba(20,30,34,.78);color:#fff">OLDIN</div></div>
+ <div id="ba${i}" class="bacard" style="left:1300px;top:160px;width:500px;height:720px"><img src="ba${n}_after.jpg"><div class="lab" style="left:26px;background:#00C1C0;color:#fff">KEYIN</div>
+  <div id="bsh${i}" class="abs" style="top:-100px;width:140px;height:1000px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);transform:rotate(14deg)"></div></div>
+ <div id="bar${i}" class="abs" style="left:1210px;top:480px;width:100px;height:100px;border-radius:50%;background:#00C1C0;box-shadow:0 0 0 12px rgba(0,193,192,.18),0 16px 40px rgba(0,125,121,.35);display:flex;align-items:center;justify-content:center">
+  <svg width="54" height="54" viewBox="0 0 24 24"><path d="M5 12h13M13 6l6 6-6 6" stroke="#fff" stroke-width="2.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+</div>`).join('');
+
+function cursor(x,y,v,click=0,hand=false){
+  const c=$('cur'); c.style.opacity=v; c.style.transform=`translate(${x}px,${y}px) scale(${1-click*.18})`;
+  $('curA').style.display=hand?'none':''; $('curH').style.display=hand?'':'none';
+}
+function ripple(x,y,p){const r=$('ripple'); if(p<=0||p>=1){r.style.opacity=0;return} r.style.opacity=(1-p)*.9; r.style.transform=`translate(${x-60}px,${y-60}px) scale(${.3+p*1.4})`;}
+
+function renderIx(t){
+  const on=t>14.2&&t<22.4;
+  $('ix').style.display=on?'':'none'; if(!on) return {cur:false};
+  // dock
+  const dv=show($('dock'),t,14.4,18.3,{din:.9,dout:.7,dy:60,sc:.08,blur:12});
+  // hover highlights
+  const hov=[15.5,16.0,16.5];
+  hov.forEach((h,i)=>{const k=Math.max(0,1-Math.abs(t-h-.15)/.45); const e=$('dk'+i); e.style.background=`rgb(${L(44,0,k)},${L(61,193,k)},${L(67,192,k)})`; e.style.transform=`translateY(${-k*14}px) scale(${1+k*.12})`;});
+  const ak=Math.max(0,1-Math.abs(t-17.05)/.5); $('dk3').style.transform=`translateY(${-ak*14}px) scale(${1+ak*.14})`;
+  // cursor path across dock
+  const D={x:610,y:730}; const pts=[[1500,1000,14.9],[D.x+94,D.y+95,15.4],[D.x+259,D.y+95,15.9],[D.x+424,D.y+95,16.4],[D.x+589,D.y+95,16.95]];
+  let cx=pts[0][0],cy=pts[0][1];
+  for(let i=1;i<pts.length;i++){const [x0,y0,t0]=pts[i-1],[x1,y1,t1]=pts[i]; if(t>=t0){const q=eio(P(t,t0,t1-t0)); cx=L(x0,x1,q); cy=L(y0,y1,q);} }
+  const clk=Math.max(0,1-Math.abs(t-17.1)/.12);
+  const cv=cl(P(t,14.9,.4))*(1-P(t,17.5,.4));
+  ripple(D.x+589,D.y+75,P(t,17.1,.6));
+  // card expands from avatar
+  const g=eio(P(t,17.15,1.15));
+  const card=$('ixcard');
+  const ex=ess(P(t,21.5,.8));
+  if(t<17.15){card.style.opacity=0;card.style.visibility='hidden';}
+  else{
+    card.style.visibility='visible';
+    const fx=L(D.x+589,300+310,g), fy=L(D.y+75,104+433,g); // centre
+    const sc=L(108/620,1,g)*(1-ex*.08);
+    const rot=L(-6,0,g)+Math.sin(TAU*(t-17)/5)*1.2*g;
+    card.style.transform=`translate(${fx-310}px,${fy-433+Math.sin(TAU*(t-17)/4)*8*g + ex*40}px) scale(${sc}) rotate(${rot}deg)`;
+    $('ixbg').style.borderRadius=L(310,48,g)+'px'; $('ixp').style.opacity=cl((g-.35)/.45);
+    card.style.opacity=cl(g*3)*(1-ex);
+    const mb=(g>0&&g<1)?Math.sin(Math.PI*g)*8:0; card.style.filter=(mb+ex*14)>.3?`blur(${mb+ex*14}px)`:'none';
+  }
+  $('ixcap').style.opacity=eo(P(t,18.1,.7)); $('ixcap').style.transform=`translateY(${(1-eo(P(t,18.1,.7)))*30}px)`;
+  show($('ixa'),t,18.0,22.2);
+  {const e=$('ixb'); const v=show(e,t,18.4,22.2,{din:1.1,blur:20}); if(v>0){const k=back(P(t,18.4,1.1)); e.style.transform+=` scale(${.9+.1*k})`;}}
+  show($('ixc'),t,19.0,22.2);
+  show($('ixd'),t,19.5,22.2,{dx:-50,dy:0});
+  return {cur:true,x:cx,y:cy,v:cv,c:clk};
+}
+
+function renderBA(t){
+  const on=t>48.9&&t<64.2;
+  $('ba').style.display=on?'':'none'; if(!on) return {cur:false};
+  show($('bah'),t,49.1,63.8,{dx:-40,dy:0});
+  show($('bat'),t,49.3,63.8);
+  show($('badots'),t,49.6,63.8,{dy:0});
+  BA.forEach((n,i)=>{
+    const a=49.3+i*4.9, b=a+4.9;
+    const act=t>a&&t<b;
+    $('bd'+i).style.background=act?'#00C1C0':'rgba(0,125,121,.2)'; $('bd'+i).style.width=act?'46px':'18px';
+    const g=$('bac'+i);
+    if(!(t>a-.01&&t<b+.01)){g.style.display='none';return} g.style.display='';
+    const out=ess(P(t,b-.55,.55));
+    // before card
+    const bi=eio(P(t,a,.8)); const B=$('bb'+i);
+    B.style.opacity=bi*(1-out); B.style.transform=`translateX(${(1-bi)*-120 - out*60}px) scale(${.94+.06*bi}) rotate(${(1-bi)*-2}deg)`;
+    let bl=(1-bi)*12+out*12; B.style.filter=bl>.3?`blur(${bl}px)`:'none';
+    // arrow
+    const ar=back(P(t,a+.55,.6)); const R=$('bar'+i);
+    R.style.opacity=cl(P(t,a+.55,.3))*(1-out); R.style.transform=`scale(${Math.max(0,ar)*(1-out*.3)}) translateX(${Math.sin(TAU*(t-a)/1.2)*4}px)`;
+    // after card: wipe reveal
+    const w=eio(P(t,a+.9,.9)); const A=$('ba'+i);
+    A.style.opacity=(t>a+.9?1:0)*(1-out); A.style.clipPath=`inset(0 ${(1-w)*100}% 0 0 round 48px)`;
+    A.style.transform=`translateX(${out*60}px) scale(${1.03-.03*w})`;
+    bl=out*12; A.style.filter=bl>.3?`blur(${bl}px)`:'none';
+    $('bsh'+i).style.left=L(-200,620,ess(P(t,a+1.9,1.0)))+'px';
+    // caption
+    show($('bcap'+i),t,a+.4,b,{din:.8,dout:.5,dx:-40,dy:0});
+  });
+  return {cur:false};
+}
+
+function render(t){
+  const rt=((t%TT)+TT)%TT;
+  let tt;
+  if(rt<41) tt=rt; else if(rt<56) tt=41.0; else tt=rt-15;
+  renderOld(tt,rt);
+  $('ix').style.display='none'; const a={cur:false}, b=renderBA(rt+8);
+  const c=a.cur?a:(b.cur?b:null);
+  if(c&&c.v>0) cursor(c.x,c.y,c.v,c.c||0,!!c.h); else {$('cur').style.opacity=0; $('ripple').style.opacity=0;}
+}
+
+function splitEl(id,mode){
+  const el=$(id); if(!el) return; el.dataset.split=mode; const parts=[];
+  const walk=node=>{
+    [...node.childNodes].forEach(nd=>{
+      if(nd.nodeType===3){
+        const txt=nd.textContent; if(!txt.trim()){return}
+        const frag=document.createDocumentFragment();
+        const toks=mode==='w'? txt.split(/(\s+)/) : [...txt];
+        toks.forEach(tk=>{
+          if(!tk) return;
+          if(/^\s+$/.test(tk)){frag.appendChild(document.createTextNode(mode==='w'?' ':' '));return}
+          const sp=document.createElement('span'); sp.textContent=tk; sp.style.display='inline-block'; sp.style.willChange='transform';
+          frag.appendChild(sp); parts.push(sp);
+        });
+        nd.replaceWith(frag);
+      } else if(nd.nodeType===1 && nd.tagName!=='BR' && nd.tagName!=='svg') walk(nd);
+    });
+  };
+  walk(el); el._parts=parts;
+}
+['s2a','s2c','s4a','s5lab','s6a','bat','svt0','svt1','svt2','svd0','svd1','svd2','bcap0','bcap1','bcap2'].forEach(id=>splitEl(id,'w'));
+splitEl('s2b','arc');
+// continuous camera drift per scene (old-time windows)
+const CAMS=[['s2',7,14.2],['s3',14.2,32.4],['s4',32.4,41],['s5',41,47.2],['s6',47.2,55]];
+const _ro=renderOld;
+renderOld=function(t,rt){
+  _ro(t,rt);
+  CAMS.forEach(([id,a,b])=>{const q=cl((t-a)/(b-a)); const e=$(id);
+    e.style.transformOrigin='50% 50%';
+    e.style.transform=`scale(${1+.045*ess(q)}) translate(${-14*ess(q)}px,${-8*ess(q)}px)`;});
+};
+window.render=render;
+render(0);
+</script></body></html>
