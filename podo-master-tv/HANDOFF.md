@@ -33,7 +33,8 @@ Ichkarida: `render(t)` 52–74 oralig'ini muruvvat sahnasi uchun ajratadi; asosi
 Kerak: Python + Playwright, Google Chrome, ffmpeg.
 - `scripts/render_chunk.py A B 60 out.mp4` — A..B soniyani 60 fps MP4 ga chiqaradi (yo'llarni o'zingizning papkangizga moslang).
 - `scripts/render_all.sh` — 2 parallel navbat bilan hamma bo'laklar.
-- `scripts/music_dynamic.py` — **joriy** dinamik fon musiqasi + SFX (97 s, ~118.8 BPM, 48 takt, loop): kick/clap/hi-hat, sidechain bas, 16-talik arpeggio, lead-melodiya, sahna o'tishlarida riser + zarb. Bo'limlar sahnalarga mos (intro/outro sokin, muruvvat iliq, oldin/keyin va obunachilar cho'qqi).
+- `scripts/music_sync.py` — **joriy**: videoga moslangan dinamik musiqa. Tempo xaritasi har bir sahna kesishini (4.5, 8.5, 12.6, 25.7, 35.2, 38.3, 52, 74, 80.6, 90.4 s) kuchli hissaga tushiradi (116–122 BPM); har bir ekrandagi so'z chiqishiga arpeggio notasi, ikonkalarga pop, kartochka aylanishi, 14 700 hisoblagichi, tugmalar va logo yig'ilishiga alohida tovushlar. Animatsiya vaqtlari o'zgarsa, fayl boshidagi `SEG` va `LINES` ro'yxatlarini yangilang.
+- `scripts/music_dynamic.py` — oldingi fon musiqasi + SFX (97 s, ~118.8 BPM, 48 takt, loop): kick/clap/hi-hat, sidechain bas, 16-talik arpeggio, lead-melodiya, sahna o'tishlarida riser + zarb. Bo'limlar sahnalarga mos (intro/outro sokin, muruvvat iliq, oldin/keyin va obunachilar cho'qqi).
 - `scripts/music.py` — oldingi sokin musiqa (zaxira).
 - Yig'ish: concat bo'laklar + audio → `-c:v copy -c:a aac -b:a 256k -movflags +faststart`.
 - `scripts/test_frames.py t1 t2 ...` — tekshirish uchun alohida kadrlar.
@@ -51,9 +52,9 @@ Kerak: Python + Playwright, Google Chrome, ffmpeg.
 - Bepul tarifda faqat `mp3_44100_128` formati ishlaydi. Bepul tarifda tijorat litsenziyasi yo'q — klinika reklamasi uchun Starter yoki undan yuqori tarifda qayta yaratish kerak (skript o'sha).
 - `voice/voice.wav` — barcha qatorlar o'z vaqtiga joylangan 97 s trek (loudnorm -16).
 - Yig'ish: `python3 scripts/mix_voice.py voice mix.wav <chiqish_papka>` → `voice.wav` + `final_audio.wav`.
-- Yakuniy audio: musiqa (`music_dynamic.py`, -22 LUFS) ovoz ostida `sidechaincompress` (ratio 8) bilan pasaytiriladi, keyin `loudnorm=I=-16:TP=-1.5`.
+- Yakuniy audio: musiqa (`music_sync.py`, -22 LUFS) ovoz ostida `sidechaincompress` (ratio 8) bilan pasaytiriladi, keyin `loudnorm=I=-16:TP=-1.5`.
 - Render muhitida (ochiq Chromium) H.264 dekod yo'q bo'lsa: `muruvvat.mp4` ni VP9 `.webm` ga o'girib, nusxadagi `index.html` da src ni almashtiring.
 
 ## Tayyor fayllar
-- `videos/PodoMaster_TV_Alice.mp4` — asosiy (Alice ovozi + dinamik musiqa).
-- `videos/PodoMaster_TV_Lily.mp4` — muqobil (Lily ovozi + dinamik musiqa).
+- `videos/PodoMaster_TV_Alice.mp4` — asosiy (Alice ovozi + videoga moslangan musiqa).
+- `videos/PodoMaster_TV_Lily.mp4` — muqobil (Lily ovozi + videoga moslangan musiqa).
