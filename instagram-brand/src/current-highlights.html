@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="uz">
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@300;400;500;600&display=block" rel="stylesheet">
+<style>
+  :root{
+    --ivory:#F7F1EB; --nude:#EADBCF; --blush:#D9B8A8; --mocha:#6B4A3E; --espresso:#2E211C;
+    --gold:#C2A06B; --gold-2:#D9BF8F; --rose:#B98579; --text:#3B2C26;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:#888;font-family:Inter,sans-serif;color:var(--text);padding:40px;display:flex;flex-direction:column;gap:40px;align-items:flex-start}
+  .asset{position:relative;overflow:hidden;flex:none}
+  .serif{font-family:'Cormorant Garamond',serif}
+  .kicker{font-size:26px;letter-spacing:9px;text-transform:uppercase;font-weight:500}
+  .sig{font-family:'Cormorant Garamond';font-style:italic}
+
+  /* ===== HIGHLIGHTS 1080x1920 ===== */
+  .hl{width:1080px;height:1920px;background:radial-gradient(circle at 50% 45%,#FBF7F2 0,#F3E9E0 55%,#EADBCF 100%);display:flex;align-items:center;justify-content:center}
+  .hl .disc{width:740px;height:740px;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;border:3px solid var(--gold);position:relative}
+  .hl .disc:after{content:"";position:absolute;inset:22px;border-radius:50%;border:1.5px solid rgba(194,160,107,.5)}
+  .hl svg{width:300px;height:300px;stroke:var(--mocha);stroke-width:4.6;fill:none;stroke-linecap:round;stroke-linejoin:round}
+  .hl .lbl{font-family:'Cormorant Garamond';font-style:italic;font-size:68px;color:var(--mocha);letter-spacing:1px}
+
+  /* ===== POSTS 1080x1350 ===== */
+  .post{width:1080px;height:1350px}
+  .pad{position:absolute;inset:90px}
+  .foot{position:absolute;left:90px;right:90px;bottom:64px;display:flex;justify-content:space-between;align-items:center;font-size:24px;letter-spacing:4px;font-weight:500;text-transform:uppercase}
+
+  .dark{background:var(--espresso);color:var(--ivory)}
+  .mocha{background:var(--mocha);color:var(--ivory)}
+  .light{background:var(--ivory)}
+  .nude{background:var(--nude)}
+
+  .arch{position:absolute;border:2px solid rgba(194,160,107,.55);border-radius:500px 500px 0 0}
+
+  .p-cover h1{font-family:'Cormorant Garamond';font-weight:500;font-size:140px;line-height:.98;margin-top:300px;letter-spacing:-1px}
+  .p-cover h1 i{color:var(--gold-2)}
+  .p-cover .sub{font-size:34px;font-weight:300;margin-top:50px;opacity:.8;line-height:1.45;max-width:760px}
+  .p-cover .swipe{position:absolute;right:90px;top:96px;font-size:24px;letter-spacing:6px;color:var(--gold-2);font-weight:500}
+
+  .p-slide .num{font-family:'Cormorant Garamond';font-size:230px;color:var(--gold);line-height:.9;font-weight:400;font-style:italic}
+  .p-slide h2{font-family:'Cormorant Garamond';font-size:92px;line-height:1.02;font-weight:500;color:var(--espresso);margin-top:40px}
+  .p-slide .rule{width:110px;height:3px;background:var(--gold);margin-top:46px}
+  .p-slide p{font-size:38px;line-height:1.55;margin-top:46px;color:#5A463E;font-weight:400}
+  .p-slide .tip{margin-top:60px;background:var(--nude);border-radius:28px;padding:40px 46px;font-size:32px;line-height:1.5}
+  .p-slide .tip b{color:var(--mocha);letter-spacing:4px;font-size:24px;display:block;margin-bottom:10px}
+
+  .p-ba .ttl{position:absolute;top:96px;left:90px;right:90px;text-align:center}
+  .p-ba .ttl h2{font-family:'Cormorant Garamond';font-size:84px;font-weight:500;color:var(--espresso);line-height:1}
+  .p-ba .ttl .kicker{color:var(--gold);margin-bottom:22px}
+  .p-ba .ph{position:absolute;top:330px;width:438px;height:760px;border-radius:220px 220px 24px 24px;background:linear-gradient(160deg,#E2CFC2,#CDB2A3);display:flex;align-items:flex-end;justify-content:center;padding-bottom:40px}
+  .p-ba .ph span{background:var(--ivory);color:var(--mocha);font-size:24px;letter-spacing:6px;font-weight:600;padding:16px 34px;border-radius:40px;text-transform:uppercase}
+  .p-ba .ph em{position:absolute;top:46%;left:0;right:0;text-align:center;color:rgba(255,255,255,.75);font-style:normal;font-size:24px;letter-spacing:4px}
+  .p-ba .info{position:absolute;left:90px;right:90px;top:1130px;text-align:center;font-size:30px;color:#5A463E;letter-spacing:1px}
+
+  .p-myth .head{position:absolute;top:100px;left:90px;right:90px}
+  .p-myth .head h2{font-family:'Cormorant Garamond';font-size:96px;font-weight:500;color:var(--espresso);line-height:1}
+  .p-myth .card{position:absolute;left:90px;right:90px;border-radius:32px;padding:56px 60px}
+  .p-myth .c1{top:330px;background:var(--ivory)}
+  .p-myth .c2{top:700px;background:var(--mocha);color:var(--ivory)}
+  .p-myth .tag{font-size:24px;letter-spacing:8px;font-weight:600;text-transform:uppercase}
+  .p-myth .c1 .tag{color:var(--rose)}
+  .p-myth .c2 .tag{color:var(--gold-2)}
+  .p-myth .txt{font-family:'Cormorant Garamond';font-size:60px;line-height:1.12;margin-top:20px;font-weight:500}
+
+  .p-serv .list{margin-top:56px}
+  .p-serv .row{display:flex;align-items:baseline;gap:24px;padding:30px 0;border-bottom:1.5px solid rgba(107,74,62,.18)}
+  .p-serv .row .n{font-family:'Cormorant Garamond';font-style:italic;font-size:48px;color:var(--gold);width:70px}
+  .p-serv .row .t{font-family:'Cormorant Garamond';font-size:56px;color:var(--espresso);font-weight:500;flex:1}
+  .p-serv .row .d{font-size:24px;letter-spacing:2px;color:#8A766C;text-transform:uppercase}
+
+  .p-cta .inner{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:0 110px}
+  .p-cta h2{font-family:'Cormorant Garamond';font-size:116px;line-height:.98;font-weight:500}
+  .p-cta h2 i{color:var(--gold-2)}
+  .p-cta p{font-size:34px;line-height:1.5;margin-top:44px;opacity:.85;font-weight:300}
+  .p-cta .btn{margin-top:66px;border:2px solid var(--gold-2);color:var(--ivory);font-size:30px;font-weight:500;padding:30px 64px;border-radius:100px;letter-spacing:4px}
+  .p-cta .tel{margin-top:40px;font-size:40px;letter-spacing:3px;color:var(--gold-2)}
+
+  .p-quote{display:flex;flex-direction:column;justify-content:center;padding:0 120px;text-align:center;align-items:center}
+  .p-quote blockquote{font-family:'Cormorant Garamond';font-style:italic;font-size:92px;line-height:1.1;font-weight:400;color:var(--espresso)}
+  .p-quote .who{margin-top:60px;font-size:26px;letter-spacing:8px;color:var(--mocha);text-transform:uppercase;font-weight:500}
+  .p-quote .orn{width:90px;height:2px;background:var(--gold);margin:50px 0}
+
+  /* ===== REELS 1080x1920 ===== */
+  .reel{width:1080px;height:1920px;background:linear-gradient(180deg,#CDB5A6 0%,#B89A8A 45%,#3A2A23 75%,#2E211C 100%)}
+  .reel .ph{position:absolute;top:220px;left:50%;transform:translateX(-50%);width:640px;height:820px;border:3px dashed rgba(255,255,255,.55);border-radius:320px 320px 30px 30px;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.8);font-size:30px;letter-spacing:5px;text-align:center;line-height:1.6}
+  .reel .safe{position:absolute;left:90px;right:90px;top:1150px;color:var(--ivory);text-align:center}
+  .reel .kicker{color:var(--gold-2)}
+  .reel h1{font-family:'Cormorant Garamond';font-size:122px;line-height:.98;font-weight:500;margin-top:30px}
+  .reel h1 i{color:var(--gold-2)}
+  .reel .nm{margin-top:50px;font-size:24px;letter-spacing:8px;opacity:.7;text-transform:uppercase}
+
+  /* ===== BRAND BOARD ===== */
+  .board{width:1080px;height:1350px;background:var(--ivory);padding:90px}
+  .board h1{font-family:'Cormorant Garamond';font-size:96px;color:var(--espresso);font-weight:500;line-height:1}
+  .board .sw{display:flex;gap:18px;margin-top:56px}
+  .board .sw div{flex:1;height:250px;border-radius:120px 120px 18px 18px;display:flex;align-items:flex-end;padding:18px;font-size:19px;font-weight:600;letter-spacing:1px;line-height:1.4}
+  .board .type{margin-top:64px;display:flex;gap:70px;align-items:flex-end}
+  .board .type .a{font-family:'Cormorant Garamond';font-size:170px;color:var(--mocha);line-height:.9;font-style:italic}
+  .board .type .b{font-size:150px;font-weight:300;line-height:.9}
+  .board .type small{display:block;font-family:Inter;font-style:normal;font-size:22px;margin-top:22px;letter-spacing:3px;color:#8A766C}
+  .board .rules{margin-top:64px;font-size:28px;line-height:1.75;color:#5A463E}
+  .board .rules b{color:var(--mocha)}
+</style>
+<style>.hl .yr{font-family:Inter;font-size:26px;letter-spacing:8px;color:var(--gold);text-transform:uppercase;margin-top:-14px}</style></head>
+<body>
+<div class="asset hl" id="cur-01-tups-lab"><div class="disc">
+<svg viewBox="0 0 100 100"><path d="M40 14h20M44 14v26L22 80c-2 4 1 8 5 8h46c4 0 7-4 5-8L56 40V14"/><path d="M30 66h40"/><circle cx="44" cy="74" r="2.5"/><circle cx="56" cy="72" r="2"/></svg>
+<div class="lbl">TUPS LAB</div><div class="yr">Laboratoriya</div></div></div>
+<div class="asset hl" id="cur-02-korestet"><div class="disc">
+<svg viewBox="0 0 100 100"><path d="M50 22L12 40l38 18 38-18z"/><path d="M28 48v18c6 8 38 8 44 0V48"/><path d="M84 42v20"/></svg>
+<div class="lbl">Korestet</div><div class="yr">Seminar</div></div></div>
+<div class="asset hl" id="cur-03-daantek"><div class="disc">
+<svg viewBox="0 0 100 100"><rect x="36" y="34" width="28" height="52" rx="6"/><path d="M42 34V24h16v10M46 24v-8h8v8"/><path d="M44 54h12M44 64h12"/></svg>
+<div class="lbl">Daantek</div><div class="yr">Seminar</div></div></div>
+<div class="asset hl" id="cur-04-vetnam-2026"><div class="disc">
+<svg viewBox="0 0 100 100"><path d="M14 62L50 22l36 40z"/><path d="M14 62c10 6 62 6 72 0"/><path d="M50 22v40M32 42l18 20 18-20"/></svg>
+<div class="lbl">Vyetnam</div><div class="yr">2026</div></div></div>
+<div class="asset hl" id="cur-05-misr-2025"><div class="disc">
+<svg viewBox="0 0 100 100"><path d="M10 80L42 30l32 50z"/><path d="M58 80l16-24 16 24"/><path d="M42 30L56 80"/><circle cx="76" cy="22" r="7"/></svg>
+<div class="lbl">Misr</div><div class="yr">2025</div></div></div>
+<div class="asset hl" id="cur-06-qatar-2025"><div class="disc">
+<svg viewBox="0 0 100 100"><path d="M20 86V48h14v38M40 86V30l8-12 8 12v56M62 86V54h18v32"/><path d="M12 86h76"/></svg>
+<div class="lbl">Qatar</div><div class="yr">2025</div></div></div>
+<div class="asset hl" id="cur-07-vetnam-2024"><div class="disc">
+<svg viewBox="0 0 100 100"><path d="M14 62L50 22l36 40z"/><path d="M14 62c10 6 62 6 72 0"/><path d="M50 22v40M32 42l18 20 18-20"/></svg>
+<div class="lbl">Vyetnam</div><div class="yr">2024</div></div></div>
+<div class="asset hl" id="cur-08-umra-2023"><div class="disc">
+<svg viewBox="0 0 100 100"><path d="M24 38l26-14 26 14v40L50 90 24 78z"/><path d="M24 38l26 14 26-14M50 52v38"/><path d="M24 50l26 14 26-14"/></svg>
+<div class="lbl">Umra</div><div class="yr">30.10.23</div></div></div>
+<div class="asset hl" id="cur-09-antalya-2022"><div class="disc">
+<svg viewBox="0 0 100 100"><circle cx="50" cy="36" r="13"/><path d="M50 12v5M50 55v5M26 36h5M69 36h5M33 19l3 3M64 50l3 3M67 19l-3 3"/><path d="M12 72c8-6 14-6 22 0s14 6 22 0 14-6 22 0 8 4 10 2M12 84c8-6 14-6 22 0s14 6 22 0 14-6 22 0"/></svg>
+<div class="lbl">Antalya</div><div class="yr">2022</div></div></div>
+<div class="asset hl" id="cur-10-dubay-2021"><div class="disc">
+<svg viewBox="0 0 100 100"><path d="M50 8v16M44 24h12l2 18h-16zM42 42h16l3 22H39zM38 64h24l4 24H34z"/><path d="M20 88h60"/></svg>
+<div class="lbl">Dubay</div><div class="yr">2021</div></div></div>
+</body></html>
