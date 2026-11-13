@@ -28,13 +28,13 @@
 Kosmetolog Urganch | Dr. Nasiba
 ```
 
-**Bio — A (tavsiya):**
+**Bio — A (tavsiya, 147 belgi — 150 ga sig'adi):**
 ```
-👩🏻‍⚕️ Shifokor-kosmetolog · 10+ yil
-✨ Akne · Pigmentatsiya · Yasharish
-💉 In'ektsion va apparat kosmetologiya
-📍 Urganch · 📲 +998 91 955 85 85
-👇 Konsultatsiyaga yozilish
+👩‍⚕️ Shifokor-kosmetolog · 10+ yil
+✨ Akne · Pigment · Yasharish
+💉 In'ektsion va apparat muolajalar
+📍 Urganch · 📲 +998919558585
+👇 Konsultatsiya
 ```
 
 **Bio — B (qisqa, hissiyotli):**
