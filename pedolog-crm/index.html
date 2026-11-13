@@ -1,0 +1,1228 @@
+<title>Podo Master CRM</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&display=swap">
+<style>
+/* Layout: tablet-first — fixed left rail with the PODO MASTER wordmark, work area on the right; phone width swaps the rail for a bottom bar */
+:root{
+  --tq:#00C1C0; --tq-d:#007D79; --tq-l:#E0F7F7; --tq-glow:rgba(0,193,192,.35);
+  --ink:#333333; --muted:#6a7b7b; --bg:#F5F5F5; --card:#ffffff; --line:#e1eaea; --soft:#f0f6f6;
+  --red:#d0213a; --red-l:#fde8eb; --amber:#b77900; --amber-l:#fff3dc; --green:#14895a; --green-l:#e2f6ec;
+  --btn-ink:#ffffff; --shadow:0 1px 2px rgba(0,60,60,.06),0 6px 20px rgba(0,60,60,.06);
+  --f:"Inter Tight",ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+  --r:16px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --tq:#19d3d2; --tq-d:#00a09e; --tq-l:#0d3433; --tq-glow:rgba(25,211,210,.3);
+  --ink:#e6f0ef; --muted:#93a9a7; --bg:#0d1515; --card:#142020; --line:#223737; --soft:#182828;
+  --red:#ff5a6e; --red-l:#3a1720; --amber:#f0b440; --amber-l:#33280f; --green:#3fcf8e; --green-l:#0f2d20;
+  --btn-ink:#ffffff; --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.25); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --tq:#19d3d2; --tq-d:#00a09e; --tq-l:#0d3433; --tq-glow:rgba(25,211,210,.3);
+  --ink:#e6f0ef; --muted:#93a9a7; --bg:#0d1515; --card:#142020; --line:#223737; --soft:#182828;
+  --red:#ff5a6e; --red-l:#3a1720; --amber:#f0b440; --amber-l:#33280f; --green:#3fcf8e; --green-l:#0f2d20;
+  --btn-ink:#ffffff; --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.25); color-scheme:dark}
+
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:15px;line-height:1.45;-webkit-tap-highlight-color:transparent}
+*{box-sizing:border-box}
+button,input,select,textarea{font:inherit;color:inherit}
+h1,h2,h3{margin:0;letter-spacing:-.02em;text-wrap:balance}
+.num{font-variant-numeric:tabular-nums}
+:focus-visible{outline:3px solid var(--tq);outline-offset:2px;border-radius:8px}
+
+/* ---------- shell ---------- */
+.shell{display:grid;grid-template-columns:232px 1fr;min-height:100%}
+.rail{position:sticky;top:0;height:100vh;height:100dvh;background:var(--card);border-right:1px solid var(--line);display:flex;flex-direction:column;padding:22px 14px 16px;padding-left:max(14px,env(safe-area-inset-left,0px));gap:6px}
+.logo{display:flex;flex-direction:column;gap:3px;padding:2px 10px 18px}
+.logo b{font-weight:800;font-size:21px;letter-spacing:-.04em;line-height:1}
+.logo b em{font-style:normal;color:var(--tq)}
+.logo span{font-size:8.5px;letter-spacing:.16em;color:var(--muted);font-weight:600}
+.logo i{display:block;height:3px;width:46px;border-radius:3px;background:var(--tq);box-shadow:0 0 12px var(--tq-glow);margin-top:6px}
+.nav{display:flex;flex-direction:column;gap:4px}
+.nav button{display:flex;align-items:center;gap:12px;border:0;background:none;padding:12px 12px;border-radius:12px;font-weight:600;font-size:15px;color:var(--muted);cursor:pointer;text-align:left;position:relative;min-height:48px}
+.nav button:hover{background:var(--soft);color:var(--ink)}
+.nav button.on{background:var(--tq-l);color:var(--tq-d)}
+:root[data-theme="dark"] .nav button.on{color:var(--tq)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .nav button.on{color:var(--tq)}}
+.nav .badge{margin-left:auto;background:var(--red);color:#fff;font-size:12px;font-weight:700;border-radius:20px;padding:1px 8px;min-width:22px;text-align:center}
+.rail-foot{margin-top:auto;display:flex;flex-direction:column;gap:8px;padding:0 4px}
+.who{display:flex;gap:10px;align-items:center;padding:10px;border-radius:12px;background:var(--soft)}
+.ava{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:var(--tq);color:#fff;font-weight:800;flex:none}
+.who small{display:block;color:var(--muted);font-size:12px}
+.who div{min-width:0}
+.who strong{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:14px}
+
+.main{min-width:0;display:flex;flex-direction:column}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding-block:14px;padding-left:28px;padding-right:max(28px,env(safe-area-inset-right,0px));border-bottom:1px solid var(--line)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--bg)}
+.top h1{font-size:24px;font-weight:800;letter-spacing:-.04em;margin-right:auto}
+.clock{display:flex;flex-direction:column;align-items:flex-end;line-height:1.1}
+.clock b{font-size:22px;font-weight:800;letter-spacing:-.03em}
+.clock small{color:var(--muted);font-size:12px}
+.content{padding-block:22px 40px;padding-left:28px;padding-right:max(28px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:20px;max-width:1280px;width:100%}
+
+/* ---------- atoms ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--line);background:var(--card);border-radius:12px;padding:10px 16px;font-weight:700;font-size:15px;cursor:pointer;min-height:46px;white-space:nowrap;transition:transform .08s,background .15s}
+.btn:active{transform:scale(.97)}
+.btn:hover{background:var(--soft)}
+.btn.pri{background:var(--tq-d);border-color:var(--tq-d);color:var(--btn-ink)}
+.btn.pri:hover{background:var(--tq);border-color:var(--tq)}
+.btn.ok{background:var(--green);border-color:var(--green);color:#fff}
+.btn.danger{color:var(--red);border-color:color-mix(in srgb,var(--red) 40%,var(--line))}
+.btn.danger.fill{background:var(--red);color:#fff;border-color:var(--red)}
+.btn.ghost{background:none;border-color:transparent}
+.btn.sm{min-height:36px;padding:6px 12px;font-size:13.5px;border-radius:10px}
+.btn.big{min-height:56px;font-size:17px;padding:12px 24px;border-radius:14px}
+.btn[disabled]{opacity:.45;pointer-events:none}
+.pill{display:inline-flex;align-items:center;gap:6px;border-radius:30px;padding:3px 11px;font-size:12.5px;font-weight:700;white-space:nowrap}
+.s-wait{background:var(--soft);color:var(--muted)}
+.s-in{background:var(--tq-l);color:var(--tq-d)}
+.s-done{background:var(--green-l);color:var(--green)}
+.s-no{background:var(--red-l);color:var(--red)}
+.s-cancel{background:var(--soft);color:var(--muted);text-decoration:line-through}
+:root[data-theme="dark"] .s-in{color:var(--tq)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .s-in{color:var(--tq)}}
+.tag{display:inline-flex;align-items:center;border-radius:8px;padding:3px 9px;font-size:12.5px;font-weight:600;background:var(--tq-l);color:var(--tq-d)}
+.tag.warn{background:var(--red-l);color:var(--red)}
+:root[data-theme="dark"] .tag{color:var(--tq)} :root[data-theme="dark"] .tag.warn{color:var(--red)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .tag{color:var(--tq)}:root:not([data-theme="light"]) .tag.warn{color:var(--red)}}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow)}
+.pad{padding:20px}
+.eyebrow{font-size:11.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.muted{color:var(--muted)}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.grow{flex:1;min-width:0}
+.sec-h{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.sec-h h2{font-size:19px;font-weight:800;margin-right:auto}
+.empty{padding:28px;text-align:center;color:var(--muted)}
+.banner{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:14px 18px;border-radius:14px;background:var(--amber-l);color:var(--amber);font-weight:600}
+.banner .btn{margin-left:auto}
+
+/* forms */
+.f{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:600;color:var(--muted);min-width:0}
+.f input,.f select,.f textarea,.inp{border:1.5px solid var(--line);background:var(--card);border-radius:12px;padding:11px 13px;font-size:16px;font-weight:500;color:var(--ink);min-height:48px;width:100%}
+.f textarea{min-height:90px;resize:vertical}
+.f input:focus,.f select:focus,.f textarea:focus,.inp:focus{outline:none;border-color:var(--tq);box-shadow:0 0 0 4px var(--tq-glow)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1.5px solid var(--line);background:var(--card);border-radius:30px;padding:8px 15px;font-weight:600;font-size:14px;cursor:pointer;min-height:40px}
+.chip.on{background:var(--tq-d);border-color:var(--tq-d);color:#fff}
+.chip.red.on{background:var(--red);border-color:var(--red)}
+.search{position:relative;flex:1;min-width:200px}
+.search svg{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--muted)}
+.search input{padding-left:44px}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.stat{padding:16px 18px;display:flex;flex-direction:column;gap:2px}
+.stat b{font-size:30px;font-weight:800;letter-spacing:-.04em;line-height:1.1}
+.stat span{font-size:13px;color:var(--muted);font-weight:600}
+.stat.hl b{color:var(--tq-d)}
+:root[data-theme="dark"] .stat.hl b{color:var(--tq)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .stat.hl b{color:var(--tq)}}
+
+/* focus card */
+.focus{position:relative;overflow:hidden;padding:24px;display:grid;grid-template-columns:1fr auto;gap:18px;border:0;color:#fff;background:linear-gradient(135deg,#007D79 0%,#00a3a2 60%,#00C1C0 100%)}
+.focus::after{content:"";position:absolute;right:-60px;top:-60px;width:260px;height:260px;border-radius:50%;border:2px solid rgba(255,255,255,.25);box-shadow:0 0 40px rgba(255,255,255,.25) inset}
+.focus .eyebrow{color:rgba(255,255,255,.85)}
+.focus h2{font-size:34px;font-weight:800;letter-spacing:-.045em;margin:6px 0 4px}
+.focus .meta{display:flex;gap:16px;flex-wrap:wrap;font-weight:600;opacity:.95}
+.focus .tag{background:rgba(255,255,255,.18);color:#fff}
+.focus .tag.warn{background:#ff5a6e;color:#fff}
+.focus .last{margin-top:14px;padding:12px 14px;border-radius:12px;background:rgba(0,0,0,.14);font-size:14px;max-width:640px}
+.focus .acts{display:flex;flex-direction:column;gap:10px;justify-content:center;position:relative;z-index:1}
+.focus .btn{border-color:rgba(255,255,255,.4);background:rgba(255,255,255,.12);color:#fff}
+.focus .btn.pri{background:#fff;color:#007D79;border-color:#fff}
+.count{font-size:15px;font-weight:700;background:rgba(255,255,255,.18);border-radius:30px;padding:4px 12px;display:inline-block}
+.count.late{background:#ff5a6e}
+.focus-thumb{width:120px;height:90px;border-radius:10px;object-fit:cover;border:2px solid rgba(255,255,255,.5)}
+
+/* timeline */
+.tl{display:flex;flex-direction:column}
+.tl-row{display:grid;grid-template-columns:70px 1fr auto;gap:14px;align-items:center;padding:12px 18px;border-top:1px solid var(--line);cursor:pointer}
+.tl-row:first-child{border-top:0}
+.tl-row:hover{background:var(--soft)}
+.tl-time{font-size:19px;font-weight:800;letter-spacing:-.03em}
+.tl-name{font-weight:700;font-size:16px}
+.tl-sub{font-size:13px;color:var(--muted)}
+.tl-row.now{background:var(--tq-l)}
+.two{display:grid;grid-template-columns:1.6fr 1fr;gap:20px;align-items:start}
+
+/* schedule */
+.sched{display:flex;flex-direction:column}
+.hr{display:grid;grid-template-columns:72px 1fr;min-height:64px;border-top:1px solid var(--line)}
+.hr:first-child{border-top:0}
+.hr-l{padding:10px 14px;font-weight:700;color:var(--muted);font-size:14px}
+.hr-c{display:flex;flex-wrap:wrap;gap:8px;padding:8px 10px;cursor:pointer;align-items:flex-start;min-width:0}
+.hr-c:hover{background:var(--soft)}
+.hr.cur .hr-l{color:var(--tq-d)}
+.appt{border-radius:12px;padding:8px 12px;min-width:180px;max-width:100%;border-left:4px solid var(--tq);background:var(--tq-l);cursor:pointer}
+.appt b{display:block;font-size:14.5px}
+.appt small{font-size:12.5px;color:var(--muted)}
+.appt.tugadi{border-color:var(--green);background:var(--green-l)}
+.appt.kelmadi,.appt.bekor{border-color:var(--red);background:var(--red-l);opacity:.75}
+.appt.keldi{border-color:var(--tq-d);box-shadow:0 0 0 2px var(--tq-glow)}
+
+/* tables */
+.tbl-wrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-size:14.5px}
+th{text-align:left;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:700;padding:12px 14px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:middle}
+tr:last-child td{border-bottom:0}
+tr.click{cursor:pointer} tr.click:hover td{background:var(--soft)}
+td.r,th.r{text-align:right}
+
+/* client profile */
+.prof{display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center}
+.prof .ava{width:64px;height:64px;font-size:24px}
+.prof h2{font-size:28px;font-weight:800;letter-spacing:-.04em}
+.visit{padding:16px 18px;border-top:1px solid var(--line);display:grid;grid-template-columns:110px 1fr;gap:16px}
+.visit:first-child{border-top:0}
+.thumbs{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.th{position:relative;width:96px;height:72px;border-radius:10px;overflow:hidden;border:2px solid var(--line);cursor:pointer;background:var(--soft);padding:0}
+.th img{width:100%;height:100%;object-fit:cover;display:block}
+.th .k{position:absolute;left:4px;top:4px;font-size:10px;font-weight:800;letter-spacing:.06em;border-radius:6px;padding:1px 6px;background:rgba(0,0,0,.6);color:#fff}
+.th .k.keyin{background:var(--tq-d)}
+.th.sel{border-color:var(--tq);box-shadow:0 0 0 3px var(--tq-glow)}
+.th.sel::after{content:"✓";position:absolute;right:4px;bottom:3px;background:var(--tq);color:#fff;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:800}
+.add-ph{width:96px;height:72px;border-radius:10px;border:2px dashed color-mix(in srgb,var(--tq) 60%,var(--line));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:var(--tq-d);font-size:11.5px;font-weight:700;cursor:pointer}
+.add-ph input{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+
+/* compare */
+.cmp{position:relative;width:min(100%,calc(60vh * 4 / 3));margin-inline:auto;aspect-ratio:4/3;max-width:100%;border-radius:14px;overflow:hidden;background:#000;--p:50%;user-select:none;touch-action:none}
+.cmp img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.cmp .b{position:absolute;inset:0;clip-path:inset(0 0 0 var(--p))}
+.cmp .h{position:absolute;top:0;bottom:0;left:var(--p);width:3px;margin-left:-1.5px;background:#fff;box-shadow:0 0 14px rgba(0,193,192,.9)}
+.cmp .h::after{content:"‹ ›";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:46px;height:46px;border-radius:50%;background:#00C1C0;color:#fff;display:grid;place-items:center;font-weight:800;font-size:18px;box-shadow:0 0 0 4px rgba(255,255,255,.6)}
+.cmp .lb{position:absolute;top:12px;font-size:12px;font-weight:800;letter-spacing:.08em;padding:5px 10px;border-radius:8px;color:#fff;background:rgba(0,0,0,.55)}
+.cmp .lb.l{left:12px} .cmp .lb.r{right:12px;background:#007D79}
+.cmp input{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:ew-resize;margin:0}
+.sbs{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sbs figure{margin:0;display:flex;flex-direction:column;gap:6px}
+.sbs img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:12px;background:var(--soft)}
+.sbs figcaption{font-size:13px;font-weight:700}
+
+/* reminders */
+.rem{display:grid;grid-template-columns:1fr auto;gap:14px;padding:16px 18px;border-top:1px solid var(--line)}
+.rem:first-child{border-top:0}
+.rem .ph{font-size:18px;font-weight:800;letter-spacing:-.02em;user-select:all}
+.sms{margin-top:8px;padding:10px 12px;border-radius:10px;background:var(--soft);font-size:13.5px;color:var(--ink);user-select:all}
+.rem .acts{display:flex;flex-direction:column;gap:8px;align-items:stretch}
+
+/* bars */
+.bars{display:grid;grid-template-columns:repeat(7,1fr);gap:10px;align-items:end;height:200px;padding-top:18px}
+.bar{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:6px;height:100%;min-width:0}
+.bar i{display:block;width:100%;max-width:46px;border-radius:8px 8px 3px 3px;background:var(--tq);min-height:3px}
+.bar.today i{background:var(--tq-d);box-shadow:0 0 14px var(--tq-glow)}
+.bar small{font-size:12px;color:var(--muted);font-weight:600}
+.bar em{font-style:normal;font-size:11.5px;font-weight:700}
+
+/* modal */
+#modal{position:fixed;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+#modal[hidden]{display:none!important}
+.mback{position:absolute;inset:0;background:rgba(5,25,25,.45);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+.msheet{position:relative;background:var(--card);border-radius:20px;width:min(620px,100%);max-height:100%;overflow:auto;box-shadow:0 30px 80px rgba(0,0,0,.3);animation:pop .22s ease-out}
+.msheet.wide{width:min(940px,100%)}
+@keyframes pop{from{transform:translateY(12px) scale(.98);opacity:0}}
+.mh{display:flex;align-items:flex-start;gap:12px;padding:20px 22px 14px;border-bottom:1px solid var(--line);position:sticky;top:0;background:var(--card);z-index:2}
+.mh h3{font-size:22px;font-weight:800;letter-spacing:-.03em}
+.mh .x{margin-left:auto}
+.mb{padding:18px 22px;display:flex;flex-direction:column;gap:16px}
+.mf{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end;padding:14px 22px 20px;border-top:1px solid var(--line);position:sticky;bottom:0;background:var(--card)}
+.mf .l{margin-right:auto}
+.box{border:1px solid var(--line);border-radius:14px;padding:14px 16px;background:var(--soft)}
+.pcols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+
+/* due alert */
+.due{text-align:center;padding:30px 24px 10px;display:flex;flex-direction:column;align-items:center;gap:8px}
+.ring{width:92px;height:92px;border-radius:50%;display:grid;place-items:center;background:var(--tq-l);color:var(--tq-d);position:relative}
+.ring::before,.ring::after{content:"";position:absolute;inset:0;border-radius:50%;border:3px solid var(--tq);animation:ring 1.6s ease-out infinite}
+.ring::after{animation-delay:.8s}
+@keyframes ring{from{transform:scale(1);opacity:.9}to{transform:scale(1.6);opacity:0}}
+.due h2{font-size:30px;font-weight:800;letter-spacing:-.045em}
+
+/* toasts */
+#toasts{position:fixed;z-index:80;right:max(16px,env(safe-area-inset-right,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;gap:8px;align-items:flex-end;pointer-events:none}
+.toast{pointer-events:auto;background:#123232;color:#fff;border-radius:12px;padding:12px 16px;font-weight:600;box-shadow:0 10px 30px rgba(0,0,0,.25);max-width:380px;border-left:4px solid #00C1C0;animation:pop .2s ease-out}
+.toast.err{border-color:#ff5a6e} .toast.warn{border-color:#f0b440}
+
+/* login */
+.login{min-height:100%;display:grid;grid-template-columns:1.1fr 1fr}
+.login-brand{position:relative;overflow:hidden;color:#fff;padding:48px;display:flex;flex-direction:column;justify-content:space-between;background:radial-gradient(120% 90% at 20% 10%,#00C1C0 0%,#00908e 45%,#005c59 100%)}
+.login-brand .logo b{font-size:44px} .login-brand .logo span{color:rgba(255,255,255,.8);font-size:12px}
+.login-brand .logo i{background:#fff;box-shadow:0 0 18px rgba(255,255,255,.8);width:80px}
+.login-brand h2{font-size:38px;font-weight:800;letter-spacing:-.05em;max-width:440px;line-height:1.05}
+.login-brand h2 em{font-style:normal;text-shadow:0 0 24px rgba(255,255,255,.6)}
+.login-brand ul{list-style:none;padding:0;margin:18px 0 0;display:flex;flex-direction:column;gap:8px;font-weight:600;opacity:.95}
+.login-brand li::before{content:"✓";display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.2);margin-right:10px;font-size:12px}
+.trail{position:absolute;right:-80px;bottom:-80px;width:420px;height:420px;border-radius:50%;border:2px solid rgba(255,255,255,.35);box-shadow:0 0 30px rgba(255,255,255,.3),inset 0 0 30px rgba(255,255,255,.2)}
+.login-form{display:flex;flex-direction:column;justify-content:center;gap:16px;padding:48px max(32px,env(safe-area-inset-right,0px)) 48px 48px;max-width:520px;width:100%;margin:0 auto}
+.login-form h1{font-size:32px;font-weight:800;letter-spacing:-.045em}
+.err{color:var(--red);font-weight:600;background:var(--red-l);padding:10px 12px;border-radius:10px}
+.demo{font-size:13px;color:var(--muted);border:1px dashed var(--line);border-radius:12px;padding:10px 12px}
+.demo b{color:var(--ink)}
+
+/* phone */
+.tabbar{display:none}
+@media (max-width:900px){
+  .shell{grid-template-columns:1fr}
+  .rail{display:none}
+  .tabbar{display:flex;position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--card);border-top:1px solid var(--line);padding:6px max(8px,env(safe-area-inset-right,0px)) calc(6px + env(safe-area-inset-bottom,0px)) max(8px,env(safe-area-inset-left,0px));justify-content:space-around}
+  .tabbar button{flex:1;border:0;background:none;display:flex;flex-direction:column;align-items:center;gap:2px;font-size:10.5px;font-weight:700;color:var(--muted);padding:6px 2px;position:relative;min-width:0}
+  .tabbar button.on{color:var(--tq-d)}
+  .tabbar .badge{position:absolute;top:2px;left:55%;background:var(--red);color:#fff;font-size:10px;border-radius:10px;padding:0 5px}
+  .top{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  .content{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-bottom:100px}
+  .two{grid-template-columns:1fr}
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .login{grid-template-columns:1fr}
+  .login-brand{padding:32px max(16px,env(safe-area-inset-right,0px)) 32px max(16px,env(safe-area-inset-left,0px));min-height:300px}
+  .login-form{padding:28px max(16px,env(safe-area-inset-right,0px)) 40px max(16px,env(safe-area-inset-left,0px))}
+  .focus{grid-template-columns:1fr}
+  .focus .acts{flex-direction:row;flex-wrap:wrap}
+  .mob-hide{display:none}
+  .tabbar-out{display:inline-flex!important}
+  #toasts{bottom:calc(76px + env(safe-area-inset-bottom,0px))}
+  .top h1{font-size:21px}
+}
+@media (max-width:560px){
+  .grid2,.grid3,.pcols{grid-template-columns:1fr}
+  .prof{grid-template-columns:auto 1fr}
+  .prof .acts{grid-column:1/-1}
+  .visit{grid-template-columns:1fr}
+  .rem{grid-template-columns:1fr}
+  .rem .acts{flex-direction:row;flex-wrap:wrap}
+  .focus h2{font-size:28px}
+  .tl-row{grid-template-columns:58px 1fr;}
+  .tl-row .pill{grid-column:2}
+  .clock{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div id="app"></div>
+<div id="modal" hidden></div>
+<div id="toasts" aria-live="polite"></div>
+
+<script>
+"use strict";
+/* =========================================================
+   PODO MASTER — pedolog CRM (oflayn, planshet uchun)
+   Ma’lumotlar: localStorage (matn) + IndexedDB (rasmlar)
+   ========================================================= */
+const LS_KEY = "podo_crm_v1";
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+const pad = n => String(n).padStart(2, "0");
+const dstr = d => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+const today = () => dstr(new Date());
+const addDays = (ds, n) => { const d = new Date(ds + "T00:00"); d.setDate(d.getDate() + n); return dstr(d); };
+const diffDays = (a, b) => Math.round((new Date(b + "T00:00") - new Date(a + "T00:00")) / 864e5);
+const MON = ["yanvar", "fevral", "mart", "aprel", "may", "iyun", "iyul", "avgust", "sentabr", "oktabr", "noyabr", "dekabr"];
+const WD = ["yakshanba", "dushanba", "seshanba", "chorshanba", "payshanba", "juma", "shanba"];
+const fmtD = ds => { const d = new Date(ds + "T00:00"); return `${d.getDate()}-${MON[d.getMonth()]}`; };
+const fmtDY = ds => { const d = new Date(ds + "T00:00"); return `${d.getDate()}-${MON[d.getMonth()]} ${d.getFullYear()}`; };
+const fmtDL = ds => { const d = new Date(ds + "T00:00"); return `${d.getDate()}-${MON[d.getMonth()]}, ${WD[d.getDay()]}`; };
+const hm = ts => { if (!ts) return "—"; const d = new Date(ts); return pad(d.getHours()) + ":" + pad(d.getMinutes()); };
+const money = n => String(Math.round(+n || 0)).replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " so‘m";
+const durTxt = ms => { if (!ms || ms < 0) return "—"; const m = Math.round(ms / 60000); return m >= 60 ? `${Math.floor(m / 60)} soat ${m % 60} daq` : `${m} daq`; };
+const hash = s => { let h = 5381; for (const c of "podo:" + s) h = ((h << 5) + h + c.charCodeAt(0)) | 0; let h2 = 0x811c9dc5; for (const c of s + ":master") { h2 ^= c.charCodeAt(0); h2 = Math.imul(h2, 16777619); } return "h" + (h >>> 0).toString(36) + (h2 >>> 0).toString(36); };
+const initials = n => String(n || "?").trim().split(/\s+/).slice(0, 2).map(w => w[0]).join("").toUpperCase();
+const tsOf = (date, time) => new Date(`${date}T${time || "00:00"}`).getTime();
+const minsUntil = a => (tsOf(a.date, a.time) - Date.now()) / 60000;
+const byTime = (a, b) => (a.date + a.time).localeCompare(b.date + b.time);
+
+const ROLE = { admin: "Administrator", reception: "Resepshn" };
+const PAY = { naqd: "Naqd", karta: "Karta", click: "Click / Payme" };
+const ST = { kutilmoqda: ["Yozilgan", "s-wait"], keldi: ["Muolajada", "s-in"], tugadi: ["Ketdi", "s-done"], kelmadi: ["Kelmadi", "s-no"], bekor: ["Bekor qilindi", "s-cancel"] };
+const DIAG = ["Tirnoq o‘sib kirishi", "Zamburug‘ (onixomikoz)", "Qadoq / natoptish", "Tovon yorilishi", "So‘gal", "Qandli diabet", "Yassi oyoqlik", "Gipergidroz", "Allergiya"];
+const WARN_DIAG = ["Qandli diabet", "Allergiya"];
+
+/* ---------- icons ---------- */
+const I = {
+  home: '<path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/>',
+  cal: '<rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+  users: '<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20c.8-3.6 3.4-5.5 6.5-5.5s5.7 1.9 6.5 5.5"/><path d="M16 4.5a3.5 3.5 0 010 7M18 14.8c1.9.7 3.1 2.4 3.5 5.2"/>',
+  bell: '<path d="M6 16v-5a6 6 0 0112 0v5l1.5 2h-15z"/><path d="M10 21h4"/>',
+  chart: '<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',
+  shift: '<circle cx="12" cy="13" r="8"/><path d="M12 9v4l3 2M9 2h6"/>',
+  gear: '<circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/>',
+  out: '<path d="M15 4h4v16h-4M10 8l-4 4 4 4M6 12h11"/>',
+  plus: '<path d="M12 5v14M5 12h14"/>',
+  cam: '<path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/>',
+  phone: '<path d="M5 3h4l2 5-2.5 1.5a11 11 0 006 6L16 13l5 2v4a2 2 0 01-2 2A17 17 0 013 5a2 2 0 012-2"/>',
+  check: '<path d="M5 12.5l4.5 4.5L19 7.5"/>',
+  search: '<circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/>',
+  x: '<path d="M6 6l12 12M18 6L6 18"/>',
+  copy: '<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 00-1-1H5a1 1 0 00-1 1v10a1 1 0 001 1h3"/>',
+  left: '<path d="M15 5l-7 7 7 7"/>', right: '<path d="M9 5l7 7-7 7"/>',
+  compare: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M12 3v18"/>',
+  lock: '<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/>',
+  edit: '<path d="M4 20h4L19 9l-4-4L4 16z"/>',
+  trash: '<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/>',
+  foot: '<path d="M9 21c-2.6 0-3.8-2-3.3-5.2.4-2.6 1.8-4.6 1.8-7.6 0-2.8 1.2-5.2 3.8-5.2s3.4 2.4 3 5.4c-.3 2.6-.9 4 .2 6.4 1.3 2.8.7 6.2-5.5 6.2z"/><circle cx="17.6" cy="5" r="1.3"/><circle cx="19.8" cy="8.4" r="1.1"/><circle cx="20.5" cy="12" r="1"/>',
+  clock: '<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>'
+};
+const ic = (n, s = 22) => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I[n] || ""}</svg>`;
+
+/* ---------- photo store (IndexedDB, memory fallback) ---------- */
+const PH = { mem: new Map(), db: null };
+function idbOpen() {
+  return new Promise(res => {
+    try {
+      const r = indexedDB.open("podo_photos", 1);
+      r.onupgradeneeded = () => r.result.createObjectStore("p");
+      r.onsuccess = () => { PH.db = r.result; res(); };
+      r.onerror = () => res();
+      setTimeout(res, 1500);
+    } catch (e) { res(); }
+  });
+}
+function phPut(id, data) {
+  PH.mem.set(id, data);
+  if (!PH.db) return Promise.resolve();
+  return new Promise(res => { try { const tx = PH.db.transaction("p", "readwrite"); tx.objectStore("p").put(data, id); tx.oncomplete = res; tx.onerror = res; } catch (e) { res(); } });
+}
+function phGet(id) {
+  if (PH.mem.has(id)) return Promise.resolve(PH.mem.get(id));
+  if (!PH.db) return Promise.resolve(null);
+  return new Promise(res => { try { const r = PH.db.transaction("p").objectStore("p").get(id); r.onsuccess = () => { if (r.result) PH.mem.set(id, r.result); res(r.result || null); }; r.onerror = () => res(null); } catch (e) { res(null); } });
+}
+function phDel(id) { PH.mem.delete(id); if (PH.db) try { PH.db.transaction("p", "readwrite").objectStore("p").delete(id); } catch (e) { } }
+function hydrate(root = document) {
+  $$("img[data-ph]", root).forEach(img => { if (img.dataset.done) return; img.dataset.done = 1; phGet(img.dataset.ph).then(src => { if (src) img.src = src; }); });
+}
+
+/* Demo photos — drawn toe illustration (namuna) */
+function drawToe(heal, seedN) {
+  const c = document.createElement("canvas"); c.width = 640; c.height = 480; const g = c.getContext("2d");
+  const bg = g.createLinearGradient(0, 0, 640, 480); bg.addColorStop(0, "#d9e9e8"); bg.addColorStop(1, "#b9d3d1"); g.fillStyle = bg; g.fillRect(0, 0, 640, 480);
+  g.fillStyle = "#e9b99c"; g.beginPath(); g.ellipse(320, 330, 190, 250, 0, Math.PI, 0); g.lineTo(510, 480); g.lineTo(130, 480); g.fill();
+  const sk = g.createRadialGradient(290, 250, 40, 320, 300, 260); sk.addColorStop(0, "rgba(255,230,210,.6)"); sk.addColorStop(1, "rgba(160,90,70,.25)"); g.fillStyle = sk; g.fill();
+  const lerp = (a, b) => Math.round(a + (b - a) * heal);
+  if (heal < .6) { g.fillStyle = `rgba(214,72,72,${(.6 - heal) * .9})`; g.beginPath(); g.ellipse(170, 230, 40, 90, .2, 0, 7); g.fill(); g.beginPath(); g.ellipse(470, 230, 40, 90, -.2, 0, 7); g.fill(); }
+  g.fillStyle = `rgb(${lerp(196, 246)},${lerp(160, 206)},${lerp(80, 200)})`;
+  g.beginPath(); g.ellipse(320, 210, 110, 125, 0, 0, 7); g.fill();
+  g.strokeStyle = `rgba(120,80,40,${.5 - heal * .4})`; g.lineWidth = 4; g.stroke();
+  let s = seedN; const rnd = () => (s = (s * 9301 + 49297) % 233280) / 233280;
+  for (let i = 0; i < 26 * (1 - heal); i++) { g.fillStyle = `rgba(${130 + rnd() * 40},${90 + rnd() * 30},30,${.35 + rnd() * .3})`; g.beginPath(); g.ellipse(250 + rnd() * 140, 120 + rnd() * 180, 6 + rnd() * 16, 4 + rnd() * 10, rnd() * 3, 0, 7); g.fill(); }
+  g.fillStyle = "rgba(255,255,255,.35)"; g.beginPath(); g.ellipse(290, 160, 26, 50, -.2, 0, 7); g.fill();
+  g.fillStyle = "rgba(0,0,0,.45)"; g.fillRect(0, 440, 640, 40); g.fillStyle = "#fff"; g.font = "600 20px sans-serif"; g.fillText("NAMUNA RASM", 18, 467);
+  return c.toDataURL("image/jpeg", .82);
+}
+
+/* ---------- state ---------- */
+let S = null, CU = null, V = { name: "bugun", p: {} }, lastAct = Date.now();
+const NOTIFIED = new Set();
+function save() { try { localStorage.setItem(LS_KEY, JSON.stringify(S)); } catch (e) { toast("Saqlab bo‘lmadi: brauzer xotirasi to‘lgan yoki bloklangan", "err"); } }
+function load() { try { S = JSON.parse(localStorage.getItem(LS_KEY) || "null"); } catch (e) { S = null; } if (!S || !S.users) { S = seed(); save(); } migrate(); }
+function migrate() { S.settings = Object.assign({ clinic: "PODO MASTER", phone: "+998 90 123 45 67", lockMin: 20, sms: "Assalomu alaykum, {ism}! PODO MASTER pedikyur va podologiya markazidan bezovta qilyapmiz. Oxirgi muolajangizdan {kun} kun o‘tdi — nazorat ko‘rigi vaqti keldi. Qulay vaqtga yozilish uchun: {tel}" }, S.settings || {}); ["photos", "reminders", "shifts", "appts", "clients", "services"].forEach(k => S[k] = S[k] || []); }
+
+function seed() {
+  const t = today(), now = new Date(), nowMin = now.getHours() * 60 + now.getMinutes();
+  const tm = off => { let m = Math.round((nowMin + off) / 5) * 5; m = Math.max(0, Math.min(23 * 60 + 55, m)); return pad(Math.floor(m / 60)) + ":" + pad(m % 60); };
+  const services = [
+    ["Tibbiy pedikyur", 150000, 60], ["Tirnoq o‘sib kirishini davolash", 250000, 45], ["Zamburug‘li tirnoqni tozalash", 180000, 40],
+    ["Qadoq / natoptishni olib tashlash", 120000, 30], ["Tovon yoriqlarini davolash", 160000, 50], ["Titan ip bilan korreksiya", 300000, 40], ["Ortopedik ortoz (qistirma)", 200000, 30]
+  ].map(([name, price, dur], i) => ({ id: "s" + (i + 1), name, price, dur }));
+  const users = [
+    { id: "u1", name: "Administrator", login: "admin", pass: hash("admin123"), role: "admin", active: true },
+    { id: "u2", name: "Malika", login: "resepshn", pass: hash("1234"), role: "reception", active: true }
+  ];
+  const C = [
+    ["Dilnoza Karimova", "+998 90 345 12 78", "1988-04-12", ["Zamburug‘ (onixomikoz)"], "Davolash kursi: har 2 haftada nazorat."],
+    ["Rustam Toshmatov", "+998 93 512 44 09", "1975-09-03", ["Qandli diabet", "Qadoq / natoptish"], "Diabet! Faqat apparat usuli, tig‘ ishlatilmasin."],
+    ["Nodira Yusupova", "+998 97 220 61 15", "1992-01-25", ["Tirnoq o‘sib kirishi"], "O‘ng oyoq bosh barmog‘i. Titan ip qo‘yilgan."],
+    ["Javohir Aliyev", "+998 99 870 33 41", "2001-06-30", ["Gipergidroz", "Zamburug‘ (onixomikoz)"], ""],
+    ["Gulnora Rahimova", "+998 91 404 18 62", "1969-11-08", ["Tovon yorilishi"], "Uyda krem: 10% mochevina."],
+    ["Sardor Ergashev", "+998 94 655 27 90", "1984-02-17", ["So‘gal"], ""],
+    ["Madina Sobirova", "+998 90 911 05 23", "1996-08-21", ["Tirnoq o‘sib kirishi"], "Og‘riqqa sezgir."],
+    ["Bekzod Nurmatov", "+998 88 133 70 54", "1979-12-02", ["Yassi oyoqlik"], "Ortoz tayyorlandi, 1 oydan keyin nazorat."]
+  ].map(([name, phone, birth, diag, notes], i) => ({ id: "c" + (i + 1), name, phone, birth, diag, notes, createdAt: Date.now() - (90 - i) * 864e5, demo: true }));
+
+  const shiftId = "sh_open";
+  const openTs = new Date(t + "T09:00").getTime();
+  const appts = [], photos = [], reminders = [];
+  const mk = (cid, date, time, sid, status, extra = {}) => { const s = services.find(x => x.id === sid); const a = Object.assign({ id: uid() + appts.length, clientId: cid, date, time, serviceId: sid, status, price: s.price, pay: "naqd", notes: "", remindDays: 14, createdBy: "u2", demo: true }, extra); appts.push(a); return a; };
+  const done = (a, arrOff, durMin, notes, pay) => { const base = tsOf(a.date, a.time); a.arrivedAt = base + arrOff * 60000; a.leftAt = a.arrivedAt + durMin * 60000; a.notes = notes; a.pay = pay || "naqd"; a.doneBy = "u2"; };
+
+  // past history for Dilnoza (fungus course, photo progress)
+  const p1 = mk("c1", addDays(t, -42), "11:00", "s3", "tugadi", { shiftId: "sh_old" }); done(p1, -5, 45, "Plastinka qalin, sarg‘ish. Apparat bilan tozalandi, antimikotik lak tavsiya.", "karta");
+  const p2 = mk("c1", addDays(t, -28), "11:30", "s3", "tugadi", { shiftId: "sh_old" }); done(p2, 0, 40, "Yaxshilanish bor, dog‘lar kamaydi.", "naqd");
+  const p3 = mk("c1", addDays(t, -14), "12:00", "s3", "tugadi", { shiftId: "sh_old" }); done(p3, 3, 40, "Sog‘lom tirnoq o‘smoqda. 14 kundan keyin nazorat.", "click");
+  [[p1, .0, .25], [p2, .3, .5], [p3, .55, .8]].forEach(([a, b, k], i) => {
+    photos.push({ id: "ph_d" + i + "o", clientId: "c1", apptId: a.id, kind: "oldin", date: a.date, ts: a.arrivedAt, gen: [b, 11 + i] });
+    photos.push({ id: "ph_d" + i + "k", clientId: "c1", apptId: a.id, kind: "keyin", date: a.date, ts: a.leftAt, gen: [k, 11 + i] });
+  });
+  const p4 = mk("c3", addDays(t, -21), "15:00", "s6", "tugadi", { shiftId: "sh_old" }); done(p4, 0, 40, "Titan ip qo‘yildi. 3 haftadan keyin almashtirish.", "karta");
+  photos.push({ id: "ph_n0o", clientId: "c3", apptId: p4.id, kind: "oldin", date: p4.date, ts: p4.arrivedAt, gen: [.15, 7] });
+  photos.push({ id: "ph_n0k", clientId: "c3", apptId: p4.id, kind: "keyin", date: p4.date, ts: p4.leftAt, gen: [.7, 7] });
+  const p5 = mk("c2", addDays(t, -30), "10:00", "s4", "tugadi", { shiftId: "sh_old" }); done(p5, 2, 30, "Natoptish olib tashlandi, diabet tufayli ehtiyotkorlik bilan.", "naqd");
+  const p6 = mk("c8", addDays(t, -29), "16:00", "s7", "tugadi", { shiftId: "sh_old" }); done(p6, 0, 30, "Ortoz o‘lchami olindi.", "karta");
+  const p7 = mk("c5", addDays(t, -1), "14:00", "s5", "tugadi", { shiftId: "sh_old" }); done(p7, 0, 50, "Yoriqlar tozalandi.", "naqd");
+  const p8 = mk("c6", addDays(t, -1), "17:00", "s4", "kelmadi", { shiftId: "sh_old" });
+
+  // today
+  const a1 = mk("c4", t, tm(-240), "s1", "tugadi", { shiftId }); done(a1, 0, 55, "Tibbiy pedikyur, terlashga qarshi vosita tavsiya qilindi.", "naqd");
+  const a2 = mk("c7", t, tm(-170), "s2", "tugadi", { shiftId }); done(a2, 5, 45, "Chap chekka qirrasi olib tashlandi, bog‘lam qo‘yildi.", "karta");
+  photos.push({ id: "ph_m0o", clientId: "c7", apptId: a2.id, kind: "oldin", date: t, ts: a2.arrivedAt, gen: [.1, 3] });
+  photos.push({ id: "ph_m0k", clientId: "c7", apptId: a2.id, kind: "keyin", date: t, ts: a2.leftAt, gen: [.75, 3] });
+  const a3 = mk("c5", t, tm(-90), "s5", "kelmadi", { shiftId });
+  const a4 = mk("c2", t, tm(-25), "s4", "keldi", { shiftId }); a4.arrivedAt = Date.now() - 20 * 60000;
+  mk("c1", t, tm(4), "s3", "kutilmoqda");
+  mk("c3", t, tm(65), "s6", "kutilmoqda");
+  mk("c8", t, tm(130), "s7", "kutilmoqda");
+  mk("c6", addDays(t, 1), "11:00", "s4", "kutilmoqda");
+
+  reminders.push({ id: uid() + "r1", clientId: "c3", date: t, reason: "Titan ipni almashtirish (21 kun)", apptId: p4.id, done: false, demo: true });
+  reminders.push({ id: uid() + "r2", clientId: "c2", date: addDays(t, -2), reason: "Natoptish — nazorat ko‘rigi (28 kun)", apptId: p5.id, done: false, demo: true });
+  reminders.push({ id: uid() + "r3", clientId: "c8", date: addDays(t, 1), reason: "Ortoz — 1 oylik nazorat", apptId: p6.id, done: false, demo: true });
+  reminders.push({ id: uid() + "r4", clientId: "c5", date: addDays(t, 6), reason: "Tovon yoriqlari — nazorat (7 kun)", apptId: p7.id, done: false, demo: true });
+  reminders.push({ id: uid() + "r5", clientId: "c4", date: addDays(t, 14), reason: "Tibbiy pedikyur — nazorat (14 kun)", apptId: a1.id, done: false, demo: true });
+
+  const shifts = [
+    { id: "sh_old", openedBy: "u2", openedAt: new Date(addDays(t, -1) + "T09:00").getTime(), openCash: 200000, closedAt: new Date(addDays(t, -1) + "T20:10").getTime(), closedBy: "u2", counted: 360000, expected: 360000, note: "", demo: true },
+    { id: shiftId, openedBy: "u2", openedAt: openTs, openCash: 200000, demo: true }
+  ];
+  return { v: 1, users, services, clients: C, appts, photos, reminders, shifts, settings: null, demoPhotosPending: true };
+}
+async function genDemoPhotos() {
+  if (!S.demoPhotosPending) return;
+  for (const p of S.photos) if (p.gen) { const have = await phGet(p.id); if (!have) await phPut(p.id, drawToe(p.gen[0], p.gen[1])); }
+  S.demoPhotosPending = false; save(); hydrate();
+}
+
+/* ---------- helpers on data ---------- */
+const cli = id => S.clients.find(c => c.id === id) || { name: "O‘chirilgan mijoz", phone: "", diag: [] };
+const svc = id => S.services.find(s => s.id === id) || { name: "—", price: 0, dur: 30 };
+const usr = id => S.users.find(u => u.id === id) || { name: "—" };
+const openShift = () => S.shifts.find(s => !s.closedAt);
+const apptsOn = d => S.appts.filter(a => a.date === d).sort(byTime);
+const clientVisits = cid => S.appts.filter(a => a.clientId === cid && a.status === "tugadi").sort(byTime).reverse();
+const lastVisit = (cid, exceptId) => clientVisits(cid).find(a => a.id !== exceptId);
+const apptPhotos = aid => S.photos.filter(p => p.apptId === aid).sort((a, b) => a.ts - b.ts);
+const dueReminders = () => S.reminders.filter(r => !r.done && r.date <= today()).sort((a, b) => a.date.localeCompare(b.date));
+const isAdmin = () => CU && CU.role === "admin";
+function smsText(r) {
+  const c = cli(r.clientId), a = S.appts.find(x => x.id === r.apptId);
+  const days = a ? diffDays(a.date, today()) : "";
+  return S.settings.sms.replace(/\{ism\}/g, c.name.split(" ")[0]).replace(/\{kun\}/g, days).replace(/\{tel\}/g, S.settings.phone).replace(/\{sabab\}/g, r.reason || "");
+}
+function shiftTotals(sh) {
+  const from = sh.openedAt, to = sh.closedAt || Date.now();
+  const list = S.appts.filter(a => a.status === "tugadi" && a.leftAt >= from && a.leftAt <= to);
+  const t = { count: list.length, naqd: 0, karta: 0, click: 0, total: 0, list };
+  list.forEach(a => { t[a.pay] = (t[a.pay] || 0) + (+a.price || 0); t.total += +a.price || 0; });
+  t.noshow = S.appts.filter(a => a.status === "kelmadi" && tsOf(a.date, a.time) >= from && tsOf(a.date, a.time) <= to).length;
+  return t;
+}
+
+/* ---------- UI helpers ---------- */
+function toast(msg, kind = "") { const el = document.createElement("div"); el.className = "toast " + kind; el.textContent = msg; $("#toasts").appendChild(el); setTimeout(() => el.remove(), 4200); }
+function modal(html, wide) { const m = $("#modal"); m.innerHTML = `<div class="mback" data-act="mclose"></div><div class="msheet ${wide ? "wide" : ""}" role="dialog" aria-modal="true">${html}</div>`; m.hidden = false; hydrate(m); }
+function mclose() { const m = $("#modal"); m.hidden = true; m.innerHTML = ""; }
+const mhead = (title, sub = "") => `<div class="mh"><div><h3>${title}</h3>${sub ? `<div class="muted" style="margin-top:2px">${sub}</div>` : ""}</div><button class="btn ghost sm x" data-act="mclose" aria-label="Yopish">${ic("x")}</button></div>`;
+function confirmBox(text, onYes, yesLabel = "Ha, tasdiqlayman", danger = true) {
+  CONFIRM = onYes;
+  modal(`${mhead("Tasdiqlang")}<div class="mb"><p style="margin:0;font-size:16px">${text}</p></div><div class="mf"><button class="btn" data-act="mclose">Bekor qilish</button><button class="btn ${danger ? "danger fill" : "pri"}" data-act="confirmYes">${yesLabel}</button></div>`);
+}
+let CONFIRM = null;
+function copyText(t) {
+  const done = () => toast("Nusxa olindi");
+  try { navigator.clipboard.writeText(t).then(done, () => fallbackCopy(t)); } catch (e) { fallbackCopy(t); }
+}
+function fallbackCopy(t) { const ta = document.createElement("textarea"); ta.value = t; document.body.appendChild(ta); ta.select(); try { document.execCommand("copy"); toast("Nusxa olindi"); } catch (e) { toast("Matnni belgilab, qo‘lda nusxa oling", "warn"); } ta.remove(); }
+function beep() {
+  try { const ac = new (window.AudioContext || window.webkitAudioContext)(); [0, .22].forEach((d, i) => { const o = ac.createOscillator(), g = ac.createGain(); o.frequency.value = i ? 1320 : 880; o.type = "sine"; g.gain.setValueAtTime(0, ac.currentTime + d); g.gain.linearRampToValueAtTime(.2, ac.currentTime + d + .02); g.gain.exponentialRampToValueAtTime(.001, ac.currentTime + d + .5); o.connect(g).connect(ac.destination); o.start(ac.currentTime + d); o.stop(ac.currentTime + d + .55); }); } catch (e) { }
+}
+const statusPill = s => `<span class="pill ${ST[s][1]}">${ST[s][0]}</span>`;
+const diagTags = (d = []) => d.map(x => `<span class="tag ${WARN_DIAG.includes(x) ? "warn" : ""}">${WARN_DIAG.includes(x) ? "⚠ " : ""}${esc(x)}</span>`).join(" ");
+
+/* ---------- permissions ---------- */
+const NAV = [
+  { id: "bugun", label: "Bugun", icon: "home" },
+  { id: "jadval", label: "Jadval", icon: "cal" },
+  { id: "mijozlar", label: "Mijozlar", icon: "users" },
+  { id: "eslatmalar", label: "Eslatmalar", icon: "bell" },
+  { id: "hisobot", label: "Hisobot", icon: "chart" },
+  { id: "smena", label: "Smena", icon: "shift" },
+  { id: "sozlamalar", label: "Sozlamalar", icon: "gear", admin: true }
+];
+const TITLES = { bugun: "Bugun", jadval: "Qabul jadvali", mijozlar: "Mijozlar bazasi", mijoz: "Mijoz kartasi", eslatmalar: "Eslatmalar", hisobot: "Kunlik hisobot", smena: "Smena", sozlamalar: "Sozlamalar" };
+
+/* ---------- auth ---------- */
+function login(l, p) {
+  const u = S.users.find(u => u.login.toLowerCase() === l.trim().toLowerCase() && u.pass === hash(p));
+  if (!u) return "Login yoki parol noto‘g‘ri";
+  if (!u.active) return "Bu foydalanuvchi bloklangan. Administratorga murojaat qiling.";
+  CU = u; try { sessionStorage.setItem("podo_cu", u.id); } catch (e) { }
+  lastAct = Date.now(); V = { name: "bugun", p: {} }; render();
+  const n = dueReminders().length; if (n) setTimeout(() => toast(`Bugun ${n} ta eslatma: mijozlarga qo‘ng‘iroq qiling`, "warn"), 600);
+  if (!openShift()) setTimeout(() => toast("Smena ochilmagan. Ishni boshlashdan oldin smenani oching.", "warn"), 900);
+  return "";
+}
+function logout(msg) { CU = null; try { sessionStorage.removeItem("podo_cu"); } catch (e) { } mclose(); render(); if (msg) toast(msg); }
+
+/* ---------- render ---------- */
+function go(name, p = {}) { if (name === "sozlamalar" && !isAdmin()) return toast("Bu bo‘lim faqat administrator uchun", "err"); V = { name, p }; render(); window.scrollTo(0, 0); }
+function render() {
+  if (!CU) return renderLogin();
+  const due = dueReminders().length, sh = openShift();
+  const nav = NAV.filter(n => !n.admin || isAdmin());
+  const active = V.name === "mijoz" ? "mijozlar" : V.name;
+  const btn = (n, cls) => `<button class="${active === n.id ? "on" : ""}" data-act="go" data-v="${n.id}" ${active === n.id ? 'aria-current="page"' : ""}>${ic(n.icon, cls ? 22 : 21)}<span>${n.label}</span>${n.id === "eslatmalar" && due ? `<span class="badge">${due}</span>` : ""}</button>`;
+  const now = new Date();
+  $("#app").innerHTML = `<div class="shell">
+  <aside class="rail">
+    <div class="logo"><b>PODO <em>MASTER</em></b><span>ПЕДИКЮРА И ПОДОЛОГИИ</span><i></i></div>
+    <nav class="nav">${nav.map(n => btn(n)).join("")}</nav>
+    <div class="rail-foot">
+      <div class="who"><div class="ava">${esc(initials(CU.name))}</div><div><strong>${esc(CU.name)}</strong><small>${ROLE[CU.role]}</small></div></div>
+      <button class="btn sm" data-act="logout">${ic("out", 18)} Chiqish</button>
+    </div>
+  </aside>
+  <main class="main">
+    <header class="top">
+      <h1>${TITLES[V.name] || ""}</h1>
+      <button class="pill ${sh ? "s-done" : "s-no"}" style="border:0;cursor:pointer;min-height:34px" data-act="go" data-v="smena">${ic("shift", 15)} ${sh ? "Smena ochiq · " + hm(sh.openedAt) : "Smena yopiq"}</button>
+      <div class="clock num"><b id="clk">${pad(now.getHours())}:${pad(now.getMinutes())}</b><small>${fmtDL(today())}</small></div>
+      <button class="btn pri" data-act="newAppt">${ic("plus", 18)} <span class="mob-hide">Yangi yozuv</span></button>
+      <button class="btn sm ghost tabbar-out" data-act="logout" aria-label="Chiqish" style="display:none">${ic("out", 18)}</button>
+    </header>
+    <div class="content" id="view">${VIEWS[V.name] ? VIEWS[V.name]() : ""}</div>
+  </main>
+  <nav class="tabbar">${nav.filter(n => n.id !== "sozlamalar").map(n => btn(n, 1)).join("")}${isAdmin() ? btn(NAV[6], 1) : `<button data-act="logout">${ic("out", 22)}<span>Chiqish</span></button>`}</nav>
+  </div>`;
+  hydrate();
+}
+
+function renderLogin() {
+  $("#app").innerHTML = `<div class="login">
+  <section class="login-brand">
+    <div class="trail" aria-hidden="true"></div>
+    <div class="logo"><b>PODO MASTER</b><span>ПЕДИКЮРА И ПОДОЛОГИИ</span><i></i></div>
+    <div>
+      <h2>Har bir qadam — <em>sog‘lom</em> oyoqdan.</h2>
+      <ul><li>Mijozlar bazasi va tashriflar tarixi</li><li>Oldin / keyin rasmlarni solishtirish</li><li>Nazorat ko‘rigi eslatmalari</li><li>Kunlik hisobot va smena yopish</li></ul>
+    </div>
+  </section>
+  <form class="login-form" id="loginForm" autocomplete="on">
+    <div class="eyebrow">${ic("lock", 14)} Xodimlar uchun</div>
+    <h1>Tizimga kirish</h1>
+    <label class="f">Login<input id="lg" name="username" autocomplete="username" autocapitalize="none" required></label>
+    <label class="f">Parol<input id="lp" name="password" type="password" autocomplete="current-password" required></label>
+    <div id="lerr" class="err" hidden></div>
+    <button class="btn pri big" type="submit">Kirish</button>
+    <div class="demo">Namuna hisoblar (birinchi kirishdan keyin Sozlamalarda almashtiring):<br><b>admin</b> / admin123 — to‘liq huquq<br><b>resepshn</b> / 1234 — cheklangan huquq</div>
+  </form></div>`;
+}
+
+/* ===================== VIEWS ===================== */
+const VIEWS = {};
+
+VIEWS.bugun = () => {
+  const t = today(), list = apptsOn(t).filter(a => a.status !== "bekor"), sh = openShift();
+  const cur = list.find(a => a.status === "keldi");
+  const next = list.filter(a => a.status === "kutilmoqda").find(a => minsUntil(a) > -90);
+  const focus = cur || next;
+  const cnt = s => list.filter(a => a.status === s).length;
+  const due = dueReminders();
+  let focusHtml = "";
+  if (focus) {
+    const c = cli(focus.clientId), s = svc(focus.serviceId), lv = lastVisit(c.id, focus.id);
+    const lp = lv ? apptPhotos(lv.id).filter(p => p.kind === "keyin").pop() : null;
+    let when;
+    if (focus.status === "keldi") when = `<span class="count">Muolajada · ${durTxt(Date.now() - focus.arrivedAt)}</span>`;
+    else { const m = Math.round(minsUntil(focus)); when = m > 0 ? `<span class="count">${m >= 60 ? Math.floor(m / 60) + " soat " + (m % 60) + " daq" : m + " daqiqadan keyin"}</span>` : m > -3 ? `<span class="count late">Vaqti keldi!</span>` : `<span class="count late">${-m} daq kechikmoqda</span>`; }
+    focusHtml = `<section class="card focus">
+      <div style="position:relative;z-index:1;min-width:0">
+        <div class="eyebrow">${focus.status === "keldi" ? "Hozir muolajada" : "Navbatdagi mijoz"} · ${focus.time}</div>
+        <h2>${esc(c.name)}</h2>
+        <div class="meta"><span>${ic("foot", 18)} ${esc(s.name)}</span><span class="num">${ic("phone", 17)} ${esc(c.phone)}</span>${when}</div>
+        ${c.diag && c.diag.length ? `<div class="row" style="margin-top:12px">${diagTags(c.diag)}</div>` : ""}
+        ${lv ? `<div class="last row" style="align-items:flex-start;flex-wrap:nowrap">${lp ? `<img class="focus-thumb" data-ph="${lp.id}" alt="">` : ""}<div><b>Oxirgi tashrif · ${fmtD(lv.date)}</b> — ${esc(svc(lv.serviceId).name)}<br>${esc(lv.notes || "Izoh yo‘q")}</div></div>` : `<div class="last">Birinchi tashrif</div>`}
+      </div>
+      <div class="acts">
+        ${focus.status === "keldi" ? `<button class="btn pri big" data-act="visit" data-id="${focus.id}">${ic("foot")} Muolajani ochish</button>` : `<button class="btn pri big" data-act="arrive" data-id="${focus.id}">${ic("check")} Keldi</button>`}
+        <button class="btn" data-act="client" data-id="${c.id}">Mijoz kartasi</button>
+      </div></section>`;
+  } else focusHtml = `<section class="card pad"><div class="empty">${ic("cal", 32)}<p>Bugun navbatda boshqa mijoz yo‘q.</p><button class="btn pri" data-act="newAppt">${ic("plus", 18)} Yangi yozuv</button></div></section>`;
+
+  return `${!sh ? `<div class="banner">${ic("shift")} Smena ochilmagan — mijozlarni qabul qilish uchun avval smenani oching.<button class="btn pri" data-act="openShiftModal">Smenani ochish</button></div>` : ""}
+  ${focusHtml}
+  <section class="stats">
+    <div class="card stat"><b class="num">${list.length}</b><span>Bugun yozilgan</span></div>
+    <div class="card stat hl"><b class="num">${cnt("keldi") + cnt("tugadi")}</b><span>Keldi</span></div>
+    <div class="card stat"><b class="num">${cnt("tugadi")}</b><span>Ketdi</span></div>
+    <div class="card stat"><b class="num" style="color:var(--red)">${cnt("kelmadi")}</b><span>Kelmadi</span></div>
+    <div class="card stat"><b class="num" style="color:var(--amber)">${due.length}</b><span>Eslatma (bugun)</span></div>
+  </section>
+  <div class="two">
+    <section class="card">
+      <div class="sec-h pad" style="padding-bottom:8px"><h2>Bugungi qabul</h2><button class="btn sm" data-act="go" data-v="jadval">Jadvalni ochish</button></div>
+      <div class="tl">${list.length ? list.map(a => { const c = cli(a.clientId); const isNow = focus && a.id === focus.id; return `<div class="tl-row ${isNow ? "now" : ""}" data-act="visit" data-id="${a.id}"><div class="tl-time num">${a.time}</div><div style="min-width:0"><div class="tl-name">${esc(c.name)}</div><div class="tl-sub">${esc(svc(a.serviceId).name)}${a.arrivedAt ? ` · keldi ${hm(a.arrivedAt)}` : ""}${a.leftAt ? ` · ketdi ${hm(a.leftAt)}` : ""}</div></div>${statusPill(a.status)}</div>`; }).join("") : `<div class="empty">Bugunga yozuv yo‘q</div>`}</div>
+    </section>
+    <section class="card">
+      <div class="sec-h pad" style="padding-bottom:8px"><h2>Qo‘ng‘iroq qilish kerak</h2><button class="btn sm" data-act="go" data-v="eslatmalar">Barchasi</button></div>
+      <div class="tl">${due.length ? due.slice(0, 5).map(r => { const c = cli(r.clientId); const late = diffDays(r.date, today()); return `<div class="tl-row" style="grid-template-columns:1fr auto" data-act="go" data-v="eslatmalar"><div style="min-width:0"><div class="tl-name">${esc(c.name)}</div><div class="tl-sub num">${esc(c.phone)} · ${esc(r.reason)}</div></div><span class="pill ${late ? "s-no" : "s-in"}">${late ? late + " kun o‘tdi" : "Bugun"}</span></div>`; }).join("") : `<div class="empty">${ic("check", 28)}<p>Bugungi eslatmalar bajarilgan</p></div>`}</div>
+    </section>
+  </div>`;
+};
+
+VIEWS.jadval = () => {
+  const d = V.p.date || today(); const list = apptsOn(d);
+  const hours = []; for (let h = 8; h <= 21; h++) hours.push(h);
+  const nh = new Date().getHours();
+  const extra = list.filter(a => +a.time.slice(0, 2) < 8 || +a.time.slice(0, 2) > 21);
+  return `<section class="row">
+    <button class="btn" data-act="day" data-v="-1" aria-label="Oldingi kun">${ic("left")}</button>
+    <button class="btn ${d === today() ? "pri" : ""}" data-act="day" data-v="0">Bugun</button>
+    <button class="btn" data-act="day" data-v="1" aria-label="Keyingi kun">${ic("right")}</button>
+    <input type="date" class="inp" id="jdate" value="${d}" style="width:auto">
+    <h2 style="font-size:20px;font-weight:800;margin-left:6px">${fmtDL(d)}</h2>
+    <span class="muted" style="margin-left:auto">${list.filter(a => a.status !== "bekor").length} ta yozuv</span>
+  </section>
+  <section class="card sched">
+    ${extra.length ? `<div class="hr"><div class="hr-l">Boshqa</div><div class="hr-c">${extra.map(apptChip).join("")}</div></div>` : ""}
+    ${hours.map(h => { const items = list.filter(a => +a.time.slice(0, 2) === h); return `<div class="hr ${d === today() && h === nh ? "cur" : ""}"><div class="hr-l num">${pad(h)}:00</div><div class="hr-c" data-act="newAppt" data-date="${d}" data-time="${pad(h)}:00">${items.map(apptChip).join("")}</div></div>`; }).join("")}
+  </section>`;
+};
+function apptChip(a) { const c = cli(a.clientId); return `<div class="appt ${a.status}" data-act="visit" data-id="${a.id}"><b>${a.time} · ${esc(c.name)}</b><small>${esc(svc(a.serviceId).name)} · ${ST[a.status][0]}</small></div>`; }
+
+VIEWS.mijozlar = () => {
+  return `<section class="row">
+    <label class="search"><span hidden>Qidirish</span>${ic("search", 20)}<input class="inp" id="q" type="search" placeholder="Ism yoki telefon raqami bo‘yicha qidirish" value="${esc(V.p.q || "")}"></label>
+    <button class="btn pri" data-act="newClient">${ic("plus", 18)} Yangi mijoz</button>
+  </section>
+  <section class="card"><div class="tbl-wrap" id="clist">${clientTable()}</div></section>`;
+};
+function clientTable() {
+  const q = (V.p.q || "").toLowerCase().replace(/\s+/g, "");
+  const rows = S.clients.filter(c => !q || c.name.toLowerCase().replace(/\s+/g, "").includes(q) || c.phone.replace(/\D/g, "").includes(q.replace(/\D/g, "") || "§"))
+    .map(c => ({ c, lv: clientVisits(c.id)[0], n: clientVisits(c.id).length, r: S.reminders.filter(r => r.clientId === c.id && !r.done).sort((a, b) => a.date.localeCompare(b.date))[0] }))
+    .sort((a, b) => ((b.lv && b.lv.date) || "").localeCompare((a.lv && a.lv.date) || "") || a.c.name.localeCompare(b.c.name));
+  if (!rows.length) return `<div class="empty">Mijoz topilmadi. <button class="btn sm pri" data-act="newClient">Yangi mijoz qo‘shish</button></div>`;
+  return `<table><thead><tr><th>Mijoz</th><th>Telefon</th><th>Tashxis</th><th class="r">Tashriflar</th><th>Oxirgi tashrif</th><th>Eslatma</th></tr></thead><tbody>
+  ${rows.map(({ c, lv, n, r }) => `<tr class="click" data-act="client" data-id="${c.id}"><td><b>${esc(c.name)}</b>${c.demo ? ` <span class="muted" style="font-size:11px">namuna</span>` : ""}</td><td class="num" style="white-space:nowrap">${esc(c.phone)}</td><td>${diagTags((c.diag || []).slice(0, 2))}</td><td class="r num">${n}</td><td class="num" style="white-space:nowrap">${lv ? fmtDY(lv.date) : "—"}</td><td style="white-space:nowrap">${r ? `<span class="pill ${r.date <= today() ? "s-no" : "s-in"}">${fmtD(r.date)}</span>` : "—"}</td></tr>`).join("")}
+  </tbody></table>`;
+}
+
+VIEWS.mijoz = () => {
+  const c = S.clients.find(x => x.id === V.p.id); if (!c) return `<div class="empty">Mijoz topilmadi</div>`;
+  const visits = S.appts.filter(a => a.clientId === c.id).sort(byTime).reverse();
+  const done = visits.filter(a => a.status === "tugadi");
+  const photos = S.photos.filter(p => p.clientId === c.id).sort((a, b) => a.ts - b.ts);
+  const rems = S.reminders.filter(r => r.clientId === c.id).sort((a, b) => b.date.localeCompare(a.date));
+  const sel = V.p.sel || [];
+  const age = c.birth ? Math.floor(diffDays(c.birth, today()) / 365.25) : null;
+  const spent = done.reduce((s, a) => s + (+a.price || 0), 0);
+  return `<button class="btn sm ghost" data-act="go" data-v="mijozlar" style="align-self:flex-start">${ic("left", 18)} Mijozlar</button>
+  <section class="card pad prof">
+    <div class="ava">${esc(initials(c.name))}</div>
+    <div style="min-width:0"><h2>${esc(c.name)}</h2>
+      <div class="row muted" style="margin-top:4px"><span class="num" style="font-weight:700;color:var(--ink);font-size:17px;user-select:all">${esc(c.phone)}</span><button class="btn sm ghost" data-act="copy" data-v="${esc(c.phone)}">${ic("copy", 16)} Nusxa</button>${age !== null ? `<span>${age} yosh</span>` : ""}<span>Mijoz: ${fmtDY(dstr(new Date(c.createdAt)))} dan</span></div>
+      ${c.diag && c.diag.length ? `<div class="row" style="margin-top:10px">${diagTags(c.diag)}</div>` : ""}
+      ${c.notes ? `<div class="box" style="margin-top:12px">${esc(c.notes)}</div>` : ""}
+    </div>
+    <div class="acts row" style="flex-direction:column;align-items:stretch">
+      <button class="btn pri" data-act="newAppt" data-client="${c.id}">${ic("cal", 18)} Navbatga yozish</button>
+      <button class="btn" data-act="newRem" data-client="${c.id}">${ic("bell", 18)} Eslatma qo‘shish</button>
+      <button class="btn" data-act="editClient" data-id="${c.id}">${ic("edit", 18)} Tahrirlash</button>
+      ${isAdmin() ? `<button class="btn danger" data-act="delClient" data-id="${c.id}">${ic("trash", 18)} O‘chirish</button>` : ""}
+    </div>
+  </section>
+  <section class="stats" style="grid-template-columns:repeat(${isAdmin() ? 4 : 3},1fr)">
+    <div class="card stat hl"><b class="num">${done.length}</b><span>Tashriflar</span></div>
+    <div class="card stat"><b class="num">${photos.length}</b><span>Rasmlar</span></div>
+    <div class="card stat"><b class="num" style="font-size:22px">${done[0] ? fmtD(done[0].date) : "—"}</b><span>Oxirgi tashrif</span></div>
+    ${isAdmin() ? `<div class="card stat"><b class="num" style="font-size:22px">${money(spent)}</b><span>Jami to‘lov</span></div>` : ""}
+  </section>
+  <section class="card">
+    <div class="sec-h pad" style="padding-bottom:6px"><h2>Oldin / keyin rasmlar</h2>
+      ${photos.length >= 2 ? `<button class="btn sm" data-act="cmpFirstLast" data-id="${c.id}">${ic("compare", 16)} Birinchi va oxirgi</button>` : ""}
+      <button class="btn sm ${sel.length === 2 ? "pri" : ""}" data-act="cmpSel" ${sel.length === 2 ? "" : "disabled"}>${ic("compare", 16)} Tanlanganlarni solishtirish (${sel.length}/2)</button>
+    </div>
+    <div class="pad" style="padding-top:6px">${photos.length ? `<p class="muted" style="margin:0 0 6px">Ikkita rasmni belgilang — davolanish natijasini yonma-yon ko‘rasiz.</p><div class="thumbs">${photos.map(p => `<button class="th ${sel.includes(p.id) ? "sel" : ""}" data-act="pick" data-id="${p.id}" aria-pressed="${sel.includes(p.id)}"><img data-ph="${p.id}" alt="${p.kind} ${p.date}"><span class="k ${p.kind}">${p.kind.toUpperCase()} · ${fmtD(p.date)}</span></button>`).join("")}</div>` : `<div class="empty">Hali rasm yo‘q. Rasmlar muolaja oynasida “Oldin” va “Keyin” bo‘limlaridan qo‘shiladi.</div>`}</div>
+  </section>
+  <div class="two">
+  <section class="card"><div class="sec-h pad" style="padding-bottom:6px"><h2>Tashriflar tarixi</h2></div>
+    ${visits.length ? visits.map(a => { const ph = apptPhotos(a.id); return `<div class="visit"><div><b class="num">${fmtDY(a.date)}</b><div class="muted num">${a.time}</div><div style="margin-top:6px">${statusPill(a.status)}</div></div><div style="min-width:0"><div class="row"><b class="grow">${esc(svc(a.serviceId).name)}</b>${a.status === "tugadi" && isAdmin() ? `<span class="num muted">${money(a.price)}</span>` : ""}<button class="btn sm" data-act="visit" data-id="${a.id}">Ochish</button></div>${a.arrivedAt ? `<div class="muted num" style="font-size:13px">Keldi ${hm(a.arrivedAt)} · Ketdi ${hm(a.leftAt)} · ${durTxt(a.leftAt - a.arrivedAt)}</div>` : ""}${a.notes ? `<div style="margin-top:6px">${esc(a.notes)}</div>` : ""}${ph.length ? `<div class="thumbs">${ph.map(p => `<button class="th" data-act="cmpVisit" data-id="${a.id}"><img data-ph="${p.id}" alt=""><span class="k ${p.kind}">${p.kind.toUpperCase()}</span></button>`).join("")}</div>` : ""}</div></div>`; }).join("") : `<div class="empty">Tashriflar yo‘q</div>`}
+  </section>
+  <section class="card"><div class="sec-h pad" style="padding-bottom:6px"><h2>Eslatmalar</h2></div>
+    ${rems.length ? rems.map(r => `<div class="tl-row" style="grid-template-columns:1fr auto;cursor:default"><div><div class="tl-name num">${fmtDY(r.date)}</div><div class="tl-sub">${esc(r.reason)}</div></div>${r.done ? `<span class="pill s-done">Bajarildi</span>` : `<span class="pill ${r.date <= today() ? "s-no" : "s-in"}">${r.date <= today() ? "Qo‘ng‘iroq qiling" : "Kutilmoqda"}</span>`}</div>`).join("") : `<div class="empty">Eslatma yo‘q</div>`}
+  </section></div>`;
+};
+
+VIEWS.eslatmalar = () => {
+  const tab = V.p.tab || "due", t = today();
+  const lists = { due: S.reminders.filter(r => !r.done && r.date <= t).sort((a, b) => a.date.localeCompare(b.date)), soon: S.reminders.filter(r => !r.done && r.date > t).sort((a, b) => a.date.localeCompare(b.date)), done: S.reminders.filter(r => r.done).sort((a, b) => (b.doneAt || 0) - (a.doneAt || 0)) };
+  const L = lists[tab];
+  return `<section class="row">
+    <div class="chips" role="tablist">
+      <button class="chip ${tab === "due" ? "on" : ""}" data-act="remTab" data-v="due">Bugun va o‘tgan (${lists.due.length})</button>
+      <button class="chip ${tab === "soon" ? "on" : ""}" data-act="remTab" data-v="soon">Kelgusi (${lists.soon.length})</button>
+      <button class="chip ${tab === "done" ? "on" : ""}" data-act="remTab" data-v="done">Bajarilgan</button>
+    </div>
+    <button class="btn pri" data-act="newRem" style="margin-left:auto">${ic("plus", 18)} Eslatma</button>
+  </section>
+  <p class="muted" style="margin:-6px 0 0">Muolaja yakunlanganda tanlangan kun (masalan, 7 kun) o‘tgach, mijoz shu ro‘yxatga avtomatik tushadi. Telefon raqamini va tayyor SMS matnini nusxalab yuboring.</p>
+  <section class="card">${L.length ? L.map(r => { const c = cli(r.clientId); const late = diffDays(r.date, t); return `<div class="rem"><div style="min-width:0">
+      <div class="row"><b style="font-size:17px">${esc(c.name)}</b>${r.done ? `<span class="pill s-done">Bajarildi ${r.doneAt ? fmtD(dstr(new Date(r.doneAt))) : ""}</span>` : late > 0 ? `<span class="pill s-no">${late} kun o‘tib ketdi</span>` : late === 0 ? `<span class="pill s-in">Bugun</span>` : `<span class="pill s-wait">${fmtDL(r.date)} · ${-late} kundan keyin</span>`}</div>
+      <div class="row" style="margin-top:4px"><span class="ph num">${esc(c.phone)}</span><button class="btn sm ghost" data-act="copy" data-v="${esc(c.phone)}">${ic("copy", 16)} Raqam</button></div>
+      <div class="muted">${esc(r.reason)}</div>
+      ${!r.done ? `<div class="sms">${esc(smsText(r))}</div>` : ""}
+    </div><div class="acts">
+      ${!r.done ? `<button class="btn sm" data-act="copySms" data-id="${r.id}">${ic("copy", 16)} SMS matni</button>
+      <button class="btn sm ok" data-act="remDone" data-id="${r.id}">${ic("check", 16)} Bog‘lanildi</button>
+      <button class="btn sm pri" data-act="newAppt" data-client="${c.id}" data-rem="${r.id}">${ic("cal", 16)} Navbatga yozish</button>
+      <button class="btn sm" data-act="remSnooze" data-id="${r.id}">+3 kun keyinga</button>` : `<button class="btn sm" data-act="client" data-id="${c.id}">Mijoz kartasi</button>`}
+    </div></div>`; }).join("") : `<div class="empty">${ic("check", 30)}<p>${tab === "due" ? "Qo‘ng‘iroq qilinadigan mijoz yo‘q" : "Ro‘yxat bo‘sh"}</p></div>`}</section>`;
+};
+
+VIEWS.hisobot = () => {
+  const d = isAdmin() ? (V.p.date || today()) : today();
+  const list = apptsOn(d).filter(a => a.status !== "bekor");
+  const done = list.filter(a => a.status === "tugadi");
+  const sum = k => done.filter(a => !k || a.pay === k).reduce((s, a) => s + (+a.price || 0), 0);
+  const adm = isAdmin();
+  let chart = "";
+  if (adm) {
+    const days = []; for (let i = 6; i >= 0; i--) days.push(addDays(d, -i));
+    const vals = days.map(x => S.appts.filter(a => a.date === x && a.status === "tugadi").reduce((s, a) => s + (+a.price || 0), 0));
+    const mx = Math.max(...vals, 1);
+    const bySvc = {}; done.forEach(a => { const n = svc(a.serviceId).name; bySvc[n] = (bySvc[n] || 0) + 1; });
+    chart = `<div class="two"><section class="card pad"><div class="sec-h"><h2>Tushum · oxirgi 7 kun</h2><span class="muted num">${money(vals.reduce((a, b) => a + b, 0))}</span></div>
+      <div class="bars">${days.map((x, i) => `<div class="bar ${x === d ? "today" : ""}"><em class="num">${vals[i] ? Math.round(vals[i] / 1000) + "k" : ""}</em><i style="height:${Math.max(2, vals[i] / mx * 140)}px"></i><small>${new Date(x + "T00:00").getDate()} ${WD[new Date(x + "T00:00").getDay()].slice(0, 3)}</small></div>`).join("")}</div></section>
+      <section class="card pad"><div class="sec-h"><h2>Muolajalar</h2></div>${Object.keys(bySvc).length ? `<div class="tl" style="margin-top:8px">${Object.entries(bySvc).sort((a, b) => b[1] - a[1]).map(([n, k]) => `<div class="row" style="padding:8px 0;border-top:1px solid var(--line)"><span class="grow">${esc(n)}</span><b class="num">${k}</b></div>`).join("")}</div>` : `<div class="empty">Bu kunda muolaja yo‘q</div>`}</section></div>`;
+  }
+  return `<section class="row">
+    ${adm ? `<button class="btn" data-act="rday" data-v="-1" aria-label="Oldingi kun">${ic("left")}</button><input type="date" class="inp" id="rdate" value="${d}" style="width:auto"><button class="btn" data-act="rday" data-v="1" aria-label="Keyingi kun">${ic("right")}</button>` : `<span class="pill s-wait">${ic("lock", 14)} Resepshn faqat bugungi hisobotni ko‘radi</span>`}
+    <h2 style="font-size:20px;font-weight:800">${fmtDL(d)}</h2>
+  </section>
+  <section class="stats" style="grid-template-columns:repeat(${adm ? 5 : 4},1fr)">
+    <div class="card stat"><b class="num">${list.length}</b><span>Yozilgan</span></div>
+    <div class="card stat hl"><b class="num">${list.filter(a => a.arrivedAt).length}</b><span>Keldi</span></div>
+    <div class="card stat"><b class="num">${done.length}</b><span>Ketdi (yakunlandi)</span></div>
+    <div class="card stat"><b class="num" style="color:var(--red)">${list.filter(a => a.status === "kelmadi").length}</b><span>Kelmadi</span></div>
+    ${adm ? `<div class="card stat"><b class="num" style="font-size:22px">${money(sum())}</b><span>Naqd ${money(sum("naqd"))} · Karta ${money(sum("karta"))} · Click ${money(sum("click"))}</span></div>` : ""}
+  </section>
+  ${chart}
+  <section class="card"><div class="sec-h pad" style="padding-bottom:4px"><h2>Kimlar keldi, kimlar ketdi</h2></div><div class="tbl-wrap"><table>
+    <thead><tr><th>Vaqt</th><th>Mijoz</th><th>Telefon</th><th>Muolaja</th><th>Keldi</th><th>Ketdi</th><th>Davomiyligi</th>${adm ? `<th class="r">Summa</th><th>To‘lov</th>` : ""}<th>Holat</th></tr></thead>
+    <tbody>${list.length ? list.map(a => { const c = cli(a.clientId); return `<tr class="click" data-act="visit" data-id="${a.id}"><td class="num"><b>${a.time}</b></td><td><b>${esc(c.name)}</b></td><td class="num" style="white-space:nowrap">${esc(c.phone)}</td><td>${esc(svc(a.serviceId).name)}</td><td class="num">${hm(a.arrivedAt)}</td><td class="num">${hm(a.leftAt)}</td><td class="num">${a.leftAt ? durTxt(a.leftAt - a.arrivedAt) : a.arrivedAt ? "davom etmoqda" : "—"}</td>${adm ? `<td class="r num" style="white-space:nowrap">${a.status === "tugadi" ? money(a.price) : "—"}</td><td>${a.status === "tugadi" ? PAY[a.pay] : "—"}</td>` : ""}<td>${statusPill(a.status)}</td></tr>`; }).join("") : `<tr><td colspan="10"><div class="empty">Bu kunda yozuv yo‘q</div></td></tr>`}</tbody></table></div></section>`;
+};
+
+VIEWS.smena = () => {
+  const sh = openShift();
+  const hist = S.shifts.filter(s => s.closedAt).sort((a, b) => b.closedAt - a.closedAt);
+  let main;
+  if (!sh) {
+    main = `<section class="card pad" style="max-width:560px"><div class="eyebrow">Smena yopiq</div><h2 style="font-size:26px;font-weight:800;margin:6px 0 14px">Yangi smenani ochish</h2>
+      <form id="openShiftForm" class="mb" style="padding:0"><label class="f">Kassadagi boshlang‘ich naqd pul (so‘m)<input id="ocash" type="number" inputmode="numeric" min="0" step="1000" value="${S.lastClose || 0}"></label>
+      <button class="btn pri big" type="submit">${ic("shift")} Smenani ochish — ${esc(CU.name)}</button></form></section>`;
+  } else {
+    const t = shiftTotals(sh), expected = (+sh.openCash || 0) + t.naqd;
+    main = `<section class="card pad"><div class="row"><div class="grow"><div class="eyebrow">Smena ochiq</div><h2 style="font-size:26px;font-weight:800;margin-top:4px">${esc(usr(sh.openedBy).name)} · ${hm(sh.openedAt)} dan beri</h2><div class="muted">${fmtDL(dstr(new Date(sh.openedAt)))} · ${durTxt(Date.now() - sh.openedAt)}</div></div><span class="pill s-done" style="font-size:14px">● Ochiq</span></div></section>
+    <section class="stats" style="grid-template-columns:repeat(4,1fr)">
+      <div class="card stat hl"><b class="num">${t.count}</b><span>Yakunlangan muolaja</span></div>
+      <div class="card stat"><b class="num" style="color:var(--red)">${t.noshow}</b><span>Kelmadi</span></div>
+      <div class="card stat"><b class="num" style="font-size:22px">${money(t.naqd)}</b><span>Naqd tushum</span></div>
+      <div class="card stat"><b class="num" style="font-size:22px">${money(t.karta + t.click)}</b><span>Karta + Click</span></div>
+    </section>
+    <section class="card pad" style="max-width:640px"><h2 style="font-size:22px;font-weight:800;margin-bottom:6px">Smenani yopish</h2>
+      <p class="muted" style="margin-top:0">Kassadagi naqd pulni sanab kiriting. Tizim kutilgan summa bilan solishtiradi.</p>
+      ${S.appts.some(a => a.status === "keldi") ? `<div class="banner" style="margin-bottom:12px">Muolajasi yakunlanmagan mijoz bor. Avval uni yakunlang.</div>` : ""}
+      <form id="closeShiftForm" class="mb" style="padding:0">
+        <div class="box row"><span class="grow">Boshlang‘ich naqd + naqd tushum</span><b class="num" id="expCash" data-v="${expected}">${money(expected)}</b></div>
+        <label class="f">Kassada sanalgan naqd pul (so‘m)<input id="ccash" type="number" inputmode="numeric" min="0" step="1000" required></label>
+        <div id="diff" class="box num" hidden></div>
+        <label class="f">Izoh (ixtiyoriy)<textarea id="cnote" placeholder="Masalan: 50 000 so‘m inkassatsiya qilindi"></textarea></label>
+        <button class="btn danger fill big" type="submit">${ic("lock")} Smenani yopish</button>
+      </form></section>`;
+  }
+  const histHtml = isAdmin() ? `<section class="card"><div class="sec-h pad" style="padding-bottom:4px"><h2>Yopilgan smenalar</h2></div><div class="tbl-wrap"><table><thead><tr><th>Sana</th><th>Xodim</th><th>Ochildi</th><th>Yopildi</th><th class="r">Muolaja</th><th class="r">Jami tushum</th><th class="r">Kutilgan naqd</th><th class="r">Sanalgan</th><th class="r">Farq</th><th>Izoh</th></tr></thead><tbody>
+    ${hist.length ? hist.map(s => { const t = shiftTotals(s), df = (s.counted || 0) - (s.expected || 0); return `<tr><td class="num" style="white-space:nowrap">${fmtD(dstr(new Date(s.openedAt)))}</td><td>${esc(usr(s.openedBy).name)}</td><td class="num">${hm(s.openedAt)}</td><td class="num">${hm(s.closedAt)}</td><td class="r num">${t.count}</td><td class="r num" style="white-space:nowrap">${money(t.total)}</td><td class="r num" style="white-space:nowrap">${money(s.expected)}</td><td class="r num" style="white-space:nowrap">${money(s.counted)}</td><td class="r num" style="white-space:nowrap;font-weight:700;color:${df === 0 ? "var(--green)" : "var(--red)"}">${df > 0 ? "+" : ""}${money(df)}</td><td>${esc(s.note || "")}</td></tr>`; }).join("") : `<tr><td colspan="10"><div class="empty">Hali yopilgan smena yo‘q</div></td></tr>`}
+  </tbody></table></div></section>` : "";
+  return main + histHtml;
+};
+
+VIEWS.sozlamalar = () => {
+  if (!isAdmin()) return "";
+  const st = S.settings;
+  return `<div class="two">
+  <section class="card"><div class="sec-h pad" style="padding-bottom:4px"><h2>Xodimlar va kirish</h2><button class="btn sm pri" data-act="editUser">${ic("plus", 16)} Xodim</button></div>
+    <div class="tbl-wrap"><table><thead><tr><th>Ism</th><th>Login</th><th>Rol</th><th>Holat</th><th></th></tr></thead><tbody>
+    ${S.users.map(u => `<tr><td><b>${esc(u.name)}</b></td><td class="num">${esc(u.login)}</td><td><span class="tag">${ROLE[u.role]}</span></td><td>${u.active ? `<span class="pill s-done">Faol</span>` : `<span class="pill s-no">Bloklangan</span>`}</td><td class="r"><button class="btn sm" data-act="editUser" data-id="${u.id}">${ic("edit", 16)} Tahrirlash</button></td></tr>`).join("")}
+    </tbody></table></div>
+    <div class="pad muted" style="font-size:13.5px"><b style="color:var(--ink)">Resepshn huquqlari:</b> mijoz qo‘shish va tahrirlash, navbatga yozish, “keldi/ketdi”, rasm olish, eslatmalar, smenani ochish/yopish, faqat bugungi hisobot (summalarsiz). <b style="color:var(--ink)">Faqat admin:</b> mijoz/yozuvni o‘chirish, istalgan kun hisoboti va tushum, smenalar tarixi, narxlar, xodimlar, zaxira nusxa.</div>
+  </section>
+  <section class="card"><div class="sec-h pad" style="padding-bottom:4px"><h2>Xizmatlar va narxlar</h2><button class="btn sm pri" data-act="editSvc">${ic("plus", 16)} Xizmat</button></div>
+    <div class="tbl-wrap"><table><thead><tr><th>Xizmat</th><th class="r">Narx</th><th class="r">Vaqt</th><th></th></tr></thead><tbody>
+    ${S.services.map(s => `<tr class="click" data-act="editSvc" data-id="${s.id}"><td><b>${esc(s.name)}</b></td><td class="r num" style="white-space:nowrap">${money(s.price)}</td><td class="r num">${s.dur} daq</td><td class="r">${ic("edit", 16)}</td></tr>`).join("")}
+    </tbody></table></div></section>
+  </div>
+  <section class="card pad"><h2 style="font-size:19px;font-weight:800;margin-bottom:14px">Markaz va eslatma matni</h2>
+    <form id="setForm" class="mb" style="padding:0">
+      <div class="grid3"><label class="f">Markaz nomi<input id="st_clinic" value="${esc(st.clinic)}"></label><label class="f">Markaz telefoni (SMS ichida)<input id="st_phone" value="${esc(st.phone)}"></label><label class="f">Avto-bloklash (daqiqa harakatsizlik)<input id="st_lock" type="number" min="1" max="240" value="${st.lockMin}"></label></div>
+      <label class="f">SMS / eslatma shabloni — {ism}, {kun}, {tel}, {sabab} o‘rniga avtomatik qo‘yiladi<textarea id="st_sms">${esc(st.sms)}</textarea></label>
+      <div><button class="btn pri" type="submit">Saqlash</button></div>
+    </form></section>
+  <section class="card pad"><h2 style="font-size:19px;font-weight:800;margin-bottom:6px">Ma’lumotlar</h2>
+    <p class="muted" style="margin-top:0">Barcha ma’lumot shu planshet brauzerida saqlanadi. Har hafta zaxira nusxa oling va boshqa joyda saqlang.</p>
+    <div class="row">
+      <button class="btn" data-act="exportData">Zaxira nusxa yuklab olish (.json)</button>
+      <label class="btn">Zaxiradan tiklash<input type="file" id="importFile" accept="application/json,.json" hidden></label>
+      <button class="btn danger" data-act="clearDemo">Namuna ma’lumotlarni o‘chirish</button>
+      <button class="btn danger" data-act="resetAll">Hammasini tozalash</button>
+    </div>
+    <div class="row" style="margin-top:12px"><span class="muted">Mavzu:</span><div class="chips">${["auto", "light", "dark"].map(m => `<button class="chip ${(localGet("podo_theme") || "auto") === m ? "on" : ""}" data-act="theme" data-v="${m}">${{ auto: "Avto", light: "Yorug‘", dark: "Qorong‘i" }[m]}</button>`).join("")}</div></div>
+  </section>`;
+};
+function localGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+function localSet(k, v) { try { localStorage.setItem(k, v); } catch (e) { } }
+function applyTheme() { const m = localGet("podo_theme") || "auto"; if (m === "auto") document.documentElement.removeAttribute("data-theme"); else document.documentElement.setAttribute("data-theme", m); }
+
+/* ===================== MODALS ===================== */
+function openVisit(id) {
+  const a = S.appts.find(x => x.id === id); if (!a) return;
+  const c = cli(a.clientId), s = svc(a.serviceId), lv = lastVisit(c.id, a.id);
+  const ph = apptPhotos(a.id), old = ph.filter(p => p.kind === "oldin"), nw = ph.filter(p => p.kind === "keyin");
+  const editable = a.status === "keldi" || a.status === "tugadi";
+  const phCol = (kind, arr) => `<div><div class="eyebrow" style="margin-bottom:6px">${kind === "oldin" ? "Oldin (muolajadan avval)" : "Keyin (muolajadan so‘ng)"}</div><div class="thumbs" style="margin-top:0">${arr.map(p => `<button class="th" data-act="viewPh" data-id="${p.id}"><img data-ph="${p.id}" alt=""><span class="k ${kind}">${hm(p.ts)}</span></button>`).join("")}${editable ? `<label class="add-ph">${ic("cam", 22)}Rasm olish<input type="file" accept="image/*" capture="environment" multiple data-photo="${kind}" data-appt="${a.id}"></label>` : ""}</div></div>`;
+  const rd = a.remindDays ?? 14;
+  modal(`${mhead(esc(c.name), `<span class="num">${fmtDL(a.date)} · ${a.time}</span> · <span class="num">${esc(c.phone)}</span> · ${statusPill(a.status)}`)}
+  <div class="mb">
+    ${(c.diag || []).length || c.notes ? `<div class="box">${diagTags(c.diag)}${c.notes ? `<div style="margin-top:${(c.diag || []).length ? 8 : 0}px">${esc(c.notes)}</div>` : ""}</div>` : ""}
+    ${lv ? `<div class="box"><div class="eyebrow">Oxirgi tashrif · ${fmtDY(lv.date)}</div><b>${esc(svc(lv.serviceId).name)}</b><div>${esc(lv.notes || "Izoh yo‘q")}</div>${apptPhotos(lv.id).length ? `<div class="thumbs">${apptPhotos(lv.id).map(p => `<button class="th" data-act="viewPh" data-id="${p.id}"><img data-ph="${p.id}" alt=""><span class="k ${p.kind}">${p.kind.toUpperCase()}</span></button>`).join("")}</div>` : ""}</div>` : `<div class="box">Birinchi tashrif — mijoz kartasini to‘ldirishni unutmang.</div>`}
+    <label class="f">Muolaja<select data-f="serviceId" data-id="${a.id}">${S.services.map(x => `<option value="${x.id}" ${x.id === a.serviceId ? "selected" : ""}>${esc(x.name)} — ${money(x.price)}</option>`).join("")}</select></label>
+    ${editable ? `
+    <div class="pcols">${phCol("oldin", old)}${phCol("keyin", nw)}</div>
+    ${old.length && nw.length ? `<button class="btn" data-act="cmpVisit" data-id="${a.id}">${ic("compare", 18)} Oldin / keyin solishtirish</button>` : ""}
+    <label class="f">Muolaja izohi (shifokor uchun)<textarea data-f="notes" data-id="${a.id}" placeholder="Nima qilindi, nimaga e’tibor berish kerak, uy parvarishi...">${esc(a.notes || "")}</textarea></label>
+    <div class="grid2"><label class="f">Summa (so‘m)<input type="number" inputmode="numeric" min="0" step="1000" data-f="price" data-id="${a.id}" value="${a.price ?? s.price}"></label>
+      <div class="f">To‘lov turi<div class="chips">${Object.entries(PAY).map(([k, v]) => `<button class="chip ${a.pay === k ? "on" : ""}" data-act="setf" data-id="${a.id}" data-f="pay" data-v="${k}">${v}</button>`).join("")}</div></div></div>
+    <div class="f">Nazorat eslatmasi — necha kundan keyin mijozga qo‘ng‘iroq qilinadi?<div class="chips">${[0, 3, 7, 14, 21, 30].map(n => `<button class="chip ${rd === n ? "on" : ""}" data-act="setf" data-id="${a.id}" data-f="remindDays" data-v="${n}">${n ? n + " kun" : "Kerak emas"}</button>`).join("")}<input class="inp" type="number" min="1" max="365" placeholder="Boshqa" data-f="remindDays" data-id="${a.id}" style="width:110px;min-height:40px" value="${[0, 3, 7, 14, 21, 30].includes(rd) ? "" : rd}"></div>
+      ${rd ? `<span style="color:var(--tq-d)">Eslatma sanasi: ${fmtDL(addDays(a.leftAt ? dstr(new Date(a.leftAt)) : today(), rd))}</span>` : ""}</div>
+    ${a.arrivedAt ? `<div class="muted num">Keldi: ${hm(a.arrivedAt)}${a.leftAt ? ` · Ketdi: ${hm(a.leftAt)} · ${durTxt(a.leftAt - a.arrivedAt)}` : ""}</div>` : ""}
+    ` : `<label class="f">Izoh<textarea data-f="notes" data-id="${a.id}">${esc(a.notes || "")}</textarea></label>`}
+  </div>
+  <div class="mf">
+    ${isAdmin() ? `<button class="btn danger l" data-act="delAppt" data-id="${a.id}">${ic("trash", 18)}</button>` : `<span class="l"></span>`}
+    <button class="btn" data-act="client" data-id="${c.id}">Mijoz kartasi</button>
+    ${a.status === "kutilmoqda" ? `<button class="btn danger" data-act="setStatus" data-id="${a.id}" data-v="bekor">Bekor</button><button class="btn danger" data-act="setStatus" data-id="${a.id}" data-v="kelmadi">Kelmadi</button><button class="btn pri big" data-act="arrive" data-id="${a.id}">${ic("check")} Keldi</button>` : ""}
+    ${a.status === "keldi" ? `<button class="btn" data-act="mclose">Saqlash</button><button class="btn ok big" data-act="finish" data-id="${a.id}">${ic("check")} Yakunlash · mijoz ketdi</button>` : ""}
+    ${a.status === "tugadi" ? `<button class="btn pri" data-act="saveDone" data-id="${a.id}">Saqlash</button>` : ""}
+    ${a.status === "kelmadi" || a.status === "bekor" ? `<button class="btn" data-act="setStatus" data-id="${a.id}" data-v="kutilmoqda">Qayta tiklash</button>` : ""}
+  </div>`, true);
+  MODAL_CTX = { type: "visit", id };
+}
+let MODAL_CTX = null;
+
+function dueModal(a) {
+  const c = cli(a.clientId), s = svc(a.serviceId), lv = lastVisit(c.id, a.id);
+  modal(`<div class="due"><div class="ring">${ic("bell", 40)}</div><div class="eyebrow" style="margin-top:12px">Qabul vaqti keldi · ${a.time}</div><h2>${esc(c.name)}</h2><div class="muted num" style="font-size:17px">${esc(c.phone)}</div><div class="tag" style="font-size:15px;padding:6px 14px">${esc(s.name)} · ${s.dur} daq</div>${(c.diag || []).length ? `<div class="row" style="justify-content:center">${diagTags(c.diag)}</div>` : ""}</div>
+  <div class="mb">${lv ? `<div class="box"><div class="eyebrow">Oxirgi muolaja · ${fmtDY(lv.date)}</div><b>${esc(svc(lv.serviceId).name)}</b><div>${esc(lv.notes || "")}</div>${apptPhotos(lv.id).length ? `<div class="thumbs">${apptPhotos(lv.id).map(p => `<span class="th"><img data-ph="${p.id}" alt=""><span class="k ${p.kind}">${p.kind.toUpperCase()}</span></span>`).join("")}</div>` : ""}</div>` : `<div class="box">Birinchi tashrif</div>`}${c.notes ? `<div class="box">${esc(c.notes)}</div>` : ""}</div>
+  <div class="mf"><button class="btn danger l" data-act="setStatus" data-id="${a.id}" data-v="kelmadi">Kelmadi</button><button class="btn" data-act="mclose">Keyinroq</button><button class="btn pri big" data-act="arrive" data-id="${a.id}">${ic("check")} Keldi — muolajani boshlash</button></div>`);
+}
+
+function apptForm(o = {}) {
+  const pre = o.client ? S.clients.find(c => c.id === o.client) : null;
+  modal(`${mhead("Yangi yozuv", "Mijozni navbatga yozish")}
+  <form id="apptForm"><div class="mb">
+    <input type="hidden" id="af_rem" value="${esc(o.rem || "")}">
+    ${pre ? `<input type="hidden" id="af_client" value="${pre.id}"><div class="box"><b>${esc(pre.name)}</b> · <span class="num">${esc(pre.phone)}</span></div>` : `
+    <div class="chips"><button type="button" class="chip on" data-act="afMode" data-v="old">Mavjud mijoz</button><button type="button" class="chip" data-act="afMode" data-v="new">Yangi mijoz</button></div>
+    <div id="af_old"><label class="f">Mijozni qidiring<input id="af_q" placeholder="Ism yoki telefon" autocomplete="off"></label>
+      <select id="af_client" class="inp" size="5" style="margin-top:8px;min-height:160px">${clientOptions("")}</select></div>
+    <div id="af_new" hidden class="grid2"><label class="f">Ism familiya<input id="af_name" autocomplete="off"></label><label class="f">Telefon<input id="af_phone" type="tel" inputmode="tel" value="+998 "></label></div>`}
+    <div class="grid3"><label class="f">Sana<input id="af_date" type="date" value="${o.date || today()}" required></label><label class="f">Vaqt<input id="af_time" type="time" value="${o.time || nextSlot()}" required step="300"></label>
+      <label class="f">Muolaja<select id="af_svc">${S.services.map(x => `<option value="${x.id}">${esc(x.name)}</option>`).join("")}</select></label></div>
+    <label class="f">Izoh<input id="af_note" placeholder="Ixtiyoriy"></label>
+    <div id="af_err" class="err" hidden></div>
+  </div><div class="mf"><button type="button" class="btn" data-act="mclose">Bekor qilish</button><button class="btn pri big" type="submit">Yozish</button></div></form>`);
+}
+function clientOptions(q) {
+  q = q.toLowerCase(); const qd = q.replace(/\D/g, "");
+  return S.clients.filter(c => !q || c.name.toLowerCase().includes(q) || (qd && c.phone.replace(/\D/g, "").includes(qd))).sort((a, b) => a.name.localeCompare(b.name)).map(c => `<option value="${c.id}">${esc(c.name)} — ${esc(c.phone)}</option>`).join("");
+}
+function nextSlot() { const d = new Date(Date.now() + 30 * 60000); let m = Math.ceil(d.getMinutes() / 15) * 15; let h = d.getHours(); if (m === 60) { m = 0; h = (h + 1) % 24; } return pad(h) + ":" + pad(m); }
+
+function clientForm(id) {
+  const c = id ? S.clients.find(x => x.id === id) : { name: "", phone: "+998 ", birth: "", diag: [], notes: "" };
+  FORM_DIAG = [...(c.diag || [])];
+  modal(`${mhead(id ? "Mijozni tahrirlash" : "Yangi mijoz")}
+  <form id="clientForm" data-id="${id || ""}"><div class="mb">
+    <div class="grid2"><label class="f">Ism familiya<input id="cf_name" value="${esc(c.name)}" required autocomplete="off"></label><label class="f">Telefon raqami<input id="cf_phone" type="tel" inputmode="tel" value="${esc(c.phone)}" required></label></div>
+    <label class="f" style="max-width:260px">Tug‘ilgan sana<input id="cf_birth" type="date" value="${esc(c.birth || "")}"></label>
+    <div class="f">Tashxis / holat<div class="chips" id="cf_diag">${diagChips()}</div></div>
+    <label class="f">Izoh (allergiya, dori, muhim ma’lumot)<textarea id="cf_notes">${esc(c.notes || "")}</textarea></label>
+    <div id="cf_err" class="err" hidden></div>
+  </div><div class="mf"><button type="button" class="btn" data-act="mclose">Bekor qilish</button><button class="btn pri big" type="submit">Saqlash</button></div></form>`);
+}
+let FORM_DIAG = [];
+const diagChips = () => DIAG.map(d => `<button type="button" class="chip ${WARN_DIAG.includes(d) ? "red" : ""} ${FORM_DIAG.includes(d) ? "on" : ""}" data-act="diag" data-v="${esc(d)}">${esc(d)}</button>`).join("");
+
+function remForm(o = {}) {
+  modal(`${mhead("Eslatma qo‘shish")}
+  <form id="remForm"><div class="mb">
+    ${o.client ? `<input type="hidden" id="rf_client" value="${o.client}"><div class="box"><b>${esc(cli(o.client).name)}</b> · <span class="num">${esc(cli(o.client).phone)}</span></div>` : `<label class="f">Mijoz<select id="rf_client" class="inp">${clientOptions("")}</select></label>`}
+    <div class="f">Necha kundan keyin?<div class="chips">${[1, 3, 7, 14, 21, 30].map(n => `<button type="button" class="chip ${n === 7 ? "on" : ""}" data-act="rfDays" data-v="${n}">${n} kun</button>`).join("")}</div></div>
+    <label class="f" style="max-width:260px">Sana<input id="rf_date" type="date" value="${addDays(today(), 7)}" required></label>
+    <label class="f">Sabab<input id="rf_reason" value="Nazorat ko‘rigi" required></label>
+  </div><div class="mf"><button type="button" class="btn" data-act="mclose">Bekor qilish</button><button class="btn pri big" type="submit">Saqlash</button></div></form>`);
+}
+
+function userForm(id) {
+  const u = id ? S.users.find(x => x.id === id) : { name: "", login: "", role: "reception", active: true };
+  modal(`${mhead(id ? "Xodimni tahrirlash" : "Yangi xodim")}
+  <form id="userForm" data-id="${id || ""}"><div class="mb">
+    <div class="grid2"><label class="f">Ism<input id="uf_name" value="${esc(u.name)}" required></label><label class="f">Login<input id="uf_login" value="${esc(u.login)}" required autocapitalize="none" autocomplete="off"></label></div>
+    <div class="grid2"><label class="f">${id ? "Yangi parol (o‘zgartirmaslik uchun bo‘sh qoldiring)" : "Parol"}<input id="uf_pass" type="password" autocomplete="new-password" ${id ? "" : "required"} minlength="4"></label>
+      <label class="f">Rol<select id="uf_role"><option value="reception" ${u.role === "reception" ? "selected" : ""}>Resepshn (cheklangan)</option><option value="admin" ${u.role === "admin" ? "selected" : ""}>Administrator (to‘liq)</option></select></label></div>
+    <label class="row" style="font-weight:600"><input type="checkbox" id="uf_active" ${u.active ? "checked" : ""} style="width:22px;height:22px"> Faol (tizimga kira oladi)</label>
+    <div id="uf_err" class="err" hidden></div>
+  </div><div class="mf">${id && id !== CU.id ? `<button type="button" class="btn danger l" data-act="delUser" data-id="${id}">${ic("trash", 18)} O‘chirish</button>` : ""}<button type="button" class="btn" data-act="mclose">Bekor qilish</button><button class="btn pri big" type="submit">Saqlash</button></div></form>`);
+}
+function svcForm(id) {
+  const s = id ? S.services.find(x => x.id === id) : { name: "", price: 100000, dur: 30 };
+  modal(`${mhead(id ? "Xizmatni tahrirlash" : "Yangi xizmat")}
+  <form id="svcForm" data-id="${id || ""}"><div class="mb">
+    <label class="f">Nomi<input id="sf_name" value="${esc(s.name)}" required></label>
+    <div class="grid2"><label class="f">Narx (so‘m)<input id="sf_price" type="number" min="0" step="1000" value="${s.price}" required></label><label class="f">Davomiyligi (daqiqa)<input id="sf_dur" type="number" min="5" step="5" value="${s.dur}" required></label></div>
+  </div><div class="mf">${id ? `<button type="button" class="btn danger l" data-act="delSvc" data-id="${id}">${ic("trash", 18)} O‘chirish</button>` : ""}<button type="button" class="btn" data-act="mclose">Bekor qilish</button><button class="btn pri big" type="submit">Saqlash</button></div></form>`);
+}
+
+function compareModal(idA, idB) {
+  const A = S.photos.find(p => p.id === idA), B = S.photos.find(p => p.id === idB); if (!A || !B) return;
+  const c = cli(A.clientId), days = diffDays(A.date, B.date);
+  modal(`${mhead("Oldin / keyin", `${esc(c.name)} · ${days > 0 ? days + " kunlik farq" : "bir kunlik muolaja"}`)}
+  <div class="mb">
+    <div class="chips"><button class="chip on" data-act="cmpMode" data-v="slider">Surgich</button><button class="chip" data-act="cmpMode" data-v="sbs">Yonma-yon</button></div>
+    <div id="cmpSlider" class="cmp"><img data-ph="${A.id}" alt="Oldin"><div class="b"><img data-ph="${B.id}" alt="Keyin"></div><div class="h"></div>
+      <span class="lb l">${A.kind.toUpperCase()} · ${fmtD(A.date)}</span><span class="lb r">${B.kind.toUpperCase()} · ${fmtD(B.date)}</span>
+      <input type="range" min="0" max="100" value="50" id="cmpRange" aria-label="Solishtirish surgichi"></div>
+    <div id="cmpSbs" class="sbs" hidden><figure><img data-ph="${A.id}" alt=""><figcaption>${A.kind.toUpperCase()} · ${fmtDY(A.date)} ${hm(A.ts)}</figcaption></figure><figure><img data-ph="${B.id}" alt=""><figcaption style="color:var(--tq-d)">${B.kind.toUpperCase()} · ${fmtDY(B.date)} ${hm(B.ts)}</figcaption></figure></div>
+  </div>`, true);
+}
+function viewPhoto(id) {
+  const p = S.photos.find(x => x.id === id); if (!p) return;
+  const back = MODAL_CTX;
+  modal(`${mhead(p.kind === "oldin" ? "Oldin" : "Keyin", `${esc(cli(p.clientId).name)} · ${fmtDY(p.date)} ${hm(p.ts)}`)}<div class="mb"><img data-ph="${p.id}" alt="" style="width:100%;border-radius:14px"></div>
+  <div class="mf">${isAdmin() ? `<button class="btn danger l" data-act="delPhoto" data-id="${p.id}">${ic("trash", 18)} O‘chirish</button>` : ""}${back && back.type === "visit" ? `<button class="btn pri" data-act="visit" data-id="${back.id}">Orqaga</button>` : `<button class="btn" data-act="mclose">Yopish</button>`}</div>`, true);
+}
+
+/* ===================== ACTIONS ===================== */
+function needShift() { if (openShift()) return true; toast("Avval smenani oching", "warn"); openShiftModal(); return false; }
+function openShiftModal() {
+  modal(`${mhead("Smenani ochish", esc(CU.name))}<form id="openShiftForm"><div class="mb"><label class="f">Kassadagi boshlang‘ich naqd pul (so‘m)<input id="ocash" type="number" inputmode="numeric" min="0" step="1000" value="${S.lastClose || 0}"></label></div><div class="mf"><button type="button" class="btn" data-act="mclose">Bekor qilish</button><button class="btn pri big" type="submit">Smenani ochish</button></div></form>`);
+}
+function rerender() { render(); if (MODAL_CTX && MODAL_CTX.type === "visit" && !$("#modal").hidden) openVisit(MODAL_CTX.id); }
+
+const ACT = {
+  go: d => { mclose(); go(d.v); },
+  logout: () => logout(),
+  mclose: () => { mclose(); MODAL_CTX = null; render(); },
+  client: d => { mclose(); MODAL_CTX = null; go("mijoz", { id: d.id }); },
+  visit: d => openVisit(d.id),
+  newAppt: d => apptForm({ client: d.client, date: d.date, time: d.time, rem: d.rem }),
+  newClient: () => clientForm(),
+  editClient: d => clientForm(d.id),
+  newRem: d => remForm({ client: d.client }),
+  openShiftModal: () => openShiftModal(),
+  copy: d => copyText(d.v),
+  confirmYes: () => { const f = CONFIRM; CONFIRM = null; mclose(); f && f(); },
+  arrive: d => {
+    if (!needShift()) return;
+    const a = S.appts.find(x => x.id === d.id); a.status = "keldi"; a.arrivedAt = Date.now(); a.shiftId = openShift().id; save();
+    toast(`${cli(a.clientId).name} keldi · ${hm(a.arrivedAt)}`); render(); openVisit(a.id);
+  },
+  setStatus: d => {
+    const a = S.appts.find(x => x.id === d.id); a.status = d.v; if (d.v === "kutilmoqda") { delete a.arrivedAt; delete a.leftAt; }
+    save(); mclose(); MODAL_CTX = null; render(); toast(`${cli(a.clientId).name}: ${ST[d.v][0].toLowerCase()}`);
+  },
+  setf: d => { const a = S.appts.find(x => x.id === d.id); a[d.f] = d.f === "remindDays" ? +d.v : d.v; save(); openVisit(a.id); },
+  finish: d => {
+    if (!needShift()) return;
+    const a = S.appts.find(x => x.id === d.id);
+    if (!(+a.price >= 0) || a.price === "") return toast("Summani kiriting", "err");
+    a.status = "tugadi"; a.leftAt = Date.now(); a.doneBy = CU.id; a.shiftId = openShift().id; a.price = +a.price;
+    syncReminder(a);
+    save(); mclose(); MODAL_CTX = null; render();
+    toast(`${cli(a.clientId).name} ketdi · ${hm(a.leftAt)}${a.remindDays ? ` · eslatma ${fmtD(addDays(today(), a.remindDays))}` : ""}`);
+  },
+  saveDone: d => { const a = S.appts.find(x => x.id === d.id); a.price = +a.price || 0; syncReminder(a); save(); mclose(); MODAL_CTX = null; render(); toast("Saqlandi"); },
+  delAppt: d => confirmBox("Bu yozuvni va unga tegishli rasmlarni o‘chirasizmi? Qaytarib bo‘lmaydi.", () => { S.photos.filter(p => p.apptId === d.id).forEach(p => phDel(p.id)); S.photos = S.photos.filter(p => p.apptId !== d.id); S.appts = S.appts.filter(a => a.id !== d.id); S.reminders = S.reminders.filter(r => !(r.apptId === d.id && r.auto)); save(); MODAL_CTX = null; render(); toast("O‘chirildi"); }),
+  delClient: d => confirmBox(`<b>${esc(cli(d.id).name)}</b> va uning barcha tashriflari, rasmlari, eslatmalari o‘chiriladi. Davom etasizmi?`, () => { S.photos.filter(p => p.clientId === d.id).forEach(p => phDel(p.id)); S.photos = S.photos.filter(p => p.clientId !== d.id); S.appts = S.appts.filter(a => a.clientId !== d.id); S.reminders = S.reminders.filter(r => r.clientId !== d.id); S.clients = S.clients.filter(c => c.id !== d.id); save(); go("mijozlar"); toast("Mijoz o‘chirildi"); }),
+  delPhoto: d => confirmBox("Rasmni o‘chirasizmi?", () => { phDel(d.id); S.photos = S.photos.filter(p => p.id !== d.id); save(); rerender(); }),
+  viewPh: d => viewPhoto(d.id),
+  pick: d => { const sel = V.p.sel || []; const i = sel.indexOf(d.id); if (i >= 0) sel.splice(i, 1); else { sel.push(d.id); if (sel.length > 2) sel.shift(); } V.p.sel = sel; render(); },
+  cmpSel: () => { const s = (V.p.sel || []).map(id => S.photos.find(p => p.id === id)).sort((a, b) => a.ts - b.ts); if (s.length === 2) compareModal(s[0].id, s[1].id); },
+  cmpFirstLast: d => { const ph = S.photos.filter(p => p.clientId === d.id).sort((a, b) => a.ts - b.ts); const first = ph.find(p => p.kind === "oldin") || ph[0]; const last = [...ph].reverse().find(p => p.kind === "keyin") || ph[ph.length - 1]; if (first && last && first.id !== last.id) compareModal(first.id, last.id); },
+  cmpVisit: d => { const ph = apptPhotos(d.id); const o = ph.find(p => p.kind === "oldin"), k = [...ph].reverse().find(p => p.kind === "keyin"); if (o && k) compareModal(o.id, k.id); else if (ph[0]) viewPhoto(ph[0].id); },
+  cmpMode: (d, el) => { $$('[data-act="cmpMode"]').forEach(b => b.classList.toggle("on", b === el)); $("#cmpSlider").hidden = d.v !== "slider"; $("#cmpSbs").hidden = d.v === "slider"; },
+  day: d => { V.p.date = d.v === "0" ? today() : addDays(V.p.date || today(), +d.v); render(); },
+  rday: d => { V.p.date = addDays(V.p.date || today(), +d.v); render(); },
+  remTab: d => { V.p.tab = d.v; render(); },
+  copySms: d => copyText(smsText(S.reminders.find(r => r.id === d.id))),
+  remDone: d => { const r = S.reminders.find(x => x.id === d.id); r.done = true; r.doneAt = Date.now(); r.doneBy = CU.id; save(); render(); toast("Eslatma bajarildi"); },
+  remSnooze: d => { const r = S.reminders.find(x => x.id === d.id); r.date = addDays(today(), 3); save(); render(); toast(`Eslatma ${fmtD(r.date)} ga ko‘chirildi`); },
+  afMode: (d, el) => { $$('[data-act="afMode"]').forEach(b => b.classList.toggle("on", b === el)); $("#af_old").hidden = d.v !== "old"; $("#af_new").hidden = d.v === "old"; (d.v === "old" ? $("#af_q") : $("#af_name")).focus(); },
+  diag: d => { const i = FORM_DIAG.indexOf(d.v); i >= 0 ? FORM_DIAG.splice(i, 1) : FORM_DIAG.push(d.v); $("#cf_diag").innerHTML = diagChips(); },
+  rfDays: (d, el) => { $$('[data-act="rfDays"]').forEach(b => b.classList.toggle("on", b === el)); $("#rf_date").value = addDays(today(), +d.v); },
+  editUser: d => userForm(d.id),
+  editSvc: d => svcForm(d.id),
+  delUser: d => { if (S.users.filter(u => u.role === "admin" && u.id !== d.id).length === 0 && usr(d.id).role === "admin") return toast("Kamida bitta administrator qolishi kerak", "err"); confirmBox(`${esc(usr(d.id).name)} o‘chirilsinmi?`, () => { S.users = S.users.filter(u => u.id !== d.id); save(); render(); }); },
+  delSvc: d => { if (S.appts.some(a => a.serviceId === d.id)) return toast("Bu xizmat tashriflarda ishlatilgan — o‘chirib bo‘lmaydi, nomini o‘zgartiring", "err"); S.services = S.services.filter(s => s.id !== d.id); save(); mclose(); render(); },
+  theme: d => { localSet("podo_theme", d.v); applyTheme(); render(); },
+  exportData: async () => {
+    const photos = {}; for (const p of S.photos) photos[p.id] = await phGet(p.id);
+    const blob = new Blob([JSON.stringify({ app: "podo-crm", at: Date.now(), state: S, photos })], { type: "application/json" });
+    const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = `podo-master-zaxira-${today()}.json`; document.body.appendChild(a); a.click(); a.remove();
+    toast("Zaxira fayli tayyorlandi");
+  },
+  clearDemo: () => confirmBox("Barcha “namuna” mijozlar, yozuvlar, rasmlar va smenalar o‘chiriladi. Sizning ma’lumotlaringiz qoladi.", () => {
+    const demoC = new Set(S.clients.filter(c => c.demo).map(c => c.id));
+    S.photos.filter(p => demoC.has(p.clientId)).forEach(p => phDel(p.id));
+    S.photos = S.photos.filter(p => !demoC.has(p.clientId)); S.appts = S.appts.filter(a => !demoC.has(a.clientId)); S.reminders = S.reminders.filter(r => !demoC.has(r.clientId));
+    S.clients = S.clients.filter(c => !c.demo); S.shifts = S.shifts.filter(s => !s.demo); save(); render(); toast("Namuna ma’lumotlar o‘chirildi");
+  }),
+  resetAll: () => confirmBox("Barcha ma’lumotlar (mijozlar, rasmlar, hisobotlar, xodimlar) butunlay o‘chiriladi va tizim boshlang‘ich holatga qaytadi.", () => {
+    S.photos.forEach(p => phDel(p.id)); try { localStorage.removeItem(LS_KEY); } catch (e) { } S = seed(); S.clients = []; S.appts = []; S.photos = []; S.reminders = []; S.shifts = []; S.demoPhotosPending = false; migrate(); save(); logout("Tizim tozalandi. admin / admin123 bilan kiring.");
+  })
+};
+function syncReminder(a) {
+  S.reminders = S.reminders.filter(r => !(r.apptId === a.id && r.auto && !r.done));
+  if (a.remindDays > 0) S.reminders.push({ id: uid(), clientId: a.clientId, apptId: a.id, date: addDays(dstr(new Date(a.leftAt || Date.now())), a.remindDays), reason: `${svc(a.serviceId).name} — nazorat (${a.remindDays} kun)`, done: false, auto: true });
+}
+
+/* ---------- events ---------- */
+document.addEventListener("click", e => {
+  lastAct = Date.now();
+  const el = e.target.closest("[data-act]"); if (!el) return;
+  if (el.closest(".hr-c") && el.dataset.act === "newAppt" && e.target.closest(".appt")) return;
+  const f = ACT[el.dataset.act]; if (!f) return;
+  e.preventDefault(); e.stopPropagation(); f(el.dataset, el, e);
+});
+document.addEventListener("input", e => {
+  lastAct = Date.now(); const t = e.target;
+  if (t.id === "q") { V.p.q = t.value; $("#clist").innerHTML = clientTable(); return; }
+  if (t.id === "af_q") { $("#af_client").innerHTML = clientOptions(t.value); const o = $("#af_client").options[0]; if (o) o.selected = true; return; }
+  if (t.id === "cmpRange") { $("#cmpSlider").style.setProperty("--p", t.value + "%"); return; }
+  if (t.dataset.f && t.dataset.id && t.tagName !== "SELECT") { const a = S.appts.find(x => x.id === t.dataset.id); if (!a) return; if (t.dataset.f === "remindDays") { if (t.value) a.remindDays = Math.max(1, +t.value); } else a[t.dataset.f] = t.dataset.f === "price" ? (t.value === "" ? "" : +t.value) : t.value; save(); }
+  if (t.id === "ccash") { const exp = +$("#expCash").dataset.v, df = (+t.value || 0) - exp, box = $("#diff"); box.hidden = t.value === ""; box.innerHTML = df === 0 ? `<b style="color:var(--green)">✓ Kassa to‘g‘ri</b>` : `<b style="color:var(--red)">${df > 0 ? "Ortiqcha" : "Kamomad"}: ${money(Math.abs(df))}</b>`; }
+});
+document.addEventListener("change", async e => {
+  const t = e.target;
+  if (t.id === "jdate" && t.value) { V.p.date = t.value; render(); return; }
+  if (t.id === "rdate" && t.value) { V.p.date = t.value; render(); return; }
+  if (t.tagName === "SELECT" && t.dataset.f === "serviceId") { const a = S.appts.find(x => x.id === t.dataset.id); a.serviceId = t.value; if (a.status !== "tugadi") a.price = svc(t.value).price; save(); openVisit(a.id); return; }
+  if (t.dataset.f === "remindDays" && t.value) { openVisit(t.dataset.id); return; }
+  if (t.matches("input[type=file][data-photo]")) { await addPhotos(t.files, t.dataset.appt, t.dataset.photo); return; }
+  if (t.id === "importFile" && t.files[0]) {
+    try { const j = JSON.parse(await t.files[0].text()); if (j.app !== "podo-crm" || !j.state || !j.state.users) throw 0; for (const [id, data] of Object.entries(j.photos || {})) if (data) await phPut(id, data); S = j.state; migrate(); save(); toast("Zaxiradan tiklandi"); render(); }
+    catch (err) { toast("Fayl noto‘g‘ri: bu PODO MASTER zaxira fayli emas", "err"); }
+  }
+});
+document.addEventListener("submit", e => {
+  e.preventDefault(); lastAct = Date.now(); const f = e.target;
+  if (f.id === "loginForm") { const err = login($("#lg").value, $("#lp").value); if (err) { $("#lerr").textContent = err; $("#lerr").hidden = false; } return; }
+  if (f.id === "openShiftForm") { if (openShift()) return; S.shifts.push({ id: uid(), openedBy: CU.id, openedAt: Date.now(), openCash: +$("#ocash").value || 0 }); save(); mclose(); render(); toast("Smena ochildi · " + nowHM()); return; }
+  if (f.id === "closeShiftForm") {
+    if (S.appts.some(a => a.status === "keldi")) return toast("Muolajada turgan mijozni avval yakunlang", "err");
+    const sh = openShift(), t = shiftTotals(sh), counted = +$("#ccash").value || 0, expected = (+sh.openCash || 0) + t.naqd, note = $("#cnote").value.trim();
+    confirmBox(`Smena yopilsinmi?<br><br>Muolajalar: <b>${t.count}</b><br>Jami tushum: <b>${money(t.total)}</b> (naqd ${money(t.naqd)}, karta ${money(t.karta)}, click ${money(t.click)})<br>Kutilgan naqd: <b>${money(expected)}</b><br>Sanalgan: <b>${money(counted)}</b> · Farq: <b>${money(counted - expected)}</b>`, () => {
+      Object.assign(sh, { closedAt: Date.now(), closedBy: CU.id, counted, expected, note }); S.lastClose = counted; save(); render();
+      modal(`${mhead("Smena yopildi", `${esc(usr(sh.openedBy).name)} · ${hm(sh.openedAt)}–${hm(sh.closedAt)}`)}<div class="mb"><div class="stats" style="grid-template-columns:repeat(2,1fr)"><div class="card stat hl"><b class="num">${t.count}</b><span>Muolaja</span></div><div class="card stat"><b class="num" style="font-size:20px">${money(t.total)}</b><span>Jami tushum</span></div><div class="card stat"><b class="num" style="font-size:20px">${money(counted)}</b><span>Kassada</span></div><div class="card stat"><b class="num" style="font-size:20px;color:${counted - expected === 0 ? "var(--green)" : "var(--red)"}">${money(counted - expected)}</b><span>Farq</span></div></div></div><div class="mf"><button class="btn pri" data-act="mclose">Tayyor</button></div>`);
+    }, "Smenani yopish", false);
+    return;
+  }
+  if (f.id === "apptForm") {
+    const err = m => { $("#af_err").textContent = m; $("#af_err").hidden = false; };
+    let cid = $("#af_client") && $("#af_client").value;
+    const isNew = $("#af_new") && !$("#af_new").hidden;
+    if (isNew) { const n = $("#af_name").value.trim(), p = $("#af_phone").value.trim(); if (!n) return err("Mijoz ismini kiriting"); if (p.replace(/\D/g, "").length < 9) return err("Telefon raqamini to‘liq kiriting"); const dup = S.clients.find(c => c.phone.replace(/\D/g, "") === p.replace(/\D/g, "")); if (dup) cid = dup.id; else { cid = uid(); S.clients.push({ id: cid, name: n, phone: p, birth: "", diag: [], notes: "", createdAt: Date.now() }); } }
+    if (!cid) return err("Mijozni tanlang");
+    const date = $("#af_date").value, time = $("#af_time").value; if (!date || !time) return err("Sana va vaqtni kiriting");
+    const sid = $("#af_svc").value, clash = S.appts.find(a => a.date === date && a.time === time && ["kutilmoqda", "keldi"].includes(a.status));
+    S.appts.push({ id: uid(), clientId: cid, date, time, serviceId: sid, status: "kutilmoqda", price: svc(sid).price, pay: "naqd", notes: $("#af_note").value.trim(), remindDays: 14, createdBy: CU.id });
+    const rid = $("#af_rem").value; if (rid) { const r = S.reminders.find(x => x.id === rid); if (r) { r.done = true; r.doneAt = Date.now(); r.doneBy = CU.id; } }
+    save(); mclose(); render(); toast(`${cli(cid).name} · ${fmtD(date)} ${time} ga yozildi${clash ? " (diqqat: shu vaqtda boshqa mijoz ham bor)" : ""}`, clash ? "warn" : ""); return;
+  }
+  if (f.id === "clientForm") {
+    const id = f.dataset.id, name = $("#cf_name").value.trim(), phone = $("#cf_phone").value.trim();
+    const err = m => { $("#cf_err").textContent = m; $("#cf_err").hidden = false; };
+    if (!name) return err("Ismni kiriting"); if (phone.replace(/\D/g, "").length < 9) return err("Telefon raqamini to‘liq kiriting");
+    const dup = S.clients.find(c => c.id !== id && c.phone.replace(/\D/g, "") === phone.replace(/\D/g, "")); if (dup) return err(`Bu raqam ${dup.name} nomida allaqachon bor`);
+    const data = { name, phone, birth: $("#cf_birth").value, diag: [...FORM_DIAG], notes: $("#cf_notes").value.trim() };
+    if (id) Object.assign(S.clients.find(c => c.id === id), data); else S.clients.push(Object.assign({ id: uid(), createdAt: Date.now() }, data));
+    save(); mclose(); if (!id) go("mijoz", { id: S.clients[S.clients.length - 1].id }); else render(); toast("Mijoz saqlandi"); return;
+  }
+  if (f.id === "remForm") { S.reminders.push({ id: uid(), clientId: $("#rf_client").value, date: $("#rf_date").value, reason: $("#rf_reason").value.trim() || "Nazorat ko‘rigi", done: false, createdBy: CU.id }); save(); mclose(); render(); toast("Eslatma qo‘shildi: " + fmtD($("#rf_date") ? $("#rf_date").value : today())); return; }
+  if (f.id === "userForm") {
+    const id = f.dataset.id, err = m => { $("#uf_err").textContent = m; $("#uf_err").hidden = false; };
+    const login = $("#uf_login").value.trim(), pass = $("#uf_pass").value, role = $("#uf_role").value, active = $("#uf_active").checked;
+    if (S.users.some(u => u.id !== id && u.login.toLowerCase() === login.toLowerCase())) return err("Bu login band");
+    if (pass && pass.length < 4) return err("Parol kamida 4 belgidan iborat bo‘lsin");
+    if (id && (role !== "admin" || !active) && usr(id).role === "admin" && !S.users.some(u => u.id !== id && u.role === "admin" && u.active)) return err("Kamida bitta faol administrator qolishi kerak");
+    const data = { name: $("#uf_name").value.trim(), login, role, active };
+    if (pass) data.pass = hash(pass);
+    if (id) { Object.assign(S.users.find(u => u.id === id), data); if (id === CU.id) Object.assign(CU, data); } else S.users.push(Object.assign({ id: uid() }, data));
+    save(); mclose(); render(); toast("Xodim saqlandi"); return;
+  }
+  if (f.id === "svcForm") { const id = f.dataset.id, data = { name: $("#sf_name").value.trim(), price: +$("#sf_price").value || 0, dur: +$("#sf_dur").value || 30 }; if (id) Object.assign(S.services.find(s => s.id === id), data); else S.services.push(Object.assign({ id: uid() }, data)); save(); mclose(); render(); toast("Xizmat saqlandi"); return; }
+  if (f.id === "setForm") { Object.assign(S.settings, { clinic: $("#st_clinic").value.trim(), phone: $("#st_phone").value.trim(), lockMin: Math.max(1, +$("#st_lock").value || 20), sms: $("#st_sms").value }); save(); toast("Sozlamalar saqlandi"); return; }
+});
+const nowHM = () => hm(Date.now());
+
+async function addPhotos(files, apptId, kind) {
+  const a = S.appts.find(x => x.id === apptId); if (!a || !files || !files.length) return;
+  toast("Rasm saqlanmoqda…");
+  for (const file of files) {
+    try {
+      const data = await resizeImage(file, 1280, .82); const id = "ph_" + uid();
+      await phPut(id, data); S.photos.push({ id, clientId: a.clientId, apptId, kind, date: a.date, ts: Date.now(), by: CU.id });
+    } catch (e) { toast("Rasmni o‘qib bo‘lmadi", "err"); }
+  }
+  save(); openVisit(apptId); toast(kind === "oldin" ? "“Oldin” rasmi saqlandi" : "“Keyin” rasmi saqlandi");
+}
+function resizeImage(file, max, q) {
+  return new Promise((res, rej) => {
+    const fr = new FileReader(); fr.onerror = rej;
+    fr.onload = () => { const img = new Image(); img.onerror = rej; img.onload = () => { const k = Math.min(1, max / Math.max(img.width, img.height)); const c = document.createElement("canvas"); c.width = Math.round(img.width * k); c.height = Math.round(img.height * k); c.getContext("2d").drawImage(img, 0, 0, c.width, c.height); res(c.toDataURL("image/jpeg", q)); }; img.src = fr.result; };
+    fr.readAsDataURL(file);
+  });
+}
+
+/* ---------- timers: clock, due alerts, auto-lock ---------- */
+function tick() {
+  if (!CU) return;
+  const n = new Date(), clk = $("#clk"); if (clk) clk.textContent = pad(n.getHours()) + ":" + pad(n.getMinutes());
+  if (Date.now() - lastAct > (S.settings.lockMin || 20) * 60000) return logout("Harakatsizlik sababli tizimdan chiqildi");
+  const t = today();
+  for (const a of S.appts) {
+    if (a.date !== t || a.status !== "kutilmoqda" || NOTIFIED.has(a.id)) continue;
+    const m = minsUntil(a);
+    if (m <= 5 && m > -20) { NOTIFIED.add(a.id); beep(); if ($("#modal").hidden) dueModal(a); else toast(`⏰ ${cli(a.clientId).name} — qabul vaqti keldi (${a.time})`, "warn"); }
+  }
+  if (V.name === "bugun" && $("#modal").hidden) render();
+}
+["pointerdown", "keydown"].forEach(ev => document.addEventListener(ev, () => lastAct = Date.now(), { passive: true }));
+
+/* ---------- boot ---------- */
+(async function boot() {
+  applyTheme();
+  await idbOpen();
+  load();
+  try { const id = sessionStorage.getItem("podo_cu"); if (id) CU = S.users.find(u => u.id === id && u.active) || null; } catch (e) { }
+  render();
+  genDemoPhotos();
+  setTimeout(tick, 2500);
+  setInterval(tick, 20000);
+})();
+</script>
