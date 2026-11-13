@@ -4,14 +4,17 @@ usage: python3 build_talk.py SRC.mov CUTS.json OUTDIR [--slim]
   CUTS.json = [[start_s, end_s], ...] in SOURCE seconds, in play order.
 Writes OUTDIR/talk.mp4 (1296x2304, source fps, CRF 12), OUTDIR/talk.wav (48 kHz, -15 LUFS, +3 s pad),
 OUTDIR/talk16.wav (16 kHz mono, for re-transcribing the edit), OUTDIR/segs.json (frame-exact segment table).
+--no-color: skip the automatic colour correction (colormatch.py, ON by default).
 --slim: also slim jaw/double chin + soften the car background (OFF by default: the user prefers the natural face).
 """
 import subprocess, numpy as np, cv2, json, sys, os
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import retouch as R
+import colormatch as CM
 
 src, cuts, out = sys.argv[1], json.load(open(sys.argv[2])), sys.argv[3]
 SLIM = '--slim' in sys.argv
+NOCOLOR = '--no-color' in sys.argv   # skip colour correction
 os.makedirs(out, exist_ok=True)
 W, H = 1296, 2304
 fps_s = subprocess.run(['ffprobe', '-v', 'error', '-select_streams', 'v:0', '-show_entries', 'stream=avg_frame_rate', '-of', 'csv=p=0', src], capture_output=True, text=True).stdout.strip()
@@ -27,6 +30,7 @@ enc = subprocess.Popen(['ffmpeg', '-v', 'error', '-y', '-f', 'rawvideo', '-pix_f
     '-c:v', 'libx264', '-preset', 'fast', '-crf', '12', '-g', '12', '-pix_fmt', 'yuv420p',
     '-colorspace', 'bt709', '-color_primaries', 'bt709', '-color_trc', 'bt709', f'{out}/talk.mp4'], stdin=subprocess.PIPE)
 lm = R.make_lm(); faces = []
+cm = None if NOCOLOR else CM.ColorMatch()
 if SLIM:
     import slim as SL
     lm2 = R.make_lm(); seg = SL.make_seg()
@@ -36,10 +40,13 @@ for s in segs:
     dec = subprocess.Popen(['ffmpeg', '-v', 'error', '-ss', f"{s['src']:.4f}", '-i', src, '-frames:v', str(s['n']), '-vf', vf,
         '-f', 'rawvideo', '-pix_fmt', 'bgr24', '-'], stdout=subprocess.PIPE)
     prev = None; p2 = None; mk = None; miss = 0; last = None
+    if cm:  # one colour LUT per segment (no flicker), fitted on 8 frames of that segment
+        print('colour', s['start_s'], cm.fit(CM.sample(src, s['src'], s['src'] + s['n'] / FPS)), flush=True)
     for i in range(s['n']):
         buf = dec.stdout.read(W * H * 3)
         frame = np.frombuffer(buf, np.uint8).reshape(H, W, 3) if len(buf) == W * H * 3 else last
         last = frame
+        if cm: frame = cm.apply(frame)
         p = R.detect(lm, cv2.resize(frame, (W // 2, H // 2), interpolation=cv2.INTER_AREA))
         if p is not None:
             p = p * 2; prev = p if prev is None else prev * 0.4 + p * 0.6; miss = 0
