@@ -41,10 +41,11 @@ Kerak: Python + Playwright, Google Chrome, ffmpeg.
 
 ## Diktor ovozi (ElevenLabs)
 - Matn va vaqtlar: `voice/script.json` (`[boshlanish_soniyasi, matn]`, 9 qator, ~620 belgi).
-- Ovoz: Lily (`pFZP5JQG7iQjIQuC4Bku`, mayin, shoshilmaydigan ayol ovozi — kutish zalida takror eshitilganda bezdirmasligi uchun tanlangan), model `eleven_v4`, `language_code=uz`, stability 0.65, style 0.
-- Sinalganlar: Sarah, Alice, Matilda (premade). Kutubxonadagi o'zbek ayol ovozi "Javohir" (`AgD9yC0DyOI1g9AP3l45`) faqat pullik tarifda API orqali ishlaydi.
+- Ovoz: Alice (`Xb7hH8MSUJpSbSDYk0k2`, aniq va xotirjam ayol ovozi — foydalanuvchi tanlagan), model `eleven_v4`, `language_code=uz`, stability 0.65, style 0.
+- Sinalganlar: Sarah, Lily, Matilda (premade). Kutubxonadagi o'zbek ayol ovozi "Javohir" (`AgD9yC0DyOI1g9AP3l45`) faqat pullik tarifda API orqali ishlaydi.
 - 5-qatorda "Mehr ulashamiz" "Me ulashamiz" bo'lib eshitilgani uchun "Mehrimizni ulashamiz" qilindi.
-- Qayta yaratish: `XI=<kalit> python3 scripts/tts.py EXAVITQu4vr4xnSDxMaL eleven_v4 [qator raqamlari]` → `seg<i>.mp3`.
+- 6-qatorda Alice "O'n to'rt" ni "Ona to'rt" deb o'qigani uchun "Bizga oʻn toʻrt ming ... ishonadi" qilindi.
+- Qayta yaratish: `XI=<kalit> python3 scripts/tts.py Xb7hH8MSUJpSbSDYk0k2 eleven_v4 [qator raqamlari]` → `seg<i>.mp3`.
   Talaffuzni tekshirish: `XI=<kalit> bash scripts/stt_check.sh seg*.mp3` (scribe_v1 orqali qayta matnga).
 - Bepul tarifda faqat `mp3_44100_128` formati ishlaydi. Bepul tarifda tijorat litsenziyasi yo'q — klinika reklamasi uchun Starter yoki undan yuqori tarifda qayta yaratish kerak (skript o'sha).
 - `voice/voice.wav` — barcha qatorlar o'z vaqtiga joylangan 97 s trek (loudnorm -16).
