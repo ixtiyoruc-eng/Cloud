@@ -1,6 +1,14 @@
-<title>Podo Master CRM</title>
-<meta name="claude:viewport-fit-sides" content="cover">
+<!doctype html>
+<html lang="uz">
+<head>
 <meta charset="utf-8">
+<title>Podo Master CRM</title>
+<meta name="theme-color" content="#007D79">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Podo Master">
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2214%22 fill=%22%23007D79%22/%3E%3Ctext x=%2232%22 y=%2243%22 font-size=%2230%22 font-family=%22Arial%22 font-weight=%22800%22 fill=%22white%22 text-anchor=%22middle%22%3EPM%3C/text%3E%3C/svg%3E">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&display=swap">
@@ -26,6 +34,12 @@
   --btn-ink:#ffffff; --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.25); color-scheme:dark}
 
 html,body{height:100%}
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+.net{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;color:var(--muted)}
+.net::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 0 3px var(--green-l)}
+.net.off{color:var(--red)}.net.off::before{background:var(--red);box-shadow:0 0 0 3px var(--red-l)}
 body{background:var(--bg);color:var(--ink);font-family:var(--f);font-size:15px;line-height:1.45;-webkit-tap-highlight-color:transparent}
 *{box-sizing:border-box}
 button,input,select,textarea{font:inherit;color:inherit}
@@ -303,7 +317,8 @@ td.r,th.r{text-align:right}
 }
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
-
+</head>
+<body>
 <div id="app"></div>
 <div id="modal" hidden></div>
 <div id="toasts" aria-live="polite"></div>
@@ -332,7 +347,6 @@ const fmtDL = ds => { const d = new Date(ds + "T00:00"); return `${d.getDate()}-
 const hm = ts => { if (!ts) return "—"; const d = new Date(ts); return pad(d.getHours()) + ":" + pad(d.getMinutes()); };
 const money = n => String(Math.round(+n || 0)).replace(/\B(?=(\d{3})+(?!\d))/g, " ") + " so‘m";
 const durTxt = ms => { if (!ms || ms < 0) return "—"; const m = Math.round(ms / 60000); return m >= 60 ? `${Math.floor(m / 60)} soat ${m % 60} daq` : `${m} daq`; };
-const hash = s => { let h = 5381; for (const c of "podo:" + s) h = ((h << 5) + h + c.charCodeAt(0)) | 0; let h2 = 0x811c9dc5; for (const c of s + ":master") { h2 ^= c.charCodeAt(0); h2 = Math.imul(h2, 16777619); } return "h" + (h >>> 0).toString(36) + (h2 >>> 0).toString(36); };
 const initials = n => String(n || "?").trim().split(/\s+/).slice(0, 2).map(w => w[0]).join("").toUpperCase();
 const tsOf = (date, time) => new Date(`${date}T${time || "00:00"}`).getTime();
 const minsUntil = a => (tsOf(a.date, a.time) - Date.now()) / 60000;
@@ -371,132 +385,47 @@ const I = {
 };
 const ic = (n, s = 22) => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${I[n] || ""}</svg>`;
 
-/* ---------- photo store (IndexedDB, memory fallback) ---------- */
-const PH = { mem: new Map(), db: null };
-function idbOpen() {
-  return new Promise(res => {
-    try {
-      const r = indexedDB.open("podo_photos", 1);
-      r.onupgradeneeded = () => r.result.createObjectStore("p");
-      r.onsuccess = () => { PH.db = r.result; res(); };
-      r.onerror = () => res();
-      setTimeout(res, 1500);
-    } catch (e) { res(); }
-  });
-}
-function phPut(id, data) {
-  PH.mem.set(id, data);
-  if (!PH.db) return Promise.resolve();
-  return new Promise(res => { try { const tx = PH.db.transaction("p", "readwrite"); tx.objectStore("p").put(data, id); tx.oncomplete = res; tx.onerror = res; } catch (e) { res(); } });
-}
-function phGet(id) {
-  if (PH.mem.has(id)) return Promise.resolve(PH.mem.get(id));
-  if (!PH.db) return Promise.resolve(null);
-  return new Promise(res => { try { const r = PH.db.transaction("p").objectStore("p").get(id); r.onsuccess = () => { if (r.result) PH.mem.set(id, r.result); res(r.result || null); }; r.onerror = () => res(null); } catch (e) { res(null); } });
-}
-function phDel(id) { PH.mem.delete(id); if (PH.db) try { PH.db.transaction("p", "readwrite").objectStore("p").delete(id); } catch (e) { } }
-function hydrate(root = document) {
-  $$("img[data-ph]", root).forEach(img => { if (img.dataset.done) return; img.dataset.done = 1; phGet(img.dataset.ph).then(src => { if (src) img.src = src; }); });
-}
-
-/* Demo photos — drawn toe illustration (namuna) */
-function drawToe(heal, seedN) {
-  const c = document.createElement("canvas"); c.width = 640; c.height = 480; const g = c.getContext("2d");
-  const bg = g.createLinearGradient(0, 0, 640, 480); bg.addColorStop(0, "#d9e9e8"); bg.addColorStop(1, "#b9d3d1"); g.fillStyle = bg; g.fillRect(0, 0, 640, 480);
-  g.fillStyle = "#e9b99c"; g.beginPath(); g.ellipse(320, 330, 190, 250, 0, Math.PI, 0); g.lineTo(510, 480); g.lineTo(130, 480); g.fill();
-  const sk = g.createRadialGradient(290, 250, 40, 320, 300, 260); sk.addColorStop(0, "rgba(255,230,210,.6)"); sk.addColorStop(1, "rgba(160,90,70,.25)"); g.fillStyle = sk; g.fill();
-  const lerp = (a, b) => Math.round(a + (b - a) * heal);
-  if (heal < .6) { g.fillStyle = `rgba(214,72,72,${(.6 - heal) * .9})`; g.beginPath(); g.ellipse(170, 230, 40, 90, .2, 0, 7); g.fill(); g.beginPath(); g.ellipse(470, 230, 40, 90, -.2, 0, 7); g.fill(); }
-  g.fillStyle = `rgb(${lerp(196, 246)},${lerp(160, 206)},${lerp(80, 200)})`;
-  g.beginPath(); g.ellipse(320, 210, 110, 125, 0, 0, 7); g.fill();
-  g.strokeStyle = `rgba(120,80,40,${.5 - heal * .4})`; g.lineWidth = 4; g.stroke();
-  let s = seedN; const rnd = () => (s = (s * 9301 + 49297) % 233280) / 233280;
-  for (let i = 0; i < 26 * (1 - heal); i++) { g.fillStyle = `rgba(${130 + rnd() * 40},${90 + rnd() * 30},30,${.35 + rnd() * .3})`; g.beginPath(); g.ellipse(250 + rnd() * 140, 120 + rnd() * 180, 6 + rnd() * 16, 4 + rnd() * 10, rnd() * 3, 0, 7); g.fill(); }
-  g.fillStyle = "rgba(255,255,255,.35)"; g.beginPath(); g.ellipse(290, 160, 26, 50, -.2, 0, 7); g.fill();
-  g.fillStyle = "rgba(0,0,0,.45)"; g.fillRect(0, 440, 640, 40); g.fillStyle = "#fff"; g.font = "600 20px sans-serif"; g.fillText("NAMUNA RASM", 18, 467);
-  return c.toDataURL("image/jpeg", .82);
-}
-
-/* ---------- state ---------- */
+/* ---------- server API ---------- */
 let S = null, CU = null, V = { name: "bugun", p: {} }, lastAct = Date.now();
 const NOTIFIED = new Set();
-function save() { try { localStorage.setItem(LS_KEY, JSON.stringify(S)); } catch (e) { toast("Saqlab bo‘lmadi: brauzer xotirasi to‘lgan yoki bloklangan", "err"); } }
-function load() { try { S = JSON.parse(localStorage.getItem(LS_KEY) || "null"); } catch (e) { S = null; } if (!S || !S.users) { S = seed(); save(); } migrate(); }
-function migrate() { S.settings = Object.assign({ clinic: "PODO MASTER", phone: "+998 90 123 45 67", lockMin: 20, sms: "Assalomu alaykum, {ism}! PODO MASTER pedikyur va podologiya markazidan bezovta qilyapmiz. Oxirgi muolajangizdan {kun} kun o‘tdi — nazorat ko‘rigi vaqti keldi. Qulay vaqtga yozilish uchun: {tel}" }, S.settings || {}); ["photos", "reminders", "shifts", "appts", "clients", "services"].forEach(k => S[k] = S[k] || []); }
-
-function seed() {
-  const t = today(), now = new Date(), nowMin = now.getHours() * 60 + now.getMinutes();
-  const tm = off => { let m = Math.round((nowMin + off) / 5) * 5; m = Math.max(0, Math.min(23 * 60 + 55, m)); return pad(Math.floor(m / 60)) + ":" + pad(m % 60); };
-  const services = [
-    ["Tibbiy pedikyur", 150000, 60], ["Tirnoq o‘sib kirishini davolash", 250000, 45], ["Zamburug‘li tirnoqni tozalash", 180000, 40],
-    ["Qadoq / natoptishni olib tashlash", 120000, 30], ["Tovon yoriqlarini davolash", 160000, 50], ["Titan ip bilan korreksiya", 300000, 40], ["Ortopedik ortoz (qistirma)", 200000, 30]
-  ].map(([name, price, dur], i) => ({ id: "s" + (i + 1), name, price, dur }));
-  const users = [
-    { id: "u1", name: "Administrator", login: "admin", pass: hash("admin123"), role: "admin", active: true },
-    { id: "u2", name: "Malika", login: "resepshn", pass: hash("1234"), role: "reception", active: true }
-  ];
-  const C = [
-    ["Dilnoza Karimova", "+998 90 345 12 78", "1988-04-12", ["Zamburug‘ (onixomikoz)"], "Davolash kursi: har 2 haftada nazorat."],
-    ["Rustam Toshmatov", "+998 93 512 44 09", "1975-09-03", ["Qandli diabet", "Qadoq / natoptish"], "Diabet! Faqat apparat usuli, tig‘ ishlatilmasin."],
-    ["Nodira Yusupova", "+998 97 220 61 15", "1992-01-25", ["Tirnoq o‘sib kirishi"], "O‘ng oyoq bosh barmog‘i. Titan ip qo‘yilgan."],
-    ["Javohir Aliyev", "+998 99 870 33 41", "2001-06-30", ["Gipergidroz", "Zamburug‘ (onixomikoz)"], ""],
-    ["Gulnora Rahimova", "+998 91 404 18 62", "1969-11-08", ["Tovon yorilishi"], "Uyda krem: 10% mochevina."],
-    ["Sardor Ergashev", "+998 94 655 27 90", "1984-02-17", ["So‘gal"], ""],
-    ["Madina Sobirova", "+998 90 911 05 23", "1996-08-21", ["Tirnoq o‘sib kirishi"], "Og‘riqqa sezgir."],
-    ["Bekzod Nurmatov", "+998 88 133 70 54", "1979-12-02", ["Yassi oyoqlik"], "Ortoz tayyorlandi, 1 oydan keyin nazorat."]
-  ].map(([name, phone, birth, diag, notes], i) => ({ id: "c" + (i + 1), name, phone, birth, diag, notes, createdAt: Date.now() - (90 - i) * 864e5, demo: true }));
-
-  const shiftId = "sh_open";
-  const openTs = new Date(t + "T09:00").getTime();
-  const appts = [], photos = [], reminders = [];
-  const mk = (cid, date, time, sid, status, extra = {}) => { const s = services.find(x => x.id === sid); const a = Object.assign({ id: uid() + appts.length, clientId: cid, date, time, serviceId: sid, status, price: s.price, pay: "naqd", notes: "", remindDays: 14, createdBy: "u2", demo: true }, extra); appts.push(a); return a; };
-  const done = (a, arrOff, durMin, notes, pay) => { const base = tsOf(a.date, a.time); a.arrivedAt = base + arrOff * 60000; a.leftAt = a.arrivedAt + durMin * 60000; a.notes = notes; a.pay = pay || "naqd"; a.doneBy = "u2"; };
-
-  // past history for Dilnoza (fungus course, photo progress)
-  const p1 = mk("c1", addDays(t, -42), "11:00", "s3", "tugadi", { shiftId: "sh_old" }); done(p1, -5, 45, "Plastinka qalin, sarg‘ish. Apparat bilan tozalandi, antimikotik lak tavsiya.", "karta");
-  const p2 = mk("c1", addDays(t, -28), "11:30", "s3", "tugadi", { shiftId: "sh_old" }); done(p2, 0, 40, "Yaxshilanish bor, dog‘lar kamaydi.", "naqd");
-  const p3 = mk("c1", addDays(t, -14), "12:00", "s3", "tugadi", { shiftId: "sh_old" }); done(p3, 3, 40, "Sog‘lom tirnoq o‘smoqda. 14 kundan keyin nazorat.", "click");
-  [[p1, .0, .25], [p2, .3, .5], [p3, .55, .8]].forEach(([a, b, k], i) => {
-    photos.push({ id: "ph_d" + i + "o", clientId: "c1", apptId: a.id, kind: "oldin", date: a.date, ts: a.arrivedAt, gen: [b, 11 + i] });
-    photos.push({ id: "ph_d" + i + "k", clientId: "c1", apptId: a.id, kind: "keyin", date: a.date, ts: a.leftAt, gen: [k, 11 + i] });
-  });
-  const p4 = mk("c3", addDays(t, -21), "15:00", "s6", "tugadi", { shiftId: "sh_old" }); done(p4, 0, 40, "Titan ip qo‘yildi. 3 haftadan keyin almashtirish.", "karta");
-  photos.push({ id: "ph_n0o", clientId: "c3", apptId: p4.id, kind: "oldin", date: p4.date, ts: p4.arrivedAt, gen: [.15, 7] });
-  photos.push({ id: "ph_n0k", clientId: "c3", apptId: p4.id, kind: "keyin", date: p4.date, ts: p4.leftAt, gen: [.7, 7] });
-  const p5 = mk("c2", addDays(t, -30), "10:00", "s4", "tugadi", { shiftId: "sh_old" }); done(p5, 2, 30, "Natoptish olib tashlandi, diabet tufayli ehtiyotkorlik bilan.", "naqd");
-  const p6 = mk("c8", addDays(t, -29), "16:00", "s7", "tugadi", { shiftId: "sh_old" }); done(p6, 0, 30, "Ortoz o‘lchami olindi.", "karta");
-  const p7 = mk("c5", addDays(t, -1), "14:00", "s5", "tugadi", { shiftId: "sh_old" }); done(p7, 0, 50, "Yoriqlar tozalandi.", "naqd");
-  const p8 = mk("c6", addDays(t, -1), "17:00", "s4", "kelmadi", { shiftId: "sh_old" });
-
-  // today
-  const a1 = mk("c4", t, tm(-240), "s1", "tugadi", { shiftId }); done(a1, 0, 55, "Tibbiy pedikyur, terlashga qarshi vosita tavsiya qilindi.", "naqd");
-  const a2 = mk("c7", t, tm(-170), "s2", "tugadi", { shiftId }); done(a2, 5, 45, "Chap chekka qirrasi olib tashlandi, bog‘lam qo‘yildi.", "karta");
-  photos.push({ id: "ph_m0o", clientId: "c7", apptId: a2.id, kind: "oldin", date: t, ts: a2.arrivedAt, gen: [.1, 3] });
-  photos.push({ id: "ph_m0k", clientId: "c7", apptId: a2.id, kind: "keyin", date: t, ts: a2.leftAt, gen: [.75, 3] });
-  const a3 = mk("c5", t, tm(-90), "s5", "kelmadi", { shiftId });
-  const a4 = mk("c2", t, tm(-25), "s4", "keldi", { shiftId }); a4.arrivedAt = Date.now() - 20 * 60000;
-  mk("c1", t, tm(4), "s3", "kutilmoqda");
-  mk("c3", t, tm(65), "s6", "kutilmoqda");
-  mk("c8", t, tm(130), "s7", "kutilmoqda");
-  mk("c6", addDays(t, 1), "11:00", "s4", "kutilmoqda");
-
-  reminders.push({ id: uid() + "r1", clientId: "c3", date: t, reason: "Titan ipni almashtirish (21 kun)", apptId: p4.id, done: false, demo: true });
-  reminders.push({ id: uid() + "r2", clientId: "c2", date: addDays(t, -2), reason: "Natoptish — nazorat ko‘rigi (28 kun)", apptId: p5.id, done: false, demo: true });
-  reminders.push({ id: uid() + "r3", clientId: "c8", date: addDays(t, 1), reason: "Ortoz — 1 oylik nazorat", apptId: p6.id, done: false, demo: true });
-  reminders.push({ id: uid() + "r4", clientId: "c5", date: addDays(t, 6), reason: "Tovon yoriqlari — nazorat (7 kun)", apptId: p7.id, done: false, demo: true });
-  reminders.push({ id: uid() + "r5", clientId: "c4", date: addDays(t, 14), reason: "Tibbiy pedikyur — nazorat (14 kun)", apptId: a1.id, done: false, demo: true });
-
-  const shifts = [
-    { id: "sh_old", openedBy: "u2", openedAt: new Date(addDays(t, -1) + "T09:00").getTime(), openCash: 200000, closedAt: new Date(addDays(t, -1) + "T20:10").getTime(), closedBy: "u2", counted: 360000, expected: 360000, note: "", demo: true },
-    { id: shiftId, openedBy: "u2", openedAt: openTs, openCash: 200000, demo: true }
-  ];
-  return { v: 1, users, services, clients: C, appts, photos, reminders, shifts, settings: null, demoPhotosPending: true };
+let NET_OK = true, STALE = false;
+async function api(method, url, body) {
+  const opt = { method, headers: { "X-Podo": "1" }, credentials: "same-origin", cache: "no-store" };
+  if (body instanceof Blob) { opt.body = body; opt.headers["Content-Type"] = body.type || "application/octet-stream"; }
+  else if (body !== undefined) { opt.body = JSON.stringify(body); opt.headers["Content-Type"] = "application/json"; }
+  let r;
+  try { r = await fetch(url, opt); } catch (e) { setNet(false); throw new Error("Server bilan aloqa yo‘q. Internetni tekshiring."); }
+  setNet(true);
+  const j = await r.json().catch(() => ({}));
+  if (r.status === 401 && url !== "/api/login") { if (CU) { CU = null; mclose(); render(); toast("Sessiya tugadi, qayta kiring", "warn"); } throw new Error(j.error || "Tizimga qayta kiring"); }
+  if (!r.ok) throw new Error(j.error || "Server xatosi (" + r.status + ")");
+  return j;
 }
-async function genDemoPhotos() {
-  if (!S.demoPhotosPending) return;
-  for (const p of S.photos) if (p.gen) { const have = await phGet(p.id); if (!have) await phPut(p.id, drawToe(p.gen[0], p.gen[1])); }
-  S.demoPhotosPending = false; save(); hydrate();
+function setNet(ok) {
+  if (ok === NET_OK) return; NET_OK = ok;
+  const el = $("#net"); if (el) { el.className = "net " + (ok ? "on" : "off"); el.querySelector("span").textContent = ok ? "Onlayn" : "Aloqa yo‘q"; }
+  toast(ok ? "Server bilan aloqa tiklandi" : "Server bilan aloqa uzildi", ok ? "" : "err");
 }
+function applyState(st) { S = st || {}; S.settings = S.settings || {}; ["users", "services", "clients", "appts", "photos", "reminders", "shifts"].forEach(k => S[k] = S[k] || []); }
+async function refresh() { try { applyState(await api("GET", "/api/state")); safeRender(); } catch (e) { } }
+function busy() { const ae = document.activeElement; return !!ae && /^(INPUT|TEXTAREA|SELECT)$/.test(ae.tagName) && !["button", "submit", "checkbox", "radio", "file", "range"].includes(ae.type); }
+function safeRender() {
+  if (!CU) return;
+  if (busy()) { STALE = true; return; }
+  STALE = false;
+  const m = $("#modal"), sheet = $(".msheet", m), top = sheet ? sheet.scrollTop : 0;
+  render();
+  if (!m.hidden && MODAL_CTX && MODAL_CTX.type === "visit") { openVisit(MODAL_CTX.id); const s2 = $(".msheet", m); if (s2) s2.scrollTop = top; }
+}
+/* the local change is already applied; send it, then resync with the server */
+function persist(p, okMsg) { return p.then(r => { if (okMsg) toast(okMsg); return refresh().then(() => r || true); }).catch(e => { toast(e.message, "err"); refresh(); return null; }); }
+const putDoc = (coll, doc) => api("PUT", `/api/${coll}/${encodeURIComponent(doc.id)}`, doc);
+const delDoc = (coll, id) => api("DELETE", `/api/${coll}/${encodeURIComponent(id)}`);
+const phURL = id => "/api/photos/" + encodeURIComponent(id);
+function hydrate(root = document) { $$("img[data-ph]", root).forEach(img => { if (!img.getAttribute("src")) img.src = phURL(img.dataset.ph); }); }
+const DEB = new Map();
+function debouncePut(a) { const x = DEB.get(a.id); if (x) clearTimeout(x.t); DEB.set(a.id, { a, t: setTimeout(() => { DEB.delete(a.id); persist(putDoc("appts", a)); }, 700) }); }
+function flushDebounce(send) { for (const [, x] of DEB) { clearTimeout(x.t); if (send) persist(putDoc("appts", x.a)); } DEB.clear(); }
 
 /* ---------- helpers on data ---------- */
 const cli = id => S.clients.find(c => c.id === id) || { name: "O‘chirilgan mijoz", phone: "", diag: [] };
@@ -525,7 +454,7 @@ function shiftTotals(sh) {
 
 /* ---------- UI helpers ---------- */
 function toast(msg, kind = "") { const el = document.createElement("div"); el.className = "toast " + kind; el.textContent = msg; $("#toasts").appendChild(el); setTimeout(() => el.remove(), 4200); }
-function modal(html, wide) { const m = $("#modal"); m.innerHTML = `<div class="mback" data-act="mclose"></div><div class="msheet ${wide ? "wide" : ""}" role="dialog" aria-modal="true">${html}</div>`; m.hidden = false; hydrate(m); }
+function modal(html, wide, locked) { MODAL_CTX = null; const m = $("#modal"); m.innerHTML = `<div class="mback" ${locked ? "" : 'data-act="mclose"'}></div><div class="msheet ${wide ? "wide" : ""}" role="dialog" aria-modal="true">${html}</div>`; m.hidden = false; hydrate(m); }
 function mclose() { const m = $("#modal"); m.hidden = true; m.innerHTML = ""; }
 const mhead = (title, sub = "") => `<div class="mh"><div><h3>${title}</h3>${sub ? `<div class="muted" style="margin-top:2px">${sub}</div>` : ""}</div><button class="btn ghost sm x" data-act="mclose" aria-label="Yopish">${ic("x")}</button></div>`;
 function confirmBox(text, onYes, yesLabel = "Ha, tasdiqlayman", danger = true) {
@@ -557,17 +486,26 @@ const NAV = [
 const TITLES = { bugun: "Bugun", jadval: "Qabul jadvali", mijozlar: "Mijozlar bazasi", mijoz: "Mijoz kartasi", eslatmalar: "Eslatmalar", hisobot: "Kunlik hisobot", smena: "Smena", sozlamalar: "Sozlamalar" };
 
 /* ---------- auth ---------- */
-function login(l, p) {
-  const u = S.users.find(u => u.login.toLowerCase() === l.trim().toLowerCase() && u.pass === hash(p));
-  if (!u) return "Login yoki parol noto‘g‘ri";
-  if (!u.active) return "Bu foydalanuvchi bloklangan. Administratorga murojaat qiling.";
-  CU = u; try { sessionStorage.setItem("podo_cu", u.id); } catch (e) { }
-  lastAct = Date.now(); V = { name: "bugun", p: {} }; render();
+async function login(l, p) {
+  try { const r = await api("POST", "/api/login", { login: l.trim(), password: p }); afterLogin(r); return ""; }
+  catch (e) { return e.message; }
+}
+function afterLogin(r) {
+  CU = r.me; applyState(r.state); lastAct = Date.now(); V = { name: "bugun", p: {} }; render();
+  if (CU.mustChange) return passModal(true);
   const n = dueReminders().length; if (n) setTimeout(() => toast(`Bugun ${n} ta eslatma: mijozlarga qo‘ng‘iroq qiling`, "warn"), 600);
   if (!openShift()) setTimeout(() => toast("Smena ochilmagan. Ishni boshlashdan oldin smenani oching.", "warn"), 900);
-  return "";
 }
-function logout(msg) { CU = null; try { sessionStorage.removeItem("podo_cu"); } catch (e) { } mclose(); render(); if (msg) toast(msg); }
+async function logout(msg) { flushDebounce(true); try { await api("POST", "/api/logout"); } catch (e) { } CU = null; S = null; mclose(); render(); if (msg) toast(msg); }
+function passModal(forced) {
+  modal(`${forced ? `<div class="mh"><div><h3>Parolni almashtiring</h3><div class="muted" style="margin-top:2px">Xavfsizlik uchun standart parolni o‘zingizniki bilan almashtiring.</div></div></div>` : mhead("Parolni o‘zgartirish", esc(CU.name))}
+  <form id="passForm"><div class="mb">
+    <label class="f">Joriy parol<input id="pw_old" type="password" autocomplete="current-password" required></label>
+    <div class="grid2"><label class="f">Yangi parol (kamida 6 belgi)<input id="pw_new" type="password" autocomplete="new-password" minlength="6" required></label>
+    <label class="f">Yangi parolni takrorlang<input id="pw_new2" type="password" autocomplete="new-password" minlength="6" required></label></div>
+    <div id="pw_err" class="err" hidden></div>
+  </div><div class="mf">${forced ? `<button type="button" class="btn l" data-act="logout">Chiqish</button>` : `<button type="button" class="btn" data-act="mclose">Bekor qilish</button>`}<button class="btn pri big" type="submit">Saqlash</button></div></form>`, false, forced);
+}
 
 /* ---------- render ---------- */
 function go(name, p = {}) { if (name === "sozlamalar" && !isAdmin()) return toast("Bu bo‘lim faqat administrator uchun", "err"); V = { name, p }; render(); window.scrollTo(0, 0); }
@@ -583,8 +521,9 @@ function render() {
     <div class="logo"><b>PODO <em>MASTER</em></b><span>ПЕДИКЮРА И ПОДОЛОГИИ</span><i></i></div>
     <nav class="nav">${nav.map(n => btn(n)).join("")}</nav>
     <div class="rail-foot">
+      <div id="net" class="net ${NET_OK ? "on" : "off"}" style="padding:0 10px"><span>${NET_OK ? "Onlayn" : "Aloqa yo‘q"}</span></div>
       <div class="who"><div class="ava">${esc(initials(CU.name))}</div><div><strong>${esc(CU.name)}</strong><small>${ROLE[CU.role]}</small></div></div>
-      <button class="btn sm" data-act="logout">${ic("out", 18)} Chiqish</button>
+      <div class="row" style="flex-wrap:nowrap"><button class="btn sm grow" data-act="passModal">${ic("lock", 16)} Parol</button><button class="btn sm grow" data-act="logout">${ic("out", 16)} Chiqish</button></div>
     </div>
   </aside>
   <main class="main">
@@ -619,7 +558,7 @@ function renderLogin() {
     <label class="f">Parol<input id="lp" name="password" type="password" autocomplete="current-password" required></label>
     <div id="lerr" class="err" hidden></div>
     <button class="btn pri big" type="submit">Kirish</button>
-    <div class="demo">Namuna hisoblar (birinchi kirishdan keyin Sozlamalarda almashtiring):<br><b>admin</b> / admin123 — to‘liq huquq<br><b>resepshn</b> / 1234 — cheklangan huquq</div>
+    <div class="demo">Login va parolni administratordan oling. 8 marta noto‘g‘ri kiritilsa, kirish 15 daqiqaga bloklanadi.</div>
   </form></div>`;
 }
 
@@ -874,9 +813,10 @@ VIEWS.sozlamalar = () => {
       <div><button class="btn pri" type="submit">Saqlash</button></div>
     </form></section>
   <section class="card pad"><h2 style="font-size:19px;font-weight:800;margin-bottom:6px">Ma’lumotlar</h2>
-    <p class="muted" style="margin-top:0">Barcha ma’lumot shu planshet brauzerida saqlanadi. Har hafta zaxira nusxa oling va boshqa joyda saqlang.</p>
+    <p class="muted" style="margin-top:0">Ma’lumotlar serverda saqlanadi va barcha planshet/telefonlarda bir xil ko‘rinadi. Haftada bir marta zaxira nusxa yuklab oling va boshqa joyda saqlang.</p>
     <div class="row">
-      <button class="btn" data-act="exportData">Zaxira nusxa yuklab olish (.json)</button>
+      <a class="btn" href="/api/backup" download>Zaxira nusxa yuklab olish (.json)</a>
+      <button class="btn" data-act="audit">Harakatlar jurnali</button>
       <label class="btn">Zaxiradan tiklash<input type="file" id="importFile" accept="application/json,.json" hidden></label>
       <button class="btn danger" data-act="clearDemo">Namuna ma’lumotlarni o‘chirish</button>
       <button class="btn danger" data-act="resetAll">Hammasini tozalash</button>
@@ -983,7 +923,7 @@ function userForm(id) {
   modal(`${mhead(id ? "Xodimni tahrirlash" : "Yangi xodim")}
   <form id="userForm" data-id="${id || ""}"><div class="mb">
     <div class="grid2"><label class="f">Ism<input id="uf_name" value="${esc(u.name)}" required></label><label class="f">Login<input id="uf_login" value="${esc(u.login)}" required autocapitalize="none" autocomplete="off"></label></div>
-    <div class="grid2"><label class="f">${id ? "Yangi parol (o‘zgartirmaslik uchun bo‘sh qoldiring)" : "Parol"}<input id="uf_pass" type="password" autocomplete="new-password" ${id ? "" : "required"} minlength="4"></label>
+    <div class="grid2"><label class="f">${id ? "Yangi parol (o‘zgartirmaslik uchun bo‘sh qoldiring)" : "Parol (kamida 6 belgi)"}<input id="uf_pass" type="password" autocomplete="new-password" ${id ? "" : "required"} minlength="6"></label>
       <label class="f">Rol<select id="uf_role"><option value="reception" ${u.role === "reception" ? "selected" : ""}>Resepshn (cheklangan)</option><option value="admin" ${u.role === "admin" ? "selected" : ""}>Administrator (to‘liq)</option></select></label></div>
     <label class="row" style="font-weight:600"><input type="checkbox" id="uf_active" ${u.active ? "checked" : ""} style="width:22px;height:22px"> Faol (tizimga kira oladi)</label>
     <div id="uf_err" class="err" hidden></div>
@@ -1022,12 +962,15 @@ function needShift() { if (openShift()) return true; toast("Avval smenani oching
 function openShiftModal() {
   modal(`${mhead("Smenani ochish", esc(CU.name))}<form id="openShiftForm"><div class="mb"><label class="f">Kassadagi boshlang‘ich naqd pul (so‘m)<input id="ocash" type="number" inputmode="numeric" min="0" step="1000" value="${S.lastClose || 0}"></label></div><div class="mf"><button type="button" class="btn" data-act="mclose">Bekor qilish</button><button class="btn pri big" type="submit">Smenani ochish</button></div></form>`);
 }
-function rerender() { render(); if (MODAL_CTX && MODAL_CTX.type === "visit" && !$("#modal").hidden) openVisit(MODAL_CTX.id); }
+const findA = id => S.appts.find(x => x.id === id);
+function apptPatch(a, patch, msg) { Object.assign(a, patch); return persist(putDoc("appts", a), msg); }
+const AUD = { login: "Tizimga kirdi", login_fail: "Noto‘g‘ri parol bilan kirishga urindi", save: "Saqladi", delete: "O‘chirdi", shift_open: "Smenani ochdi", shift_close: "Smenani yopdi", photo_add: "Rasm qo‘shdi", password: "Parolini o‘zgartirdi", backup: "Zaxira nusxa oldi", restore: "Zaxiradan tikladi", demo_clear: "Namuna ma’lumotlarni o‘chirdi", reset: "Ma’lumotlarni tozaladi" };
+const COLL = { clients: "mijoz", appts: "qabul yozuvi", reminders: "eslatma", services: "xizmat", settings: "sozlamalar", users: "xodim", photos: "rasm", shifts: "smena" };
 
 const ACT = {
   go: d => { mclose(); go(d.v); },
   logout: () => logout(),
-  mclose: () => { mclose(); MODAL_CTX = null; render(); },
+  mclose: () => { flushDebounce(true); mclose(); MODAL_CTX = null; render(); },
   client: d => { mclose(); MODAL_CTX = null; go("mijoz", { id: d.id }); },
   visit: d => openVisit(d.id),
   newAppt: d => apptForm({ client: d.client, date: d.date, time: d.time, rem: d.rem }),
@@ -1035,34 +978,32 @@ const ACT = {
   editClient: d => clientForm(d.id),
   newRem: d => remForm({ client: d.client }),
   openShiftModal: () => openShiftModal(),
+  passModal: () => passModal(false),
   copy: d => copyText(d.v),
   confirmYes: () => { const f = CONFIRM; CONFIRM = null; mclose(); f && f(); },
-  arrive: d => {
+  arrive: async d => {
     if (!needShift()) return;
-    const a = S.appts.find(x => x.id === d.id); a.status = "keldi"; a.arrivedAt = Date.now(); a.shiftId = openShift().id; save();
-    toast(`${cli(a.clientId).name} keldi · ${hm(a.arrivedAt)}`); render(); openVisit(a.id);
+    const a = findA(d.id); mclose();
+    const r = await apptPatch(a, { status: "keldi" });
+    if (r && r.doc) { toast(`${cli(a.clientId).name} keldi · ${hm(r.doc.arrivedAt)}`); openVisit(a.id); }
   },
-  setStatus: d => {
-    const a = S.appts.find(x => x.id === d.id); a.status = d.v; if (d.v === "kutilmoqda") { delete a.arrivedAt; delete a.leftAt; }
-    save(); mclose(); MODAL_CTX = null; render(); toast(`${cli(a.clientId).name}: ${ST[d.v][0].toLowerCase()}`);
-  },
-  setf: d => { const a = S.appts.find(x => x.id === d.id); a[d.f] = d.f === "remindDays" ? +d.v : d.v; save(); openVisit(a.id); },
-  finish: d => {
+  setStatus: d => { const a = findA(d.id); mclose(); MODAL_CTX = null; apptPatch(a, { status: d.v }, `${cli(a.clientId).name}: ${ST[d.v][0].toLowerCase()}`); render(); },
+  setf: d => { const a = findA(d.id); a[d.f] = d.f === "remindDays" ? +d.v : d.v; openVisit(a.id); persist(putDoc("appts", a)); },
+  finish: async d => {
     if (!needShift()) return;
-    const a = S.appts.find(x => x.id === d.id);
-    if (!(+a.price >= 0) || a.price === "") return toast("Summani kiriting", "err");
-    a.status = "tugadi"; a.leftAt = Date.now(); a.doneBy = CU.id; a.shiftId = openShift().id; a.price = +a.price;
-    syncReminder(a);
-    save(); mclose(); MODAL_CTX = null; render();
-    toast(`${cli(a.clientId).name} ketdi · ${hm(a.leftAt)}${a.remindDays ? ` · eslatma ${fmtD(addDays(today(), a.remindDays))}` : ""}`);
+    const a = findA(d.id);
+    if (a.price === "" || !(+a.price >= 0)) return toast("Summani kiriting", "err");
+    flushDebounce(false); mclose(); MODAL_CTX = null;
+    const r = await apptPatch(a, { status: "tugadi", price: +a.price });
+    if (r && r.doc) toast(`${cli(a.clientId).name} ketdi · ${hm(r.doc.leftAt)}${r.doc.remindDays ? ` · eslatma ${fmtD(addDays(today(), r.doc.remindDays))}` : ""}`);
   },
-  saveDone: d => { const a = S.appts.find(x => x.id === d.id); a.price = +a.price || 0; syncReminder(a); save(); mclose(); MODAL_CTX = null; render(); toast("Saqlandi"); },
-  delAppt: d => confirmBox("Bu yozuvni va unga tegishli rasmlarni o‘chirasizmi? Qaytarib bo‘lmaydi.", () => { S.photos.filter(p => p.apptId === d.id).forEach(p => phDel(p.id)); S.photos = S.photos.filter(p => p.apptId !== d.id); S.appts = S.appts.filter(a => a.id !== d.id); S.reminders = S.reminders.filter(r => !(r.apptId === d.id && r.auto)); save(); MODAL_CTX = null; render(); toast("O‘chirildi"); }),
-  delClient: d => confirmBox(`<b>${esc(cli(d.id).name)}</b> va uning barcha tashriflari, rasmlari, eslatmalari o‘chiriladi. Davom etasizmi?`, () => { S.photos.filter(p => p.clientId === d.id).forEach(p => phDel(p.id)); S.photos = S.photos.filter(p => p.clientId !== d.id); S.appts = S.appts.filter(a => a.clientId !== d.id); S.reminders = S.reminders.filter(r => r.clientId !== d.id); S.clients = S.clients.filter(c => c.id !== d.id); save(); go("mijozlar"); toast("Mijoz o‘chirildi"); }),
-  delPhoto: d => confirmBox("Rasmni o‘chirasizmi?", () => { phDel(d.id); S.photos = S.photos.filter(p => p.id !== d.id); save(); rerender(); }),
+  saveDone: d => { const a = findA(d.id); flushDebounce(false); mclose(); MODAL_CTX = null; apptPatch(a, { price: +a.price || 0 }, "Saqlandi"); },
+  delAppt: d => confirmBox("Bu yozuvni va unga tegishli rasmlarni o‘chirasizmi? Qaytarib bo‘lmaydi.", () => { MODAL_CTX = null; persist(delDoc("appts", d.id), "O‘chirildi"); }),
+  delClient: d => confirmBox(`<b>${esc(cli(d.id).name)}</b> va uning barcha tashriflari, rasmlari, eslatmalari o‘chiriladi. Davom etasizmi?`, () => { go("mijozlar"); persist(delDoc("clients", d.id), "Mijoz o‘chirildi"); }),
+  delPhoto: d => confirmBox("Rasmni o‘chirasizmi?", () => persist(api("DELETE", phURL(d.id)), "Rasm o‘chirildi")),
   viewPh: d => viewPhoto(d.id),
   pick: d => { const sel = V.p.sel || []; const i = sel.indexOf(d.id); if (i >= 0) sel.splice(i, 1); else { sel.push(d.id); if (sel.length > 2) sel.shift(); } V.p.sel = sel; render(); },
-  cmpSel: () => { const s = (V.p.sel || []).map(id => S.photos.find(p => p.id === id)).sort((a, b) => a.ts - b.ts); if (s.length === 2) compareModal(s[0].id, s[1].id); },
+  cmpSel: () => { const s = (V.p.sel || []).map(id => S.photos.find(p => p.id === id)).filter(Boolean).sort((a, b) => a.ts - b.ts); if (s.length === 2) compareModal(s[0].id, s[1].id); },
   cmpFirstLast: d => { const ph = S.photos.filter(p => p.clientId === d.id).sort((a, b) => a.ts - b.ts); const first = ph.find(p => p.kind === "oldin") || ph[0]; const last = [...ph].reverse().find(p => p.kind === "keyin") || ph[ph.length - 1]; if (first && last && first.id !== last.id) compareModal(first.id, last.id); },
   cmpVisit: d => { const ph = apptPhotos(d.id); const o = ph.find(p => p.kind === "oldin"), k = [...ph].reverse().find(p => p.kind === "keyin"); if (o && k) compareModal(o.id, k.id); else if (ph[0]) viewPhoto(ph[0].id); },
   cmpMode: (d, el) => { $$('[data-act="cmpMode"]').forEach(b => b.classList.toggle("on", b === el)); $("#cmpSlider").hidden = d.v !== "slider"; $("#cmpSbs").hidden = d.v === "slider"; },
@@ -1070,42 +1011,31 @@ const ACT = {
   rday: d => { V.p.date = addDays(V.p.date || today(), +d.v); render(); },
   remTab: d => { V.p.tab = d.v; render(); },
   copySms: d => copyText(smsText(S.reminders.find(r => r.id === d.id))),
-  remDone: d => { const r = S.reminders.find(x => x.id === d.id); r.done = true; r.doneAt = Date.now(); r.doneBy = CU.id; save(); render(); toast("Eslatma bajarildi"); },
-  remSnooze: d => { const r = S.reminders.find(x => x.id === d.id); r.date = addDays(today(), 3); save(); render(); toast(`Eslatma ${fmtD(r.date)} ga ko‘chirildi`); },
+  remDone: d => { const r = S.reminders.find(x => x.id === d.id); r.done = true; render(); persist(putDoc("reminders", r), "Eslatma bajarildi"); },
+  remSnooze: d => { const r = S.reminders.find(x => x.id === d.id); r.date = addDays(today(), 3); render(); persist(putDoc("reminders", r), `Eslatma ${fmtD(r.date)} ga ko‘chirildi`); },
   afMode: (d, el) => { $$('[data-act="afMode"]').forEach(b => b.classList.toggle("on", b === el)); $("#af_old").hidden = d.v !== "old"; $("#af_new").hidden = d.v === "old"; (d.v === "old" ? $("#af_q") : $("#af_name")).focus(); },
   diag: d => { const i = FORM_DIAG.indexOf(d.v); i >= 0 ? FORM_DIAG.splice(i, 1) : FORM_DIAG.push(d.v); $("#cf_diag").innerHTML = diagChips(); },
   rfDays: (d, el) => { $$('[data-act="rfDays"]').forEach(b => b.classList.toggle("on", b === el)); $("#rf_date").value = addDays(today(), +d.v); },
   editUser: d => userForm(d.id),
   editSvc: d => svcForm(d.id),
-  delUser: d => { if (S.users.filter(u => u.role === "admin" && u.id !== d.id).length === 0 && usr(d.id).role === "admin") return toast("Kamida bitta administrator qolishi kerak", "err"); confirmBox(`${esc(usr(d.id).name)} o‘chirilsinmi?`, () => { S.users = S.users.filter(u => u.id !== d.id); save(); render(); }); },
-  delSvc: d => { if (S.appts.some(a => a.serviceId === d.id)) return toast("Bu xizmat tashriflarda ishlatilgan — o‘chirib bo‘lmaydi, nomini o‘zgartiring", "err"); S.services = S.services.filter(s => s.id !== d.id); save(); mclose(); render(); },
+  delUser: d => confirmBox(`${esc(usr(d.id).name)} o‘chirilsinmi?`, () => persist(delDoc("users", d.id), "Xodim o‘chirildi")),
+  delSvc: d => { mclose(); persist(delDoc("services", d.id), "Xizmat o‘chirildi"); },
   theme: d => { localSet("podo_theme", d.v); applyTheme(); render(); },
-  exportData: async () => {
-    const photos = {}; for (const p of S.photos) photos[p.id] = await phGet(p.id);
-    const blob = new Blob([JSON.stringify({ app: "podo-crm", at: Date.now(), state: S, photos })], { type: "application/json" });
-    const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = `podo-master-zaxira-${today()}.json`; document.body.appendChild(a); a.click(); a.remove();
-    toast("Zaxira fayli tayyorlandi");
-  },
-  clearDemo: () => confirmBox("Barcha “namuna” mijozlar, yozuvlar, rasmlar va smenalar o‘chiriladi. Sizning ma’lumotlaringiz qoladi.", () => {
-    const demoC = new Set(S.clients.filter(c => c.demo).map(c => c.id));
-    S.photos.filter(p => demoC.has(p.clientId)).forEach(p => phDel(p.id));
-    S.photos = S.photos.filter(p => !demoC.has(p.clientId)); S.appts = S.appts.filter(a => !demoC.has(a.clientId)); S.reminders = S.reminders.filter(r => !demoC.has(r.clientId));
-    S.clients = S.clients.filter(c => !c.demo); S.shifts = S.shifts.filter(s => !s.demo); save(); render(); toast("Namuna ma’lumotlar o‘chirildi");
-  }),
-  resetAll: () => confirmBox("Barcha ma’lumotlar (mijozlar, rasmlar, hisobotlar, xodimlar) butunlay o‘chiriladi va tizim boshlang‘ich holatga qaytadi.", () => {
-    S.photos.forEach(p => phDel(p.id)); try { localStorage.removeItem(LS_KEY); } catch (e) { } S = seed(); S.clients = []; S.appts = []; S.photos = []; S.reminders = []; S.shifts = []; S.demoPhotosPending = false; migrate(); save(); logout("Tizim tozalandi. admin / admin123 bilan kiring.");
-  })
+  clearDemo: () => confirmBox("Barcha “namuna” mijozlar, yozuvlar, rasmlar va smenalar o‘chiriladi. Sizning ma’lumotlaringiz qoladi.", () => persist(api("POST", "/api/demo/clear"), "Namuna ma’lumotlar o‘chirildi")),
+  resetAll: () => confirmBox("Barcha mijozlar, qabul yozuvlari, rasmlar, eslatmalar va smenalar butunlay o‘chiriladi. Xodimlar, xizmatlar va sozlamalar qoladi. Avval zaxira nusxa olganingizga ishonch hosil qiling.", () => persist(api("POST", "/api/reset", { confirm: "TOZALASH" }), "Ma’lumotlar tozalandi"), "Ha, hammasini o‘chirish"),
+  audit: async () => {
+    let list; try { list = await api("GET", "/api/audit?limit=300"); } catch (e) { return toast(e.message, "err"); }
+    const name = (coll, id, info) => coll === "clients" ? (S.clients.find(c => c.id === id) || {}).name || info : coll === "appts" ? (() => { const a = S.appts.find(x => x.id === id); return a ? `${cli(a.clientId).name} · ${ST[info] ? ST[info][0] : info}` : info; })() : info;
+    modal(`${mhead("Harakatlar jurnali", "Kim, qachon, nima qildi · oxirgi 300 ta")}<div class="tbl-wrap"><table><thead><tr><th>Vaqt</th><th>Xodim</th><th>Harakat</th><th>Nima</th></tr></thead><tbody>
+      ${list.map(r => `<tr><td class="num" style="white-space:nowrap">${fmtD(dstr(new Date(r.ts)))} ${hm(r.ts)}</td><td>${esc(r.user)}</td><td>${esc(AUD[r.action] || r.action)}</td><td>${r.coll ? esc(COLL[r.coll] || r.coll) + ": " : ""}${esc(name(r.coll, r.doc_id, r.info || ""))}</td></tr>`).join("") || `<tr><td colspan="4"><div class="empty">Jurnal bo‘sh</div></td></tr>`}
+    </tbody></table></div>`, true);
+  }
 };
-function syncReminder(a) {
-  S.reminders = S.reminders.filter(r => !(r.apptId === a.id && r.auto && !r.done));
-  if (a.remindDays > 0) S.reminders.push({ id: uid(), clientId: a.clientId, apptId: a.id, date: addDays(dstr(new Date(a.leftAt || Date.now())), a.remindDays), reason: `${svc(a.serviceId).name} — nazorat (${a.remindDays} kun)`, done: false, auto: true });
-}
 
 /* ---------- events ---------- */
 document.addEventListener("click", e => {
   lastAct = Date.now();
   const el = e.target.closest("[data-act]"); if (!el) return;
-  if (el.closest(".hr-c") && el.dataset.act === "newAppt" && e.target.closest(".appt")) return;
   const f = ACT[el.dataset.act]; if (!f) return;
   e.preventDefault(); e.stopPropagation(); f(el.dataset, el, e);
 });
@@ -1114,94 +1044,132 @@ document.addEventListener("input", e => {
   if (t.id === "q") { V.p.q = t.value; $("#clist").innerHTML = clientTable(); return; }
   if (t.id === "af_q") { $("#af_client").innerHTML = clientOptions(t.value); const o = $("#af_client").options[0]; if (o) o.selected = true; return; }
   if (t.id === "cmpRange") { $("#cmpSlider").style.setProperty("--p", t.value + "%"); return; }
-  if (t.dataset.f && t.dataset.id && t.tagName !== "SELECT") { const a = S.appts.find(x => x.id === t.dataset.id); if (!a) return; if (t.dataset.f === "remindDays") { if (t.value) a.remindDays = Math.max(1, +t.value); } else a[t.dataset.f] = t.dataset.f === "price" ? (t.value === "" ? "" : +t.value) : t.value; save(); }
+  if (t.dataset.f && t.dataset.id && t.tagName !== "SELECT") {
+    const a = findA(t.dataset.id); if (!a) return;
+    if (t.dataset.f === "remindDays") { if (t.value) a.remindDays = Math.max(1, Math.min(365, +t.value)); }
+    else a[t.dataset.f] = t.dataset.f === "price" ? (t.value === "" ? "" : +t.value) : t.value;
+    debouncePut(a);
+  }
   if (t.id === "ccash") { const exp = +$("#expCash").dataset.v, df = (+t.value || 0) - exp, box = $("#diff"); box.hidden = t.value === ""; box.innerHTML = df === 0 ? `<b style="color:var(--green)">✓ Kassa to‘g‘ri</b>` : `<b style="color:var(--red)">${df > 0 ? "Ortiqcha" : "Kamomad"}: ${money(Math.abs(df))}</b>`; }
 });
+document.addEventListener("focusout", () => setTimeout(() => { if (STALE && !busy()) safeRender(); }, 50));
 document.addEventListener("change", async e => {
   const t = e.target;
   if (t.id === "jdate" && t.value) { V.p.date = t.value; render(); return; }
   if (t.id === "rdate" && t.value) { V.p.date = t.value; render(); return; }
-  if (t.tagName === "SELECT" && t.dataset.f === "serviceId") { const a = S.appts.find(x => x.id === t.dataset.id); a.serviceId = t.value; if (a.status !== "tugadi") a.price = svc(t.value).price; save(); openVisit(a.id); return; }
-  if (t.dataset.f === "remindDays" && t.value) { openVisit(t.dataset.id); return; }
+  if (t.tagName === "SELECT" && t.dataset.f === "serviceId") { const a = findA(t.dataset.id); a.serviceId = t.value; if (a.status !== "tugadi") a.price = svc(t.value).price; t.blur(); openVisit(a.id); persist(putDoc("appts", a)); return; }
+  if (t.dataset.f === "remindDays" && t.value) { flushDebounce(true); t.blur(); openVisit(t.dataset.id); return; }
   if (t.matches("input[type=file][data-photo]")) { await addPhotos(t.files, t.dataset.appt, t.dataset.photo); return; }
   if (t.id === "importFile" && t.files[0]) {
-    try { const j = JSON.parse(await t.files[0].text()); if (j.app !== "podo-crm" || !j.state || !j.state.users) throw 0; for (const [id, data] of Object.entries(j.photos || {})) if (data) await phPut(id, data); S = j.state; migrate(); save(); toast("Zaxiradan tiklandi"); render(); }
-    catch (err) { toast("Fayl noto‘g‘ri: bu PODO MASTER zaxira fayli emas", "err"); }
+    const file = t.files[0]; t.value = "";
+    confirmBox(`<b>${esc(file.name)}</b> faylidan tiklansinmi? Serverdagi joriy ma’lumotlar to‘liq shu fayl bilan almashtiriladi.`, async () => {
+      toast("Zaxira yuklanmoqda…");
+      const r = await persist(api("POST", "/api/restore", new Blob([file], { type: "application/json" })), "Zaxiradan tiklandi");
+      if (r) { try { const me = await api("GET", "/api/me"); CU = me.me; applyState(me.state); render(); } catch (e) { } }
+    }, "Ha, tiklash");
   }
 });
-document.addEventListener("submit", e => {
+document.addEventListener("submit", async e => {
   e.preventDefault(); lastAct = Date.now(); const f = e.target;
-  if (f.id === "loginForm") { const err = login($("#lg").value, $("#lp").value); if (err) { $("#lerr").textContent = err; $("#lerr").hidden = false; } return; }
-  if (f.id === "openShiftForm") { if (openShift()) return; S.shifts.push({ id: uid(), openedBy: CU.id, openedAt: Date.now(), openCash: +$("#ocash").value || 0 }); save(); mclose(); render(); toast("Smena ochildi · " + nowHM()); return; }
+  const btn = $('button[type="submit"]', f); if (btn && btn.disabled) return;
+  const lockBtn = on => { if (btn) btn.disabled = on; };
+  if (f.id === "loginForm") {
+    lockBtn(true); const err = await login($("#lg").value, $("#lp").value); lockBtn(false);
+    if (err) { $("#lerr").textContent = err; $("#lerr").hidden = false; } return;
+  }
+  if (f.id === "passForm") {
+    const err = m => { $("#pw_err").textContent = m; $("#pw_err").hidden = false; };
+    if ($("#pw_new").value !== $("#pw_new2").value) return err("Yangi parollar bir xil emas");
+    lockBtn(true);
+    try { const r = await api("POST", "/api/password", { old: $("#pw_old").value, new: $("#pw_new").value }); CU = r.me; mclose(); render(); toast("Parol o‘zgartirildi"); }
+    catch (x) { err(x.message); lockBtn(false); }
+    return;
+  }
+  if (f.id === "openShiftForm") { mclose(); persist(api("POST", "/api/shift/open", { openCash: +$("#ocash", f).value || 0 }), "Smena ochildi · " + nowHM()); return; }
   if (f.id === "closeShiftForm") {
     if (S.appts.some(a => a.status === "keldi")) return toast("Muolajada turgan mijozni avval yakunlang", "err");
     const sh = openShift(), t = shiftTotals(sh), counted = +$("#ccash").value || 0, expected = (+sh.openCash || 0) + t.naqd, note = $("#cnote").value.trim();
-    confirmBox(`Smena yopilsinmi?<br><br>Muolajalar: <b>${t.count}</b><br>Jami tushum: <b>${money(t.total)}</b> (naqd ${money(t.naqd)}, karta ${money(t.karta)}, click ${money(t.click)})<br>Kutilgan naqd: <b>${money(expected)}</b><br>Sanalgan: <b>${money(counted)}</b> · Farq: <b>${money(counted - expected)}</b>`, () => {
-      Object.assign(sh, { closedAt: Date.now(), closedBy: CU.id, counted, expected, note }); S.lastClose = counted; save(); render();
-      modal(`${mhead("Smena yopildi", `${esc(usr(sh.openedBy).name)} · ${hm(sh.openedAt)}–${hm(sh.closedAt)}`)}<div class="mb"><div class="stats" style="grid-template-columns:repeat(2,1fr)"><div class="card stat hl"><b class="num">${t.count}</b><span>Muolaja</span></div><div class="card stat"><b class="num" style="font-size:20px">${money(t.total)}</b><span>Jami tushum</span></div><div class="card stat"><b class="num" style="font-size:20px">${money(counted)}</b><span>Kassada</span></div><div class="card stat"><b class="num" style="font-size:20px;color:${counted - expected === 0 ? "var(--green)" : "var(--red)"}">${money(counted - expected)}</b><span>Farq</span></div></div></div><div class="mf"><button class="btn pri" data-act="mclose">Tayyor</button></div>`);
+    confirmBox(`Smena yopilsinmi?<br><br>Muolajalar: <b>${t.count}</b><br>Jami tushum: <b>${money(t.total)}</b> (naqd ${money(t.naqd)}, karta ${money(t.karta)}, click ${money(t.click)})<br>Kutilgan naqd: <b>${money(expected)}</b><br>Sanalgan: <b>${money(counted)}</b> · Farq: <b>${money(counted - expected)}</b>`, async () => {
+      const r = await persist(api("POST", "/api/shift/close", { counted, note }));
+      if (!r || !r.shift) return;
+      const s = r.shift, tt = r.totals, df = s.counted - s.expected;
+      modal(`${mhead("Smena yopildi", `${esc(usr(s.openedBy).name)} · ${hm(s.openedAt)}–${hm(s.closedAt)}`)}<div class="mb"><div class="stats" style="grid-template-columns:repeat(2,1fr)"><div class="card stat hl"><b class="num">${tt.count}</b><span>Muolaja</span></div><div class="card stat"><b class="num" style="font-size:20px">${money(tt.total)}</b><span>Jami tushum</span></div><div class="card stat"><b class="num" style="font-size:20px">${money(s.counted)}</b><span>Kassada</span></div><div class="card stat"><b class="num" style="font-size:20px;color:${df === 0 ? "var(--green)" : "var(--red)"}">${money(df)}</b><span>Farq</span></div></div></div><div class="mf"><button class="btn pri" data-act="mclose">Tayyor</button></div>`);
     }, "Smenani yopish", false);
     return;
   }
   if (f.id === "apptForm") {
-    const err = m => { $("#af_err").textContent = m; $("#af_err").hidden = false; };
-    let cid = $("#af_client") && $("#af_client").value;
-    const isNew = $("#af_new") && !$("#af_new").hidden;
-    if (isNew) { const n = $("#af_name").value.trim(), p = $("#af_phone").value.trim(); if (!n) return err("Mijoz ismini kiriting"); if (p.replace(/\D/g, "").length < 9) return err("Telefon raqamini to‘liq kiriting"); const dup = S.clients.find(c => c.phone.replace(/\D/g, "") === p.replace(/\D/g, "")); if (dup) cid = dup.id; else { cid = uid(); S.clients.push({ id: cid, name: n, phone: p, birth: "", diag: [], notes: "", createdAt: Date.now() }); } }
-    if (!cid) return err("Mijozni tanlang");
-    const date = $("#af_date").value, time = $("#af_time").value; if (!date || !time) return err("Sana va vaqtni kiriting");
-    const sid = $("#af_svc").value, clash = S.appts.find(a => a.date === date && a.time === time && ["kutilmoqda", "keldi"].includes(a.status));
-    S.appts.push({ id: uid(), clientId: cid, date, time, serviceId: sid, status: "kutilmoqda", price: svc(sid).price, pay: "naqd", notes: $("#af_note").value.trim(), remindDays: 14, createdBy: CU.id });
-    const rid = $("#af_rem").value; if (rid) { const r = S.reminders.find(x => x.id === rid); if (r) { r.done = true; r.doneAt = Date.now(); r.doneBy = CU.id; } }
-    save(); mclose(); render(); toast(`${cli(cid).name} · ${fmtD(date)} ${time} ga yozildi${clash ? " (diqqat: shu vaqtda boshqa mijoz ham bor)" : ""}`, clash ? "warn" : ""); return;
+    const err = m => { $("#af_err").textContent = m; $("#af_err").hidden = false; lockBtn(false); };
+    lockBtn(true);
+    try {
+      let cid = $("#af_client") && $("#af_client").value;
+      const isNew = $("#af_new") && !$("#af_new").hidden;
+      if (isNew) {
+        const n = $("#af_name").value.trim(), p = $("#af_phone").value.trim();
+        if (!n) return err("Mijoz ismini kiriting"); if (p.replace(/\D/g, "").length < 9) return err("Telefon raqamini to‘liq kiriting");
+        const dup = S.clients.find(c => c.phone.replace(/\D/g, "") === p.replace(/\D/g, ""));
+        if (dup) cid = dup.id; else { cid = uid(); await putDoc("clients", { id: cid, name: n, phone: p, birth: "", diag: [], notes: "" }); }
+      }
+      if (!cid) return err("Mijozni tanlang");
+      const date = $("#af_date").value, time = $("#af_time").value; if (!date || !time) return err("Sana va vaqtni kiriting");
+      const sid = $("#af_svc").value, clash = S.appts.find(a => a.date === date && a.time === time && ["kutilmoqda", "keldi"].includes(a.status));
+      await putDoc("appts", { id: uid(), clientId: cid, date, time, serviceId: sid, status: "kutilmoqda", price: svc(sid).price, pay: "naqd", notes: $("#af_note").value.trim(), remindDays: 14 });
+      const rid = $("#af_rem").value; if (rid) { const r = S.reminders.find(x => x.id === rid); if (r) await putDoc("reminders", Object.assign({}, r, { done: true })); }
+      const nm = isNew ? $("#af_name").value.trim() : cli(cid).name;
+      mclose(); await refresh();
+      toast(`${nm} · ${fmtD(date)} ${time} ga yozildi${clash ? " (diqqat: shu vaqtda boshqa mijoz ham bor)" : ""}`, clash ? "warn" : "");
+    } catch (x) { err(x.message); }
+    return;
   }
   if (f.id === "clientForm") {
-    const id = f.dataset.id, name = $("#cf_name").value.trim(), phone = $("#cf_phone").value.trim();
-    const err = m => { $("#cf_err").textContent = m; $("#cf_err").hidden = false; };
-    if (!name) return err("Ismni kiriting"); if (phone.replace(/\D/g, "").length < 9) return err("Telefon raqamini to‘liq kiriting");
-    const dup = S.clients.find(c => c.id !== id && c.phone.replace(/\D/g, "") === phone.replace(/\D/g, "")); if (dup) return err(`Bu raqam ${dup.name} nomida allaqachon bor`);
-    const data = { name, phone, birth: $("#cf_birth").value, diag: [...FORM_DIAG], notes: $("#cf_notes").value.trim() };
-    if (id) Object.assign(S.clients.find(c => c.id === id), data); else S.clients.push(Object.assign({ id: uid(), createdAt: Date.now() }, data));
-    save(); mclose(); if (!id) go("mijoz", { id: S.clients[S.clients.length - 1].id }); else render(); toast("Mijoz saqlandi"); return;
+    const id = f.dataset.id || uid(), err = m => { $("#cf_err").textContent = m; $("#cf_err").hidden = false; lockBtn(false); };
+    const data = { id, name: $("#cf_name").value.trim(), phone: $("#cf_phone").value.trim(), birth: $("#cf_birth").value, diag: [...FORM_DIAG], notes: $("#cf_notes").value.trim() };
+    if (!data.name) return err("Ismni kiriting"); if (data.phone.replace(/\D/g, "").length < 9) return err("Telefon raqamini to‘liq kiriting");
+    lockBtn(true);
+    try { await putDoc("clients", data); mclose(); await refresh(); if (!f.dataset.id) go("mijoz", { id }); toast("Mijoz saqlandi"); } catch (x) { err(x.message); }
+    return;
   }
-  if (f.id === "remForm") { S.reminders.push({ id: uid(), clientId: $("#rf_client").value, date: $("#rf_date").value, reason: $("#rf_reason").value.trim() || "Nazorat ko‘rigi", done: false, createdBy: CU.id }); save(); mclose(); render(); toast("Eslatma qo‘shildi: " + fmtD($("#rf_date") ? $("#rf_date").value : today())); return; }
+  if (f.id === "remForm") { const r = { id: uid(), clientId: $("#rf_client").value, date: $("#rf_date").value, reason: $("#rf_reason").value.trim() || "Nazorat ko‘rigi" }; mclose(); persist(putDoc("reminders", r), "Eslatma qo‘shildi: " + fmtD(r.date)); return; }
   if (f.id === "userForm") {
-    const id = f.dataset.id, err = m => { $("#uf_err").textContent = m; $("#uf_err").hidden = false; };
-    const login = $("#uf_login").value.trim(), pass = $("#uf_pass").value, role = $("#uf_role").value, active = $("#uf_active").checked;
-    if (S.users.some(u => u.id !== id && u.login.toLowerCase() === login.toLowerCase())) return err("Bu login band");
-    if (pass && pass.length < 4) return err("Parol kamida 4 belgidan iborat bo‘lsin");
-    if (id && (role !== "admin" || !active) && usr(id).role === "admin" && !S.users.some(u => u.id !== id && u.role === "admin" && u.active)) return err("Kamida bitta faol administrator qolishi kerak");
-    const data = { name: $("#uf_name").value.trim(), login, role, active };
-    if (pass) data.pass = hash(pass);
-    if (id) { Object.assign(S.users.find(u => u.id === id), data); if (id === CU.id) Object.assign(CU, data); } else S.users.push(Object.assign({ id: uid() }, data));
-    save(); mclose(); render(); toast("Xodim saqlandi"); return;
+    const id = f.dataset.id || uid(), err = m => { $("#uf_err").textContent = m; $("#uf_err").hidden = false; lockBtn(false); };
+    const data = { id, name: $("#uf_name").value.trim(), login: $("#uf_login").value.trim(), role: $("#uf_role").value, active: $("#uf_active").checked };
+    if ($("#uf_pass").value) data.password = $("#uf_pass").value;
+    lockBtn(true);
+    try { await putDoc("users", data); if (id === CU.id) Object.assign(CU, { name: data.name, login: data.login, role: data.role }); mclose(); await refresh(); toast("Xodim saqlandi"); } catch (x) { err(x.message); }
+    return;
   }
-  if (f.id === "svcForm") { const id = f.dataset.id, data = { name: $("#sf_name").value.trim(), price: +$("#sf_price").value || 0, dur: +$("#sf_dur").value || 30 }; if (id) Object.assign(S.services.find(s => s.id === id), data); else S.services.push(Object.assign({ id: uid() }, data)); save(); mclose(); render(); toast("Xizmat saqlandi"); return; }
-  if (f.id === "setForm") { Object.assign(S.settings, { clinic: $("#st_clinic").value.trim(), phone: $("#st_phone").value.trim(), lockMin: Math.max(1, +$("#st_lock").value || 20), sms: $("#st_sms").value }); save(); toast("Sozlamalar saqlandi"); return; }
+  if (f.id === "svcForm") { const data = { id: f.dataset.id || uid(), name: $("#sf_name").value.trim(), price: +$("#sf_price").value || 0, dur: +$("#sf_dur").value || 30 }; mclose(); persist(putDoc("services", data), "Xizmat saqlandi"); return; }
+  if (f.id === "setForm") { persist(putDoc("settings", { id: "main", clinic: $("#st_clinic").value.trim(), phone: $("#st_phone").value.trim(), lockMin: Math.max(1, +$("#st_lock").value || 20), sms: $("#st_sms").value }), "Sozlamalar saqlandi"); return; }
 });
 const nowHM = () => hm(Date.now());
 
 async function addPhotos(files, apptId, kind) {
-  const a = S.appts.find(x => x.id === apptId); if (!a || !files || !files.length) return;
-  toast("Rasm saqlanmoqda…");
+  const a = findA(apptId); if (!a || !files || !files.length) return;
+  toast("Rasm yuklanmoqda…");
+  let ok = 0;
   for (const file of files) {
-    try {
-      const data = await resizeImage(file, 1280, .82); const id = "ph_" + uid();
-      await phPut(id, data); S.photos.push({ id, clientId: a.clientId, apptId, kind, date: a.date, ts: Date.now(), by: CU.id });
-    } catch (e) { toast("Rasmni o‘qib bo‘lmadi", "err"); }
+    try { const blob = await resizeImage(file, 1600, .85); await api("POST", `/api/photos?appt=${encodeURIComponent(apptId)}&kind=${kind}`, blob); ok++; }
+    catch (e) { toast(e.message || "Rasmni yuklab bo‘lmadi", "err"); }
   }
-  save(); openVisit(apptId); toast(kind === "oldin" ? "“Oldin” rasmi saqlandi" : "“Keyin” rasmi saqlandi");
+  await refresh(); if (!$("#modal").hidden) openVisit(apptId);
+  if (ok) toast(kind === "oldin" ? "“Oldin” rasmi saqlandi" : "“Keyin” rasmi saqlandi");
 }
 function resizeImage(file, max, q) {
   return new Promise((res, rej) => {
-    const fr = new FileReader(); fr.onerror = rej;
-    fr.onload = () => { const img = new Image(); img.onerror = rej; img.onload = () => { const k = Math.min(1, max / Math.max(img.width, img.height)); const c = document.createElement("canvas"); c.width = Math.round(img.width * k); c.height = Math.round(img.height * k); c.getContext("2d").drawImage(img, 0, 0, c.width, c.height); res(c.toDataURL("image/jpeg", q)); }; img.src = fr.result; };
-    fr.readAsDataURL(file);
+    const url = URL.createObjectURL(file), img = new Image();
+    img.onerror = () => { URL.revokeObjectURL(url); rej(new Error("Rasmni o‘qib bo‘lmadi")); };
+    img.onload = () => {
+      URL.revokeObjectURL(url);
+      const k = Math.min(1, max / Math.max(img.width, img.height)), c = document.createElement("canvas");
+      c.width = Math.round(img.width * k); c.height = Math.round(img.height * k); c.getContext("2d").drawImage(img, 0, 0, c.width, c.height);
+      c.toBlob(b => b ? res(b) : rej(new Error("Rasmni siqib bo‘lmadi")), "image/jpeg", q);
+    };
+    img.src = url;
   });
 }
 
-/* ---------- timers: clock, due alerts, auto-lock ---------- */
+/* ---------- timers: clock, due alerts, auto-lock, live sync ---------- */
 function tick() {
-  if (!CU) return;
+  if (!CU || !S) return;
   const n = new Date(), clk = $("#clk"); if (clk) clk.textContent = pad(n.getHours()) + ":" + pad(n.getMinutes());
   if (Date.now() - lastAct > (S.settings.lockMin || 20) * 60000) return logout("Harakatsizlik sababli tizimdan chiqildi");
   const t = today();
@@ -1210,19 +1178,30 @@ function tick() {
     const m = minsUntil(a);
     if (m <= 5 && m > -20) { NOTIFIED.add(a.id); beep(); if ($("#modal").hidden) dueModal(a); else toast(`⏰ ${cli(a.clientId).name} — qabul vaqti keldi (${a.time})`, "warn"); }
   }
-  if (V.name === "bugun" && $("#modal").hidden) render();
+  if (V.name === "bugun" && $("#modal").hidden) safeRender();
+}
+let polling = false;
+async function poll() {
+  if (!CU || !S || polling) return; polling = true;
+  try { const r = await api("GET", "/api/version"); if (r.v !== S.v) await refresh(); else if (STALE) safeRender(); } catch (e) { }
+  polling = false;
 }
 ["pointerdown", "keydown"].forEach(ev => document.addEventListener(ev, () => lastAct = Date.now(), { passive: true }));
+document.addEventListener("visibilitychange", () => { if (!document.hidden) poll(); });
+window.addEventListener("online", poll);
 
 /* ---------- boot ---------- */
 (async function boot() {
   applyTheme();
-  await idbOpen();
-  load();
-  try { const id = sessionStorage.getItem("podo_cu"); if (id) CU = S.users.find(u => u.id === id && u.active) || null; } catch (e) { }
+  $("#app").innerHTML = `<div class="empty" style="padding-top:30vh">PODO MASTER yuklanmoqda…</div>`;
+  try { const r = await api("GET", "/api/me"); CU = r.me; applyState(r.state); } catch (e) { CU = null; }
   render();
-  genDemoPhotos();
+  if (CU && CU.mustChange) passModal(true);
   setTimeout(tick, 2500);
   setInterval(tick, 20000);
+  setInterval(poll, 4000);
 })();
 </script>
+
+</body>
+</html>

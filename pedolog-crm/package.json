@@ -1,0 +1,11 @@
+{
+  "name": "podo-master-crm",
+  "version": "2.0.0",
+  "private": true,
+  "description": "PODO MASTER — pedolog markazi uchun CRM (server)",
+  "main": "server.js",
+  "engines": { "node": ">=22.13" },
+  "scripts": {
+    "start": "node --disable-warning=ExperimentalWarning server.js"
+  }
+}
