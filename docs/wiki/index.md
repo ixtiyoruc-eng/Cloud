@@ -7,6 +7,7 @@ Chief-of-staff memory for this repo. Every claim is dated; claims about code cit
 
 ## Decisions
 - [2026-11-15 skills setup](decision-2026-11-15-skills-setup.md) — installed mattpocock/skills, GitHub Issues tracker, wiki in `docs/wiki/`.
+- [2026-11-15 editing skills](decision-2026-11-15-editing-skills.md) — montage and SFX skills installed, caveats, SFX sources.
 - [2026-11-15 wiki lint schedule](decision-2026-11-15-wiki-lint-schedule.md) — weekly Monday lint of this wiki.
 
 ## Backlog
@@ -22,4 +23,5 @@ Chief-of-staff memory for this repo. Every claim is dated; claims about code cit
 - [conventions](conventions.md) — how this wiki is written.
 
 ## Sources
+- [skills search 2026-11-15](../research/skills-search-2026-11-15.md) — vetted and rejected editing skills, SFX sources.
 - [audit 2026-11-15](../research/audit-2026-11-15.md) — subagent audit of the video-editing environment.
