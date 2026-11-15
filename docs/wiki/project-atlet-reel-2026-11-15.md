@@ -7,3 +7,9 @@
 - Open as of 2026-11-15: caption wording check by the speaker, two music loops to check by ear, the full render (dumbbell, glass UI, grade, blur) not done.
 
 Related: [reference styles](../research/reference-styles-2026-11-15.md), [editing skills](decision-2026-11-15-editing-skills.md), [goal](goal.md).
+
+## Revision 2 (2026-11-15)
+
+- On 2026-11-15 the user gave the ground-truth script (Khorezm dialect, Cyrillic) and asked: captions word for word from it (in Uzbek Latin, keeping the dialect wording — chief-of-staff choice, easy to change), remove the duplicate "kunlik 5 gram" near 1:05, smooth face tracking on the hook shot, then a full render with graphics.
+- A render subagent was started on 2026-11-15. Expected outputs: scratchpad `edit/v2/` (edl.json, final_1080x1920.mp4, preview_540.mp4, changes.md); Remotion source in `tools/atlet-reel/remotion/`.
+- Handoff note (2026-11-15): the user may switch the session model when the current model's limit runs out. Everything needed to continue is in this page, `tools/atlet-reel/`, and the session scratchpad (`edit/`, `sfx/pack/`, `drive/f/`, `art/atlet-reel.html` = the published artifact source). If the scratchpad is lost, re-download the Drive folder with `gdown --folder` (link in the user's message of 2026-11-15).
