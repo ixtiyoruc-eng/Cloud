@@ -13,6 +13,9 @@ Chief-of-staff memory for this repo. Every claim is dated; claims about code cit
 ## Projects
 - [Atlet reel 2026-11-15](project-atlet-reel-2026-11-15.md) — phonk-synced supplements reel: edit plan, SFX pack, rough-cut artifact.
 
+## Preferences
+- [Uzbek alphabet on screen](preference-uzbek-alphabet.md) — use ş ç ö ğ for sh ch o' g' in captions and graphics.
+
 ## Backlog
 - [backlog](backlog.md) — ranked environment improvements from the 2026-11-15 audit.
 
