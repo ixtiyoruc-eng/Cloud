@@ -6,3 +6,5 @@
 - Skills not installed as of 2026-11-15: `codebase-design`, `domain-modeling`, `triage`.
 
 Related: [goal](goal.md).
+
+- On 2026-11-15 the user installed `find-skills` from `vercel-labs/skills@main` into `.claude/skills/find-skills/`. On the same day, running its `npx skills find` CLI in this session was blocked by the permission classifier.
