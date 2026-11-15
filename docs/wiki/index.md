@@ -23,5 +23,6 @@ Chief-of-staff memory for this repo. Every claim is dated; claims about code cit
 - [conventions](conventions.md) — how this wiki is written.
 
 ## Sources
+- [reference styles 2026-11-15](../research/reference-styles-2026-11-15.md) — two montage references measured: cuts, captions, music sync, SFX, reproduction recipes.
 - [skills search 2026-11-15](../research/skills-search-2026-11-15.md) — vetted and rejected editing skills, SFX sources.
 - [audit 2026-11-15](../research/audit-2026-11-15.md) — subagent audit of the video-editing environment.
