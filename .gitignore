@@ -1,0 +1,9 @@
+# Build and render junk. Do not ignore videos/ (output policy not decided yet).
+node_modules/
+.remotion/
+out/
+build/
+__pycache__/
+*.pyc
+*.part
+.DS_Store

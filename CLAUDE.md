@@ -7,3 +7,7 @@ Issues and specs live in GitHub Issues on ixtiyoruc-eng/Cloud. See `docs/agents/
 ### Domain docs
 
 Single-context: one `GLOSSARY.md` and `docs/adr/` at the repo root. See `docs/agents/domain.md`.
+
+### Repo overview
+
+Start with `README.md` (what this repo is, `bash video-setup.sh`, where things live).
