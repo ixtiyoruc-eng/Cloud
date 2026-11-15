@@ -10,6 +10,9 @@ Chief-of-staff memory for this repo. Every claim is dated; claims about code cit
 - [2026-11-15 editing skills](decision-2026-11-15-editing-skills.md) — montage and SFX skills installed, caveats, SFX sources.
 - [2026-11-15 wiki lint schedule](decision-2026-11-15-wiki-lint-schedule.md) — weekly Monday lint of this wiki.
 
+## Projects
+- [Atlet reel 2026-11-15](project-atlet-reel-2026-11-15.md) — phonk-synced supplements reel: edit plan, SFX pack, rough-cut artifact.
+
 ## Backlog
 - [backlog](backlog.md) — ranked environment improvements from the 2026-11-15 audit.
 
