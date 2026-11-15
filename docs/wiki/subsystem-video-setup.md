@@ -28,3 +28,7 @@ Supersedes the pip and Remotion findings above. As of `ixtiyoruc-eng/Cloud@a2a5e
 - Fonts come from a pinned `google/fonts` commit; Inter Display comes from the apt package `fonts-inter`. Montserrat, Inter Tight and Inter Display have U+02BB.
 - Remotion is pinned to 4.0.543, and setup writes `~/motion/remotion.config.ts` to use the browser in `/opt/pw-browsers`.
 - On 2026-11-15 the chief of staff re-ran it: all checks passed in 5.6 s on a warm container. A fresh-container time was not measured.
+
+## Cloud setup script (2026-11-15)
+
+On 2026-11-15 the user approved a setup script on cloud environment "Gym": `bash Cloud/video-setup.sh || echo "...failed..."`, so a failure does not block a session from starting. It runs only when a container is built fresh, and was not yet proven on a fresh container that day. New sessions clone the default branch `master`, which on 2026-11-15 still had the old script.

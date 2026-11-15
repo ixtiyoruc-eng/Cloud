@@ -3,7 +3,7 @@
 Ranked on 2026-11-15 from [audit 2026-11-15](../research/audit-2026-11-15.md) (section 4). Status is dated per line.
 
 1. Fix the pip step and make failures loud (S). 2026-11-15: done in `ixtiyoruc-eng/Cloud@a2a5e5b`.
-2. Save setup as the cloud environment's setup script, idempotent (S). 2026-11-15: open; needs user approval.
+2. Save setup as the cloud environment's setup script, idempotent (S). 2026-11-15: user approved; saved as the setup script of cloud environment "Gym". It runs `Cloud/video-setup.sh` from the cloned branch, and the fix was then only on `claude/magical-darwin-72prnm`, not `master`.
 3. Build whisper.cpp and download its model in setup (M). 2026-11-15: open.
 4. Point Remotion at the installed browser (S). 2026-11-15: done in `@a2a5e5b`.
 5. Move the Remotion project and Python helpers into the repo, with lockfiles (M). 2026-11-15: open.
