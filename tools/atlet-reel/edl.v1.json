@@ -1,0 +1,3445 @@
+{
+ "version": 1,
+ "generated": "2026-11-15",
+ "output": {
+  "width": 1080,
+  "height": 1920,
+  "fps": 30,
+  "duration": 78.831,
+  "preview": "preview.mp4 540x960"
+ },
+ "sources": {
+  "clips": {
+   "c1": "Video 1 kadr.mov",
+   "c2": "Video 2 kadr.mov",
+   "c3": "Video 3 kadr.mov",
+   "c4": "Video 4 kadr.mov",
+   "c5": "Video 5 kadr.mov"
+  },
+  "frame": "zoom is relative to the full-height 9:16 crop (1.0 = 2268x4032); base 1.30 (face ~18% of frame height, desk mostly trimmed; source still >=1558 px wide so no upscaling at 1080), punch-in 1.456 (= base x 1.12) on alternate jump cuts; eyes placed at 38% of crop height. Stored 4032x3024 HEVC with rotation -90 => displayed 3024x4032 portrait (3:4). All crop numbers are in displayed 3024x4032 pixels. 9:16 full-height crop = 2268x4032.",
+  "language": "uz (Uzbek, Khorezm dialect; whisper large-v3 auto-detect said 'kk', text is Uzbek)"
+ },
+ "segments": [
+  {
+   "id": "S01",
+   "clip": "c1",
+   "source_file": "Video 1 kadr.mov",
+   "range": "R01",
+   "section": "hook",
+   "src_in": 0.89,
+   "src_out": 5.81,
+   "out_start": 0,
+   "out_end": 4.92,
+   "crop": {
+    "x": 443,
+    "y": 444,
+    "w": 1745,
+    "h": 3102,
+    "zoom": 1.3,
+    "face_cx_px": 1315,
+    "eyes_y_px": 1622,
+    "eyes_y_in_crop": 0.38,
+    "face_samples": 21
+   },
+   "covered_by_mg": false,
+   "beat_snap_ms": null,
+   "pre_air_ms": null,
+   "camera": "slow push-in +2% across the segment (ease in-out sine)"
+  },
+  {
+   "id": "S02",
+   "clip": "c1",
+   "source_file": "Video 1 kadr.mov",
+   "range": "R01",
+   "section": "hook",
+   "src_in": 6.035,
+   "src_out": 8.72,
+   "out_start": 4.92,
+   "out_end": 7.605,
+   "crop": {
+    "x": 521,
+    "y": 540,
+    "w": 1558,
+    "h": 2769,
+    "zoom": 1.456,
+    "face_cx_px": 1300,
+    "eyes_y_px": 1592,
+    "eyes_y_in_crop": 0.38,
+    "face_samples": 12
+   },
+   "covered_by_mg": false,
+   "beat_snap_ms": null,
+   "pre_air_ms": null,
+   "camera": "slow push-in +2% across the segment (ease in-out sine)"
+  },
+  {
+   "id": "S03",
+   "clip": "c2",
+   "source_file": "Video 2 kadr.mov",
+   "range": "R02",
+   "section": "protein",
+   "src_in": 1.54,
+   "src_out": 6.021,
+   "out_start": 7.605,
+   "out_end": 12.086,
+   "crop": {
+    "x": 438,
+    "y": 481,
+    "w": 1745,
+    "h": 3102,
+    "zoom": 1.3,
+    "face_cx_px": 1310,
+    "eyes_y_px": 1659,
+    "eyes_y_in_crop": 0.38,
+    "face_samples": 19
+   },
+   "covered_by_mg": false,
+   "beat_snap_ms": 101,
+   "pre_air_ms": null,
+   "camera": "slow push-in +2% across the segment (ease in-out sine)"
+  },
+  {
+   "id": "S04",
+   "clip": "c2",
+   "source_file": "Video 2 kadr.mov",
+   "range": "R02",
+   "section": "protein",
+   "src_in": 6.025,
+   "src_out": 7.389,
+   "out_start": 12.086,
+   "out_end": 13.45,
+   "crop": {
+    "x": 564,
+    "y": 616,
+    "w": 1558,
+    "h": 2769,
+    "zoom": 1.456,
+    "face_cx_px": 1343,
+    "eyes_y_px": 1668,
+    "eyes_y_in_crop": 0.38,
+    "face_samples": 7
+   },
+   "covered_by_mg": false,
+   "beat_snap_ms": 59,
+   "pre_air_ms": null,
+   "camera": "slow push-in +2% across the segment (ease in-out sine)"
+  },
+  {
+   "id": "S05",
+   "clip": "c2",
+   "source_file": "Video 2 kadr.mov",
+   "range": "R03",
+   "section": "protein",
+   "src_in": 13.68,
+   "src_out": 17.9,
+   "out_start": 13.45,
+   "out_end": 17.67,
+   "crop": {
+    "x": 486,
+    "y": 502,
+    "w": 1745,
+    "h": 3102,
+    "zoom": 1.3,
+    "face_cx_px": 1359,
+    "eyes_y_px": 1681,
+    "eyes_y_in_crop": 0.38,
+    "face_samples": 18
+   },
+   "covered_by_mg": false,
+   "beat_snap_ms": null,
+   "pre_air_ms": null,
+   "camera": "slow push-in +2% across the segment (ease in-out sine)"
+  },
+  {
+   "id": "S06",
+   "clip": "c2",
+   "source_file": "Video 2 kadr.mov",
+   "range": "R03",
+   "section": "protein",
+   "src_in": 17.95,
+   "src_out": 18.73,
+   "out_start": 17.67,
+   "out_end": 18.45,
+   "crop": {
+    "x": 590,
+    "y": 629,
+    "w": 1558,
+    "h": 2769,
+    "zoom": 1.456,
+    "face_cx_px": 1369,
+    "eyes_y_px": 1681,
+    "eyes_y_in_crop": 0.38,
+    "face_samples": 4
+   },
+   "covered_by_mg": false,
+   "beat_snap_ms": 100,
+   "pre_air_ms": null,
+   "camera": "slow push-in +2% across the segment (ease in-out sine)"
+  },
+  {
+   "id": "S07",
+   "clip": "c2",
+   "source_file": "Video 2 kadr.mov",
+   "range": "R05",
+   "section": "protein",
+   "src_in": 39.75,
+   "src_out": 48.44,
+   "out_start": 18.45,
+   "out_end": 27.14,
+   "crop": {
+    "x": 489,
+    "y": 499,
+    "w": 1745,
+    "h": 3102,
+    "zoom": 1.3,
+    "face_cx_px": 1362,
+    "eyes_y_px": 1678,
+    "eyes_y_in_crop": 0.38,
+    "face_samples": 36
+   },
+   "covered_by_mg": false,
+   "beat_snap_ms": null,
+   "pre_air_ms": null,
+   "camera": "slow push-in +2% across the segment (ease in-out sine)"
+  },
+  {
+   "id": "S08",
+   "clip": "c2",
+   "source_file": "Video 2 kadr.mov",
+   "range": "R06",
+   "section": "protein",
+   "src_in": 55.71,
+   "src_out": 60.202,
+   "out_start": 27.14,
+   "out_end": 31.632,
+   "crop": {
+    "x": 565,
+    "y": 631,
+    "w": 1558,
+    "h": 2769,
+    "zoom": 1.456,
+    "face_cx_px": 1344,
+    "eyes_y_px": 1683,
+    "eyes_y_in_crop": 0.38,
+    "face_samples": 19
+   },
+   "covered_by_mg": false,
+   "beat_snap_ms": 102,
+   "pre_air_ms": null,
+   "camera": "slow push-in +2% across the segment (ease in-out sine)"
+  },
+  {
+   "id": "S09",
+   "clip": "c3",
+   "source_file": "Video 3 kadr.mov",
+   "range": "R07",
+   "section": "gainer",
+   "src_in": 3.78,
+   "src_out": 8.43,
+   "out_start": 31.632,
+   "out_end": 36.282,
+   "crop": {
+    "x": 490,
+    "y": 454,
+    "w": 1745,
+    "h": 3102,
+    "zoom": 1.3,
+    "face_cx_px": 1362,
+    "eyes_y_px": 1632,
+    "eyes_y_in_crop": 0.38,
+    "face_samples": 20
+   },
+   "covered_by_mg": false,
+   "beat_snap_ms": null,
+   "pre_air_ms": null,
+   "camera": "slow push-in +2% across the segment (ease in-out sine)"
+  },
+  {
+   "id": "S10",
+   "clip": "c4",
+   "source_file": "Video 4 kadr.mov",
+   "range": "R08",
+   "section": "gainer",
+   "src_in": 2.21,
+   "src_out": 3.469,
+   "out_start": 36.282,
+   "out_end": 37.541,
+   "crop": {
+    "x": 602,
+    "y": 619,
+    "w": 1558,
+    "h": 2769,
+    "zoom": 1.456,
+    "face_cx_px": 1381,
+    "eyes_y_px": 1671,
+    "eyes_y_in_crop": 0.38,
+    "face_samples": 6
+   },
+   "covered_by_mg": false,
+   "beat_snap_ms": 9,
+   "pre_air_ms": null,
+   "camera": "slow push-in +2% across the segment (ease in-out sine)"
+  },
+  {
+   "id": "S11",
+   "clip": "c4",
+   "source_file": "Video 4 kadr.mov",
+   "range": "R09",
+   "section": "gainer",
+   "src_in": 23.91,
+   "src_out": 28.78,
+   "out_start": 37.541,
+   "out_end": 42.411,
+   "crop": {
+    "x": 367,
+    "y": 560,
+    "w": 1745,
+    "h": 3102,
+    "zoom": 1.3,
+    "face_cx_px": 1239,
+    "eyes_y_px": 1739,
+    "eyes_y_in_crop": 0.38,
+    "face_samples": 20
+   },
+   "covered_by_mg": true,
+   "beat_snap_ms": null,
+   "pre_air_ms": null,
+   "camera": "slow push-in +2% across the segment (ease in-out sine)"
+  },
+  {
+   "id": "S12",
+   "clip": "c4",
+   "source_file": "Video 4 kadr.mov",
+   "range": "R09",
+   "section": "gainer",
+   "src_in": 28.79,
+   "src_out": 29.56,
+   "out_start": 42.411,
+   "out_end": 43.181,
+   "crop": {
+    "x": 360,
+    "y": 558,
+    "w": 1745,
+    "h": 3102,
+    "zoom": 1.3,
+    "face_cx_px": 1232,
+    "eyes_y_px": 1737,
+    "eyes_y_in_crop": 0.38,
+    "face_samples": 4
+   },
+   "covered_by_mg": true,
+   "beat_snap_ms": null,
+   "pre_air_ms": null,
+   "camera": "slow push-in +2% across the segment (ease in-out sine)"
+  },
+  {
+   "id": "S13",
+   "clip": "c4",
+   "source_file": "Video 4 kadr.mov",
+   "range": "R09",
+   "section": "gainer",
+   "src_in": 29.885,
+   "src_out": 33.336,
+   "out_start": 43.181,
+   "out_end": 46.632,
+   "crop": {
+    "x": 362,
+    "y": 558,
+    "w": 1745,
+    "h": 3102,
+    "zoom": 1.3,
+    "face_cx_px": 1235,
+    "eyes_y_px": 1736,
+    "eyes_y_in_crop": 0.38,
+    "face_samples": 15
+   },
+   "covered_by_mg": true,
+   "beat_snap_ms": -4,
+   "pre_air_ms": null,
+   "camera": "slow push-in +2% across the segment (ease in-out sine)"
+  },
+  {
+   "id": "S14",
+   "clip": "c4",
+   "source_file": "Video 4 kadr.mov",
+   "range": "R09",
+   "section": "gainer",
+   "src_in": 33.37,
+   "src_out": 34.45,
+   "out_start": 46.632,
+   "out_end": 47.712,
+   "crop": {
+    "x": 364,
+    "y": 571,
+    "w": 1745,
+    "h": 3102,
+    "zoom": 1.3,
+    "face_cx_px": 1237,
+    "eyes_y_px": 1750,
+    "eyes_y_in_crop": 0.38,
+    "face_samples": 6
+   },
+   "covered_by_mg": true,
+   "beat_snap_ms": null,
+   "pre_air_ms": null,
+   "camera": "slow push-in +2% across the segment (ease in-out sine)"
+  },
+  {
+   "id": "S15",
+   "clip": "c4",
+   "source_file": "Video 4 kadr.mov",
+   "range": "R09",
+   "section": "gainer",
+   "src_in": 34.47,
+   "src_out": 34.93,
+   "out_start": 47.712,
+   "out_end": 48.172,
+   "crop": {
+    "x": 377,
+    "y": 571,
+    "w": 1745,
+    "h": 3102,
+    "zoom": 1.3,
+    "face_cx_px": 1249,
+    "eyes_y_px": 1749,
+    "eyes_y_in_crop": 0.38,
+    "face_samples": 3
+   },
+   "covered_by_mg": true,
+   "beat_snap_ms": null,
+   "pre_air_ms": null,
+   "camera": "slow push-in +2% across the segment (ease in-out sine)"
+  },
+  {
+   "id": "S16",
+   "clip": "c4",
+   "source_file": "Video 4 kadr.mov",
+   "range": "R10",
+   "section": "gainer",
+   "src_in": 49.51,
+   "src_out": 53.15,
+   "out_start": 48.172,
+   "out_end": 51.812,
+   "crop": {
+    "x": 498,
+    "y": 451,
+    "w": 1745,
+    "h": 3102,
+    "zoom": 1.3,
+    "face_cx_px": 1370,
+    "eyes_y_px": 1629,
+    "eyes_y_in_crop": 0.38,
+    "face_samples": 16
+   },
+   "covered_by_mg": false,
+   "beat_snap_ms": null,
+   "pre_air_ms": null,
+   "camera": "slow push-in +2% across the segment (ease in-out sine)"
+  },
+  {
+   "id": "S17",
+   "clip": "c4",
+   "source_file": "Video 4 kadr.mov",
+   "range": "R10",
+   "section": "gainer",
+   "src_in": 53.26,
+   "src_out": 54.898,
+   "out_start": 51.812,
+   "out_end": 53.45,
+   "crop": {
+    "x": 664,
+    "y": 567,
+    "w": 1558,
+    "h": 2769,
+    "zoom": 1.456,
+    "face_cx_px": 1443,
+    "eyes_y_px": 1619,
+    "eyes_y_in_crop": 0.38,
+    "face_samples": 8
+   },
+   "covered_by_mg": false,
+   "beat_snap_ms": 38,
+   "pre_air_ms": null,
+   "camera": "slow push-in +2% across the segment (ease in-out sine)"
+  },
+  {
+   "id": "S18",
+   "clip": "c5",
+   "source_file": "Video 5 kadr.mov",
+   "range": "R11",
+   "section": "creatine",
+   "src_in": 5.14,
+   "src_out": 10.24,
+   "out_start": 53.45,
+   "out_end": 58.55,
+   "crop": {
+    "x": 437,
+    "y": 504,
+    "w": 1745,
+    "h": 3102,
+    "zoom": 1.3,
+    "face_cx_px": 1309,
+    "eyes_y_px": 1682,
+    "eyes_y_in_crop": 0.38,
+    "face_samples": 21
+   },
+   "covered_by_mg": false,
+   "beat_snap_ms": null,
+   "pre_air_ms": null,
+   "camera": "slow push-in +2% across the segment (ease in-out sine)"
+  },
+  {
+   "id": "S19",
+   "clip": "c5",
+   "source_file": "Video 5 kadr.mov",
+   "range": "R12",
+   "section": "creatine",
+   "src_in": 16.8,
+   "src_out": 18.27,
+   "out_start": 58.55,
+   "out_end": 60.02,
+   "crop": {
+    "x": 619,
+    "y": 655,
+    "w": 1558,
+    "h": 2769,
+    "zoom": 1.456,
+    "face_cx_px": 1398,
+    "eyes_y_px": 1708,
+    "eyes_y_in_crop": 0.38,
+    "face_samples": 7
+   },
+   "covered_by_mg": false,
+   "beat_snap_ms": null,
+   "pre_air_ms": null,
+   "camera": "slow push-in +2% across the segment (ease in-out sine)"
+  },
+  {
+   "id": "S20",
+   "clip": "c5",
+   "source_file": "Video 5 kadr.mov",
+   "range": "R13",
+   "section": "creatine",
+   "src_in": 19.13,
+   "src_out": 20.02,
+   "out_start": 60.02,
+   "out_end": 60.91,
+   "crop": {
+    "x": 715,
+    "y": 548,
+    "w": 1745,
+    "h": 3102,
+    "zoom": 1.3,
+    "face_cx_px": 1588,
+    "eyes_y_px": 1727,
+    "eyes_y_in_crop": 0.38,
+    "face_samples": 5
+   },
+   "covered_by_mg": true,
+   "beat_snap_ms": null,
+   "pre_air_ms": null,
+   "camera": "slow push-in +2% across the segment (ease in-out sine)"
+  },
+  {
+   "id": "S21",
+   "clip": "c5",
+   "source_file": "Video 5 kadr.mov",
+   "range": "R13",
+   "section": "creatine",
+   "src_in": 20.22,
+   "src_out": 24.385,
+   "out_start": 60.91,
+   "out_end": 65.075,
+   "crop": {
+    "x": 688,
+    "y": 544,
+    "w": 1745,
+    "h": 3102,
+    "zoom": 1.3,
+    "face_cx_px": 1560,
+    "eyes_y_px": 1722,
+    "eyes_y_in_crop": 0.38,
+    "face_samples": 18
+   },
+   "covered_by_mg": true,
+   "beat_snap_ms": null,
+   "pre_air_ms": null,
+   "camera": "slow push-in +2% across the segment (ease in-out sine)"
+  },
+  {
+   "id": "S22",
+   "clip": "c5",
+   "source_file": "Video 5 kadr.mov",
+   "range": "R13",
+   "section": "creatine",
+   "src_in": 24.6,
+   "src_out": 26.7,
+   "out_start": 65.075,
+   "out_end": 67.175,
+   "crop": {
+    "x": 565,
+    "y": 528,
+    "w": 1745,
+    "h": 3102,
+    "zoom": 1.3,
+    "face_cx_px": 1437,
+    "eyes_y_px": 1707,
+    "eyes_y_in_crop": 0.38,
+    "face_samples": 10
+   },
+   "covered_by_mg": true,
+   "beat_snap_ms": null,
+   "pre_air_ms": null,
+   "camera": "slow push-in +2% across the segment (ease in-out sine)"
+  },
+  {
+   "id": "S23",
+   "clip": "c5",
+   "source_file": "Video 5 kadr.mov",
+   "range": "R14",
+   "section": "creatine",
+   "src_in": 32.16,
+   "src_out": 33.5,
+   "out_start": 67.175,
+   "out_end": 68.515,
+   "crop": {
+    "x": 504,
+    "y": 521,
+    "w": 1745,
+    "h": 3102,
+    "zoom": 1.3,
+    "face_cx_px": 1377,
+    "eyes_y_px": 1700,
+    "eyes_y_in_crop": 0.38,
+    "face_samples": 6
+   },
+   "covered_by_mg": false,
+   "beat_snap_ms": null,
+   "pre_air_ms": null,
+   "camera": "slow push-in +2% across the segment (ease in-out sine)"
+  },
+  {
+   "id": "S24",
+   "clip": "c5",
+   "source_file": "Video 5 kadr.mov",
+   "range": "R14",
+   "section": "creatine",
+   "src_in": 33.7,
+   "src_out": 37.726,
+   "out_start": 68.515,
+   "out_end": 72.541,
+   "crop": {
+    "x": 584,
+    "y": 651,
+    "w": 1558,
+    "h": 2769,
+    "zoom": 1.456,
+    "face_cx_px": 1363,
+    "eyes_y_px": 1703,
+    "eyes_y_in_crop": 0.38,
+    "face_samples": 17
+   },
+   "covered_by_mg": false,
+   "beat_snap_ms": 96,
+   "pre_air_ms": null,
+   "camera": "slow push-in +2% across the segment (ease in-out sine)"
+  },
+  {
+   "id": "S25",
+   "clip": "c5",
+   "source_file": "Video 5 kadr.mov",
+   "range": "R15",
+   "section": "cta",
+   "src_in": 61.35,
+   "src_out": 67.64,
+   "out_start": 72.541,
+   "out_end": 78.831,
+   "crop": {
+    "x": 531,
+    "y": 479,
+    "w": 1745,
+    "h": 3102,
+    "zoom": 1.3,
+    "face_cx_px": 1403,
+    "eyes_y_px": 1658,
+    "eyes_y_in_crop": 0.38,
+    "face_samples": 27
+   },
+   "covered_by_mg": false,
+   "beat_snap_ms": null,
+   "pre_air_ms": null,
+   "camera": "slow push-in +2% across the segment (ease in-out sine)"
+  }
+ ],
+ "cuts": [
+  {
+   "at": 4.92,
+   "between": [
+    "S01",
+    "S02"
+   ],
+   "type": "jump cut (pause/breath removed)",
+   "removed_src": [
+    5.81,
+    6.035
+   ],
+   "beat_snap_ms": null
+  },
+  {
+   "at": 7.605,
+   "between": [
+    "S02",
+    "S03"
+   ],
+   "type": "take/clip change",
+   "removed_src": null,
+   "beat_snap_ms": null
+  },
+  {
+   "at": 12.086,
+   "between": [
+    "S03",
+    "S04"
+   ],
+   "type": "jump cut (pause/breath removed)",
+   "removed_src": [
+    6.021,
+    6.025
+   ],
+   "beat_snap_ms": 101
+  },
+  {
+   "at": 13.45,
+   "between": [
+    "S04",
+    "S05"
+   ],
+   "type": "take/clip change",
+   "removed_src": [
+    7.389,
+    13.68
+   ],
+   "beat_snap_ms": 59
+  },
+  {
+   "at": 17.67,
+   "between": [
+    "S05",
+    "S06"
+   ],
+   "type": "jump cut (pause/breath removed)",
+   "removed_src": [
+    17.9,
+    17.95
+   ],
+   "beat_snap_ms": null
+  },
+  {
+   "at": 18.45,
+   "between": [
+    "S06",
+    "S07"
+   ],
+   "type": "take/clip change",
+   "removed_src": [
+    18.73,
+    39.75
+   ],
+   "beat_snap_ms": 100
+  },
+  {
+   "at": 27.14,
+   "between": [
+    "S07",
+    "S08"
+   ],
+   "type": "take/clip change",
+   "removed_src": [
+    48.44,
+    55.71
+   ],
+   "beat_snap_ms": null
+  },
+  {
+   "at": 31.632,
+   "between": [
+    "S08",
+    "S09"
+   ],
+   "type": "take/clip change",
+   "removed_src": null,
+   "beat_snap_ms": 102
+  },
+  {
+   "at": 36.282,
+   "between": [
+    "S09",
+    "S10"
+   ],
+   "type": "take/clip change",
+   "removed_src": null,
+   "beat_snap_ms": null
+  },
+  {
+   "at": 37.541,
+   "between": [
+    "S10",
+    "S11"
+   ],
+   "type": "take/clip change",
+   "removed_src": [
+    3.469,
+    23.91
+   ],
+   "beat_snap_ms": 9
+  },
+  {
+   "at": 42.411,
+   "between": [
+    "S11",
+    "S12"
+   ],
+   "type": "jump cut (pause/breath removed)",
+   "removed_src": [
+    28.78,
+    28.79
+   ],
+   "beat_snap_ms": null
+  },
+  {
+   "at": 43.181,
+   "between": [
+    "S12",
+    "S13"
+   ],
+   "type": "jump cut (pause/breath removed)",
+   "removed_src": [
+    29.56,
+    29.885
+   ],
+   "beat_snap_ms": null
+  },
+  {
+   "at": 46.632,
+   "between": [
+    "S13",
+    "S14"
+   ],
+   "type": "jump cut (pause/breath removed)",
+   "removed_src": [
+    33.336,
+    33.37
+   ],
+   "beat_snap_ms": -4
+  },
+  {
+   "at": 47.712,
+   "between": [
+    "S14",
+    "S15"
+   ],
+   "type": "jump cut (pause/breath removed)",
+   "removed_src": [
+    34.45,
+    34.47
+   ],
+   "beat_snap_ms": null
+  },
+  {
+   "at": 48.172,
+   "between": [
+    "S15",
+    "S16"
+   ],
+   "type": "take/clip change",
+   "removed_src": [
+    34.93,
+    49.51
+   ],
+   "beat_snap_ms": null
+  },
+  {
+   "at": 51.812,
+   "between": [
+    "S16",
+    "S17"
+   ],
+   "type": "jump cut (pause/breath removed)",
+   "removed_src": [
+    53.15,
+    53.26
+   ],
+   "beat_snap_ms": null
+  },
+  {
+   "at": 53.45,
+   "between": [
+    "S17",
+    "S18"
+   ],
+   "type": "take/clip change",
+   "removed_src": null,
+   "beat_snap_ms": 38
+  },
+  {
+   "at": 58.55,
+   "between": [
+    "S18",
+    "S19"
+   ],
+   "type": "take/clip change",
+   "removed_src": [
+    10.24,
+    16.8
+   ],
+   "beat_snap_ms": null
+  },
+  {
+   "at": 60.02,
+   "between": [
+    "S19",
+    "S20"
+   ],
+   "type": "take/clip change",
+   "removed_src": [
+    18.27,
+    19.13
+   ],
+   "beat_snap_ms": null
+  },
+  {
+   "at": 60.91,
+   "between": [
+    "S20",
+    "S21"
+   ],
+   "type": "jump cut (pause/breath removed)",
+   "removed_src": [
+    20.02,
+    20.22
+   ],
+   "beat_snap_ms": null
+  },
+  {
+   "at": 65.075,
+   "between": [
+    "S21",
+    "S22"
+   ],
+   "type": "jump cut (pause/breath removed)",
+   "removed_src": [
+    24.385,
+    24.6
+   ],
+   "beat_snap_ms": null
+  },
+  {
+   "at": 67.175,
+   "between": [
+    "S22",
+    "S23"
+   ],
+   "type": "take/clip change",
+   "removed_src": [
+    26.7,
+    32.16
+   ],
+   "beat_snap_ms": null
+  },
+  {
+   "at": 68.515,
+   "between": [
+    "S23",
+    "S24"
+   ],
+   "type": "jump cut (pause/breath removed)",
+   "removed_src": [
+    33.5,
+    33.7
+   ],
+   "beat_snap_ms": null
+  },
+  {
+   "at": 72.541,
+   "between": [
+    "S24",
+    "S25"
+   ],
+   "type": "take/clip change",
+   "removed_src": [
+    37.726,
+    61.35
+   ],
+   "beat_snap_ms": 96
+  }
+ ],
+ "mg_slots": [
+  {
+   "id": "MG1",
+   "out_start": 37.461,
+   "out_end": 48.45,
+   "reason": "speaker reads phone/notes (head/eyes down, face-landmark eyeLookDown + pitch, verified on contact sheets)",
+   "lookdown_out": [
+    37.541,
+    48.172
+   ],
+   "ranges": [
+    "R09"
+   ],
+   "spoken": "Ozg'in, vazn ololmay yurganlarga vazn olish uchun ko'p yeyish kerak, ko'p yeyish esa qiyin. Shu vaqtda sizga yordamga suyuq ovqat, ya'ni geyner kerak bo'ladi.",
+   "title": "Vazn olish uchun",
+   "subtitle": "ko'p yeyish kerak",
+   "cards": [
+    {
+     "t": 37.461,
+     "title": "Vazn olish uchun",
+     "subtitle": "ko'p yeyish kerak",
+     "visual": "Thin silhouette outline + a flat weight graph line; plate icon slides in on 'ko'p yeyish'.",
+     "anchor_word": "Ozg'in,",
+     "out_end": 42.542
+    },
+    {
+     "t": 42.542,
+     "title": "Ko'p yeyish — qiyin",
+     "subtitle": "",
+     "visual": "Three stacked plate cards, the top one tilts away; soft clock ring ticks once.",
+     "anchor_word": "esa",
+     "out_end": 42.996
+    },
+    {
+     "t": 42.996,
+     "title": "Yechim: GEYNER",
+     "subtitle": "suyuq ovqat",
+     "visual": "3D shaker bottle rotates in, liquid swirl in cobalt glow; label chip 'GEYNER' lands on 'geyner'.",
+     "anchor_word": "Shu",
+     "out_end": 48.45
+    }
+   ],
+   "enter": "glide up 40 px + blur 12->0 + opacity 0->1, 0.35 s, ease cubic-bezier(0.22,1,0.36,1), lands on beat",
+   "exit": "scale 1.0->1.04 + blur 0->10 + fade, 0.25 s, ease cubic-bezier(0.4,0,0.2,1), lands on beat"
+  },
+  {
+   "id": "MG2",
+   "out_start": 59.67,
+   "out_end": 67.541,
+   "reason": "speaker reads phone/notes (head/eyes down, face-landmark eyeLookDown + pitch, verified on contact sheets)",
+   "lookdown_out": [
+    59.75,
+    67.265
+   ],
+   "ranges": [
+    "R12",
+    "R13",
+    "R14"
+   ],
+   "spoken": "Kreatin ATF zaxirasini ko'paytiradi. Bu muskullardagi asosiy energiya manbai bo'ladi. Kreatin oddiy go'shtda bor.",
+   "title": "ATF zaxirasi ↑",
+   "subtitle": "",
+   "cards": [
+    {
+     "t": 59.67,
+     "title": "ATF zaxirasi ↑",
+     "subtitle": "",
+     "visual": "Battery/energy cells filling bottom-up in icy blue, label 'ATF'.",
+     "anchor_word": "Kreatin",
+     "out_end": 62.541
+    },
+    {
+     "t": 62.541,
+     "title": "Muskul energiyasi",
+     "subtitle": "asosiy manba",
+     "visual": "Stylised muscle fibre with a pulse of light travelling along it.",
+     "anchor_word": "Bu",
+     "out_end": 65.269
+    },
+    {
+     "t": 65.269,
+     "title": "Go'shtda ham bor",
+     "subtitle": "",
+     "visual": "Glass card with a steak icon; sets up the next to-camera line '5 g = 1,5 kg go'sht'.",
+     "anchor_word": "Kreatin",
+     "out_end": 67.541
+    }
+   ],
+   "enter": "glide up 40 px + blur 12->0 + opacity 0->1, 0.35 s, ease cubic-bezier(0.22,1,0.36,1), lands on beat",
+   "exit": "scale 1.0->1.04 + blur 0->10 + fade, 0.25 s, ease cubic-bezier(0.4,0,0.2,1), lands on beat"
+  }
+ ],
+ "captions": [
+  {
+   "out_start": 0.02,
+   "text": "Zalga borasiz,",
+   "accent": null,
+   "accent_t": null,
+   "range": "R01",
+   "out_end": 0.99,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 0.99,
+   "text": "lekin qanaqa sport",
+   "accent": null,
+   "accent_t": null,
+   "range": "R01",
+   "out_end": 1.81,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 1.81,
+   "text": "pitaniye olishni",
+   "accent": "pitaniye",
+   "accent_t": 1.84,
+   "range": "R01",
+   "out_end": 2.33,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 2.33,
+   "text": "bilmaysizmi?",
+   "accent": null,
+   "accent_t": null,
+   "range": "R01",
+   "out_end": 2.965,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 2.965,
+   "text": "Kreatin,",
+   "accent": "Kreatin",
+   "accent_t": 2.995,
+   "range": "R01",
+   "out_end": 3.75,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 3.75,
+   "text": "geyner,",
+   "accent": "geyner",
+   "accent_t": 3.78,
+   "range": "R01",
+   "out_end": 4.3,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 4.3,
+   "text": "protein...",
+   "accent": "protein",
+   "accent_t": 4.33,
+   "range": "R01",
+   "out_end": 4.78,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 4.89,
+   "text": "Qarang,",
+   "accent": null,
+   "accent_t": null,
+   "range": "R01",
+   "out_end": 5.125,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 5.125,
+   "text": "men buni",
+   "accent": null,
+   "accent_t": null,
+   "range": "R01",
+   "out_end": 5.475,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 5.475,
+   "text": "tushuntirib",
+   "accent": null,
+   "accent_t": null,
+   "range": "R01",
+   "out_end": 5.93,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 5.93,
+   "text": "beraman:",
+   "accent": null,
+   "accent_t": null,
+   "range": "R01",
+   "out_end": 6.275,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 6.275,
+   "text": "qaysi nima uchun",
+   "accent": null,
+   "accent_t": null,
+   "range": "R01",
+   "out_end": 6.725,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 6.725,
+   "text": "ichiladi.",
+   "accent": null,
+   "accent_t": null,
+   "range": "R01",
+   "out_end": 7.645,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 7.645,
+   "text": "Birinchi navbatda",
+   "accent": null,
+   "accent_t": null,
+   "range": "R02",
+   "out_end": 8.49,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 8.49,
+   "text": "protein.",
+   "accent": "protein",
+   "accent_t": 8.52,
+   "range": "R02",
+   "out_end": 8.98,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 8.98,
+   "text": "Protein o'zi bu",
+   "accent": "Protein",
+   "accent_t": 9.01,
+   "range": "R02",
+   "out_end": 9.825,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 9.825,
+   "text": "oddiy oqsil.",
+   "accent": null,
+   "accent_t": null,
+   "range": "R02",
+   "out_end": 10.485,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 10.485,
+   "text": "Tvorogda,",
+   "accent": null,
+   "accent_t": null,
+   "range": "R02",
+   "out_end": 11.25,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 11.25,
+   "text": "tuxumda,",
+   "accent": null,
+   "accent_t": null,
+   "range": "R02",
+   "out_end": 12.086,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 12.086,
+   "text": "go'shtda mavjud.",
+   "accent": null,
+   "accent_t": null,
+   "range": "R02",
+   "out_end": 13.451,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 13.49,
+   "text": "Kimga to'g'ri",
+   "accent": null,
+   "accent_t": null,
+   "range": "R03",
+   "out_end": 13.99,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 13.99,
+   "text": "keladi desa:",
+   "accent": null,
+   "accent_t": null,
+   "range": "R03",
+   "out_end": 14.72,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 14.72,
+   "text": "o'g'ilmi,",
+   "accent": null,
+   "accent_t": null,
+   "range": "R03",
+   "out_end": 15.29,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 15.29,
+   "text": "qizmi,",
+   "accent": null,
+   "accent_t": null,
+   "range": "R03",
+   "out_end": 15.7,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 15.7,
+   "text": "semirayotganmi,",
+   "accent": null,
+   "accent_t": null,
+   "range": "R03",
+   "out_end": 16.45,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 16.45,
+   "text": "ozayotganmi —",
+   "accent": null,
+   "accent_t": null,
+   "range": "R03",
+   "out_end": 17.55,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 17.655,
+   "text": "farqi yo'q.",
+   "accent": "farqi",
+   "accent_t": 17.685,
+   "range": "R03",
+   "out_end": 18.38,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 18.47,
+   "text": "Agar siz haftasiga",
+   "accent": null,
+   "accent_t": null,
+   "range": "R05",
+   "out_end": 19.6,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 19.6,
+   "text": "3 marta zalga",
+   "accent": "3",
+   "accent_t": 19.63,
+   "range": "R05",
+   "out_end": 20.145,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 20.145,
+   "text": "borsangiz,",
+   "accent": null,
+   "accent_t": null,
+   "range": "R05",
+   "out_end": 21.01,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 21.01,
+   "text": "sizga har bir",
+   "accent": null,
+   "accent_t": null,
+   "range": "R05",
+   "out_end": 21.555,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 21.555,
+   "text": "kilogrammingizga 2",
+   "accent": "2",
+   "accent_t": 21.79,
+   "range": "R05",
+   "out_end": 22.035,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 22.035,
+   "text": "gramm oqsil kerak.",
+   "accent": "gramm",
+   "accent_t": 22.065,
+   "range": "R05",
+   "out_end": 23.055,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 23.055,
+   "text": "Agar siz oqsilni",
+   "accent": "oqsilni",
+   "accent_t": 23.6,
+   "range": "R05",
+   "out_end": 23.76,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 23.76,
+   "text": "ovqatdan ola",
+   "accent": null,
+   "accent_t": null,
+   "range": "R05",
+   "out_end": 24.35,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 24.35,
+   "text": "olaman desangiz,",
+   "accent": null,
+   "accent_t": null,
+   "range": "R05",
+   "out_end": 25.38,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 25.38,
+   "text": "sizga protein",
+   "accent": "protein",
+   "accent_t": 25.785,
+   "range": "R05",
+   "out_end": 26.415,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 26.415,
+   "text": "shart emas.",
+   "accent": null,
+   "accent_t": null,
+   "range": "R05",
+   "out_end": 27.16,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 27.16,
+   "text": "Agar siz ovqatdan",
+   "accent": null,
+   "accent_t": null,
+   "range": "R06",
+   "out_end": 28.325,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 28.325,
+   "text": "ololmasangiz,",
+   "accent": null,
+   "accent_t": null,
+   "range": "R06",
+   "out_end": 29.04,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 29.04,
+   "text": "o'zingizga kerakli",
+   "accent": null,
+   "accent_t": null,
+   "range": "R06",
+   "out_end": 29.81,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 29.81,
+   "text": "oqsil uchun sizga",
+   "accent": null,
+   "accent_t": null,
+   "range": "R06",
+   "out_end": 30.705,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 30.705,
+   "text": "protein shart.",
+   "accent": "protein",
+   "accent_t": 30.735,
+   "range": "R06",
+   "out_end": 31.56,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 31.652,
+   "text": "Ikkinchisi esa bu",
+   "accent": null,
+   "accent_t": null,
+   "range": "R07",
+   "out_end": 32.517,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 32.517,
+   "text": "geyner.",
+   "accent": "geyner",
+   "accent_t": 32.547,
+   "range": "R07",
+   "out_end": 33.077,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 33.077,
+   "text": "Geyner —",
+   "accent": null,
+   "accent_t": null,
+   "range": "R07",
+   "out_end": 33.692,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 33.692,
+   "text": "oqsil,",
+   "accent": "oqsil",
+   "accent_t": 33.722,
+   "range": "R07",
+   "out_end": 34.087,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 34.087,
+   "text": "uglevod va yog'",
+   "accent": null,
+   "accent_t": null,
+   "range": "R07",
+   "out_end": 35.097,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 35.097,
+   "text": "aralashmasi",
+   "accent": null,
+   "accent_t": null,
+   "range": "R07",
+   "out_end": 35.647,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 35.647,
+   "text": "bo'ladi.",
+   "accent": null,
+   "accent_t": null,
+   "range": "R07",
+   "out_end": 36.402,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 36.402,
+   "text": "Kimga to'g'ri",
+   "accent": null,
+   "accent_t": null,
+   "range": "R08",
+   "out_end": 37.107,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 37.107,
+   "text": "keladi?",
+   "accent": null,
+   "accent_t": null,
+   "range": "R08",
+   "out_end": 37.561,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 37.561,
+   "text": "Ozg'in,",
+   "accent": null,
+   "accent_t": null,
+   "range": "R09",
+   "out_end": 37.926,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": true
+  },
+  {
+   "out_start": 37.926,
+   "text": "vazn ololmay",
+   "accent": null,
+   "accent_t": null,
+   "range": "R09",
+   "out_end": 38.461,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": true
+  },
+  {
+   "out_start": 38.461,
+   "text": "yurganlarga vazn",
+   "accent": null,
+   "accent_t": null,
+   "range": "R09",
+   "out_end": 40.106,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": true
+  },
+  {
+   "out_start": 40.106,
+   "text": "olish uchun ko'p",
+   "accent": null,
+   "accent_t": null,
+   "range": "R09",
+   "out_end": 40.876,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": true
+  },
+  {
+   "out_start": 40.876,
+   "text": "yeyish kerak,",
+   "accent": null,
+   "accent_t": null,
+   "range": "R09",
+   "out_end": 41.596,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": true
+  },
+  {
+   "out_start": 41.596,
+   "text": "ko'p yeyish esa",
+   "accent": null,
+   "accent_t": null,
+   "range": "R09",
+   "out_end": 42.741,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": true
+  },
+  {
+   "out_start": 42.741,
+   "text": "qiyin.",
+   "accent": "qiyin",
+   "accent_t": 42.771,
+   "range": "R09",
+   "out_end": 43.151,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": true
+  },
+  {
+   "out_start": 43.151,
+   "text": "Shu vaqtda sizga",
+   "accent": null,
+   "accent_t": null,
+   "range": "R09",
+   "out_end": 43.766,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": true
+  },
+  {
+   "out_start": 43.766,
+   "text": "yordamga suyuq",
+   "accent": "suyuq",
+   "accent_t": 44.321,
+   "range": "R09",
+   "out_end": 45.041,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": true
+  },
+  {
+   "out_start": 45.041,
+   "text": "ovqat,",
+   "accent": null,
+   "accent_t": null,
+   "range": "R09",
+   "out_end": 45.416,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": true
+  },
+  {
+   "out_start": 45.416,
+   "text": "ya'ni geyner kerak",
+   "accent": "geyner",
+   "accent_t": 46.181,
+   "range": "R09",
+   "out_end": 47.617,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": true
+  },
+  {
+   "out_start": 47.617,
+   "text": "bo'ladi.",
+   "accent": null,
+   "accent_t": null,
+   "range": "R09",
+   "out_end": 48.192,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": true
+  },
+  {
+   "out_start": 48.192,
+   "text": "Kunlik",
+   "accent": null,
+   "accent_t": null,
+   "range": "R10",
+   "out_end": 48.332,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": true
+  },
+  {
+   "out_start": 48.332,
+   "text": "kaloriyangizni",
+   "accent": "kaloriyangizni",
+   "accent_t": 48.362,
+   "range": "R10",
+   "out_end": 49.077,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": true
+  },
+  {
+   "out_start": 49.077,
+   "text": "to'ldirasiz,",
+   "accent": null,
+   "accent_t": null,
+   "range": "R10",
+   "out_end": 49.627,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 49.627,
+   "text": "yo",
+   "accent": null,
+   "accent_t": null,
+   "range": "R10",
+   "out_end": 49.952,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 49.952,
+   "text": "profitsitga chiqasiz,",
+   "accent": null,
+   "accent_t": null,
+   "range": "R10",
+   "out_end": 50.777,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 50.777,
+   "text": "yo muskul,",
+   "accent": "muskul",
+   "accent_t": 51.377,
+   "range": "R10",
+   "out_end": 52.137,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 52.137,
+   "text": "yo vazn olish",
+   "accent": null,
+   "accent_t": null,
+   "range": "R10",
+   "out_end": 52.902,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 52.902,
+   "text": "bo'ladi.",
+   "accent": null,
+   "accent_t": null,
+   "range": "R10",
+   "out_end": 53.442,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 53.47,
+   "text": "Uchinchisi esa",
+   "accent": null,
+   "accent_t": null,
+   "range": "R11",
+   "out_end": 54.66,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 54.66,
+   "text": "kreatin.",
+   "accent": "kreatin",
+   "accent_t": 54.69,
+   "range": "R11",
+   "out_end": 55.29,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 55.29,
+   "text": "Kreatin kuch va",
+   "accent": "Kreatin",
+   "accent_t": 55.32,
+   "range": "R11",
+   "out_end": 55.86,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 55.86,
+   "text": "samaradorlikni,",
+   "accent": null,
+   "accent_t": null,
+   "range": "R11",
+   "out_end": 56.545,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 56.545,
+   "text": "ya'ni",
+   "accent": null,
+   "accent_t": null,
+   "range": "R11",
+   "out_end": 56.795,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 56.795,
+   "text": "chidamlilikni",
+   "accent": "chidamlilikni",
+   "accent_t": 56.825,
+   "range": "R11",
+   "out_end": 57.47,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 57.47,
+   "text": "oshirish uchun",
+   "accent": null,
+   "accent_t": null,
+   "range": "R11",
+   "out_end": 58.07,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 58.07,
+   "text": "ichiladi.",
+   "accent": null,
+   "accent_t": null,
+   "range": "R11",
+   "out_end": 58.58,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 58.63,
+   "text": "Kreatin nima ish",
+   "accent": "Kreatin",
+   "accent_t": 58.66,
+   "range": "R12",
+   "out_end": 59.38,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 59.38,
+   "text": "beradi?",
+   "accent": null,
+   "accent_t": null,
+   "range": "R12",
+   "out_end": 60.05,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 60.06,
+   "text": "Kreatin ATF",
+   "accent": "Kreatin",
+   "accent_t": 60.09,
+   "range": "R13",
+   "out_end": 60.88,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": true
+  },
+  {
+   "out_start": 60.88,
+   "text": "zaxirasini",
+   "accent": null,
+   "accent_t": null,
+   "range": "R13",
+   "out_end": 61.89,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": true
+  },
+  {
+   "out_start": 61.89,
+   "text": "ko'paytiradi.",
+   "accent": null,
+   "accent_t": null,
+   "range": "R13",
+   "out_end": 62.665,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": true
+  },
+  {
+   "out_start": 62.665,
+   "text": "Bu muskullardagi",
+   "accent": null,
+   "accent_t": null,
+   "range": "R13",
+   "out_end": 63.305,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": true
+  },
+  {
+   "out_start": 63.305,
+   "text": "asosiy energiya",
+   "accent": "energiya",
+   "accent_t": 63.79,
+   "range": "R13",
+   "out_end": 64.26,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": true
+  },
+  {
+   "out_start": 64.26,
+   "text": "manbai bo'ladi.",
+   "accent": null,
+   "accent_t": null,
+   "range": "R13",
+   "out_end": 65.06,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": true
+  },
+  {
+   "out_start": 65.06,
+   "text": "Kreatin oddiy",
+   "accent": "Kreatin",
+   "accent_t": 65.09,
+   "range": "R13",
+   "out_end": 66.29,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": true
+  },
+  {
+   "out_start": 66.29,
+   "text": "go'shtda bor.",
+   "accent": null,
+   "accent_t": null,
+   "range": "R13",
+   "out_end": 67.195,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": true
+  },
+  {
+   "out_start": 67.195,
+   "text": "Kunlik besh gramm",
+   "accent": "besh",
+   "accent_t": 67.695,
+   "range": "R14",
+   "out_end": 68.485,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": true
+  },
+  {
+   "out_start": 68.485,
+   "text": "kreatinni",
+   "accent": "kreatinni",
+   "accent_t": 68.515,
+   "range": "R14",
+   "out_end": 69.475,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 69.475,
+   "text": "olish uchun bir",
+   "accent": null,
+   "accent_t": null,
+   "range": "R14",
+   "out_end": 70.435,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 70.435,
+   "text": "yarim kilo",
+   "accent": "kilo",
+   "accent_t": 70.915,
+   "range": "R14",
+   "out_end": 71.13,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 71.13,
+   "text": "go'sht yeyish",
+   "accent": null,
+   "accent_t": null,
+   "range": "R14",
+   "out_end": 71.555,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 71.555,
+   "text": "kerak bo'ladi.",
+   "accent": null,
+   "accent_t": null,
+   "range": "R14",
+   "out_end": 72.475,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 72.571,
+   "text": "O'zingizga",
+   "accent": null,
+   "accent_t": null,
+   "range": "R15",
+   "out_end": 72.976,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 72.976,
+   "text": "keraklisini bilib",
+   "accent": null,
+   "accent_t": null,
+   "range": "R15",
+   "out_end": 74.451,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 74.451,
+   "text": "olgan bo'lsangiz,",
+   "accent": null,
+   "accent_t": null,
+   "range": "R15",
+   "out_end": 74.746,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 74.746,
+   "text": "videoga layk",
+   "accent": "layk",
+   "accent_t": 74.781,
+   "range": "R15",
+   "out_end": 75.201,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 75.201,
+   "text": "bosing,",
+   "accent": null,
+   "accent_t": null,
+   "range": "R15",
+   "out_end": 75.386,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 75.386,
+   "text": "Atletuz Xorazmga",
+   "accent": "Atletuz",
+   "accent_t": 75.416,
+   "range": "R15",
+   "out_end": 76.566,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 76.566,
+   "text": "obuna bo'lib",
+   "accent": "obuna",
+   "accent_t": 76.596,
+   "range": "R15",
+   "out_end": 77.206,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 77.206,
+   "text": "qo'ying,",
+   "accent": null,
+   "accent_t": null,
+   "range": "R15",
+   "out_end": 77.761,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 77.761,
+   "text": "hammangizni",
+   "accent": null,
+   "accent_t": null,
+   "range": "R15",
+   "out_end": 77.941,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 77.941,
+   "text": "Atletuzda kutib",
+   "accent": null,
+   "accent_t": null,
+   "range": "R15",
+   "out_end": 78.441,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  },
+  {
+   "out_start": 78.441,
+   "text": "qolamiz.",
+   "accent": null,
+   "accent_t": null,
+   "range": "R15",
+   "out_end": 78.831,
+   "anim": "per-word: opacity 0->1 + blur 8->0 px + scale 0.96->1.0, 0.18 s, ease-out cubic-bezier(0.16,1,0.3,1); group exit: fade + blur 0->6 px 0.12 s",
+   "over_mg": false
+  }
+ ],
+ "ui_cards": [
+  {
+   "t": 2.995,
+   "snap_beat": 2.995,
+   "out_end": 7.605,
+   "kind": "glass_pill",
+   "label": "KREATIN",
+   "anchor_word": "Kreatin",
+   "range": "R01",
+   "desc": "3 glass pills stack top-right, one per product word"
+  },
+  {
+   "t": 3.78,
+   "snap_beat": 3.904,
+   "out_end": 7.605,
+   "kind": "glass_pill",
+   "label": "GEYNER",
+   "anchor_word": "geyner",
+   "range": "R01",
+   "desc": ""
+  },
+  {
+   "t": 4.33,
+   "snap_beat": 4.358,
+   "out_end": 7.605,
+   "kind": "glass_pill",
+   "label": "PROTEIN",
+   "anchor_word": "protein",
+   "range": "R01",
+   "desc": ""
+  },
+  {
+   "t": 7.675,
+   "snap_beat": 7.54,
+   "out_end": 13.45,
+   "kind": "section_badge",
+   "label": "01 · PROTEIN",
+   "anchor_word": "Birinchi",
+   "range": "R02",
+   "desc": "top-centre badge, soft blue rim glow"
+  },
+  {
+   "t": 10.515,
+   "snap_beat": 10.722,
+   "out_end": 13.45,
+   "kind": "icon_chip",
+   "label": "Tvorog",
+   "anchor_word": "Tvorogda",
+   "range": "R02",
+   "desc": "3 icon chips appear on each food word: tvorog / tuxum / go'sht"
+  },
+  {
+   "t": 11.28,
+   "snap_beat": 11.177,
+   "out_end": 13.45,
+   "kind": "icon_chip",
+   "label": "Tuxum",
+   "anchor_word": "tuxumda",
+   "range": "R02",
+   "desc": ""
+  },
+  {
+   "t": 12.116,
+   "snap_beat": 12.086,
+   "out_end": 13.45,
+   "kind": "icon_chip",
+   "label": "Go'sht",
+   "anchor_word": "go'shtda",
+   "range": "R02",
+   "desc": ""
+  },
+  {
+   "t": 17.685,
+   "snap_beat": 17.54,
+   "out_end": 18.45,
+   "kind": "glass_card",
+   "label": "Hammaga mos ✓",
+   "anchor_word": "farqi",
+   "range": "R03",
+   "desc": "one card: o'g'il · qiz · semirish · ozish -> check mark on 'farqi yo'q'"
+  },
+  {
+   "t": 19.63,
+   "snap_beat": 19.813,
+   "out_end": 27.14,
+   "kind": "analytics_card",
+   "label": "3× / hafta",
+   "anchor_word": "3",
+   "range": "R05",
+   "desc": "glass analytics card: '3× zal / hafta' then line '2 g oqsil × 1 kg vazn' builds on '2'"
+  },
+  {
+   "t": 21.79,
+   "snap_beat": 21.631,
+   "out_end": 27.14,
+   "kind": "analytics_card",
+   "label": "2 g / kg",
+   "anchor_word": "2",
+   "range": "R05",
+   "desc": ""
+  },
+  {
+   "t": 26.445,
+   "snap_beat": 26.631,
+   "out_end": 27.14,
+   "kind": "glass_card",
+   "label": "Ovqatdan yetsa — shart emas",
+   "anchor_word": "shart",
+   "range": "R05",
+   "desc": "card dims to 60% on 'shart emas'"
+  },
+  {
+   "t": 30.735,
+   "snap_beat": 30.722,
+   "out_end": 31.632,
+   "kind": "glass_card",
+   "label": "Protein kerak ✓",
+   "anchor_word": "protein",
+   "range": "R06",
+   "desc": ""
+  },
+  {
+   "t": 31.682,
+   "snap_beat": 31.632,
+   "out_end": 36.282,
+   "kind": "section_badge",
+   "label": "02 · GEYNER",
+   "anchor_word": "Ikkinchisi",
+   "range": "R07",
+   "desc": ""
+  },
+  {
+   "t": 33.722,
+   "snap_beat": 33.905,
+   "out_end": 36.282,
+   "kind": "donut_card",
+   "label": "Oqsil",
+   "anchor_word": "oqsil",
+   "range": "R07",
+   "desc": "composition ring: 3 segments land on oqsil / uglevod / yog'"
+  },
+  {
+   "t": 34.117,
+   "snap_beat": 33.905,
+   "out_end": 36.282,
+   "kind": "donut_card",
+   "label": "Uglevod",
+   "anchor_word": "uglevod",
+   "range": "R07",
+   "desc": ""
+  },
+  {
+   "t": 34.717,
+   "snap_beat": 34.814,
+   "out_end": 36.282,
+   "kind": "donut_card",
+   "label": "Yog'",
+   "anchor_word": "yog'",
+   "range": "R07",
+   "desc": ""
+  },
+  {
+   "t": 49.982,
+   "snap_beat": 49.814,
+   "out_end": 53.45,
+   "kind": "graph_card",
+   "label": "Profitsit +",
+   "anchor_word": "profitsitga",
+   "range": "R10",
+   "desc": ""
+  },
+  {
+   "t": 51.377,
+   "snap_beat": 51.178,
+   "out_end": 53.45,
+   "kind": "glass_pill",
+   "label": "Muskul ↑",
+   "anchor_word": "muskul",
+   "range": "R10",
+   "desc": ""
+  },
+  {
+   "t": 52.167,
+   "snap_beat": 52.087,
+   "out_end": 53.45,
+   "kind": "glass_pill",
+   "label": "Vazn ↑",
+   "anchor_word": "yo vazn",
+   "range": "R10",
+   "desc": ""
+  },
+  {
+   "t": 53.5,
+   "snap_beat": 53.45,
+   "out_end": 58.55,
+   "kind": "section_badge",
+   "label": "03 · KREATIN",
+   "anchor_word": "Uchinchisi",
+   "range": "R11",
+   "desc": ""
+  },
+  {
+   "t": 55.675,
+   "snap_beat": 55.723,
+   "out_end": 58.55,
+   "kind": "bar_card",
+   "label": "Kuch ↑",
+   "anchor_word": "kuch",
+   "range": "R11",
+   "desc": "two horizontal bars fill: Kuch / Chidamlilik"
+  },
+  {
+   "t": 56.825,
+   "snap_beat": 56.632,
+   "out_end": 58.55,
+   "kind": "bar_card",
+   "label": "Chidamlilik ↑",
+   "anchor_word": "chidamlilikni",
+   "range": "R11",
+   "desc": ""
+  },
+  {
+   "t": 67.695,
+   "snap_beat": 67.541,
+   "out_end": 72.541,
+   "kind": "equation_card",
+   "label": "5 g kreatin",
+   "anchor_word": "besh",
+   "range": "R14",
+   "desc": "equation builds: '5 g kreatin' = '1,5 kg go'sht'"
+  },
+  {
+   "t": 70.915,
+   "snap_beat": 70.723,
+   "out_end": 72.541,
+   "kind": "equation_card",
+   "label": "= 1,5 kg go'sht",
+   "anchor_word": "kilo",
+   "range": "R14",
+   "desc": ""
+  },
+  {
+   "t": 74.781,
+   "snap_beat": 74.814,
+   "out_end": 78.831,
+   "kind": "glass_pill",
+   "label": "♥ Layk",
+   "anchor_word": "layk",
+   "range": "R15",
+   "desc": ""
+  },
+  {
+   "t": 76.596,
+   "snap_beat": 76.632,
+   "out_end": 78.831,
+   "kind": "glass_pill",
+   "label": "Obuna · Atletuz Xorazm",
+   "anchor_word": "obuna",
+   "range": "R15",
+   "desc": "brand handle only as spoken; confirm exact @handle with the user"
+  }
+ ],
+ "dumbbell": [
+  {
+   "t": 2.995,
+   "out_end": 7.605,
+   "action": "enter: float in from depth (z -400 -> 0), slow Y-rotation 12°/s, soft blue rim light; lands on the hook drop"
+  },
+  {
+   "t": 7.675,
+   "out_end": 10.515,
+   "action": "re-appear beside '01 · PROTEIN' badge, gentle bob ±8 px 2.7 s period"
+  },
+  {
+   "t": 31.632,
+   "out_end": 33.722,
+   "action": "beside '02 · GEYNER', on drop 2"
+  },
+  {
+   "t": 53.45,
+   "out_end": 55.675,
+   "action": "beside '03 · KREATIN', on drop 3"
+  },
+  {
+   "t": 72.541,
+   "out_end": 78.831,
+   "action": "final float behind CTA pills, slow push-in, fades with the music"
+  }
+ ],
+ "sfx": [
+  {
+   "t": 1.84,
+   "category": "caption_tick",
+   "gain_db": -20,
+   "align": "onset",
+   "why": "caption accent 'pitaniye'"
+  },
+  {
+   "t": 2.995,
+   "category": "hook_boom",
+   "gain_db": -6,
+   "align": "peak",
+   "why": "music drop 1 lands on 'Kreatin' (hook)"
+  },
+  {
+   "t": 3.78,
+   "category": "caption_tick",
+   "gain_db": -20,
+   "align": "onset",
+   "why": "caption accent 'geyner'"
+  },
+  {
+   "t": 7.675,
+   "category": "soft_chime",
+   "gain_db": -20,
+   "align": "onset",
+   "why": "UI card '01 · PROTEIN' glides in"
+  },
+  {
+   "t": 8.52,
+   "category": "caption_tick",
+   "gain_db": -20,
+   "align": "onset",
+   "why": "caption accent 'protein'"
+  },
+  {
+   "t": 17.685,
+   "category": "soft_chime",
+   "gain_db": -20,
+   "align": "onset",
+   "why": "UI card 'Hammaga mos ✓' glides in"
+  },
+  {
+   "t": 19.63,
+   "category": "soft_chime",
+   "gain_db": -20,
+   "align": "onset",
+   "why": "UI card '3× / hafta' glides in"
+  },
+  {
+   "t": 21.79,
+   "category": "soft_chime",
+   "gain_db": -20,
+   "align": "onset",
+   "why": "UI card '2 g / kg' glides in"
+  },
+  {
+   "t": 23.6,
+   "category": "caption_tick",
+   "gain_db": -20,
+   "align": "onset",
+   "why": "caption accent 'oqsilni'"
+  },
+  {
+   "t": 25.785,
+   "category": "caption_tick",
+   "gain_db": -20,
+   "align": "onset",
+   "why": "caption accent 'protein'"
+  },
+  {
+   "t": 26.445,
+   "category": "soft_chime",
+   "gain_db": -20,
+   "align": "onset",
+   "why": "UI card 'Ovqatdan yetsa — shart emas' glides in"
+  },
+  {
+   "t": 30.722,
+   "category": "soft_chime",
+   "gain_db": -20,
+   "align": "onset",
+   "why": "UI card 'Protein kerak ✓' glides in"
+  },
+  {
+   "t": 31.632,
+   "category": "drop_hit",
+   "gain_db": -9,
+   "align": "peak",
+   "why": "drop 2 -> topic 2 'Ikkinchisi esa, geyner'"
+  },
+  {
+   "t": 31.632,
+   "category": "zip_up",
+   "gain_db": -16,
+   "align": "end",
+   "why": "short zip ends on topic 2 drop (ref B: zip into section)"
+  },
+  {
+   "t": 32.547,
+   "category": "caption_tick",
+   "gain_db": -20,
+   "align": "onset",
+   "why": "caption accent 'geyner'"
+  },
+  {
+   "t": 33.722,
+   "category": "soft_chime",
+   "gain_db": -20,
+   "align": "onset",
+   "why": "UI card 'Oqsil' glides in"
+  },
+  {
+   "t": 34.117,
+   "category": "soft_chime",
+   "gain_db": -20,
+   "align": "onset",
+   "why": "UI card 'Uglevod' glides in"
+  },
+  {
+   "t": 34.814,
+   "category": "soft_chime",
+   "gain_db": -20,
+   "align": "onset",
+   "why": "UI card 'Yog'' glides in"
+  },
+  {
+   "t": 37.461,
+   "category": "air_whoosh",
+   "gain_db": -12,
+   "align": "peak",
+   "why": "MG1 full-screen graphic glides in (whoosh peak on the beat it lands)"
+  },
+  {
+   "t": 37.581,
+   "category": "soft_chime",
+   "gain_db": -18,
+   "align": "onset",
+   "why": "MG1 card lands"
+  },
+  {
+   "t": 42.542,
+   "category": "air_whoosh",
+   "gain_db": -18,
+   "align": "peak",
+   "why": "MG1 card change: Ko'p yeyish — qiyin"
+  },
+  {
+   "t": 42.996,
+   "category": "air_whoosh",
+   "gain_db": -18,
+   "align": "peak",
+   "why": "MG1 card change: Yechim: GEYNER"
+  },
+  {
+   "t": 48.45,
+   "category": "shimmer_transition",
+   "gain_db": -16,
+   "align": "onset",
+   "why": "MG1 exits back to speaker"
+  },
+  {
+   "t": 49.982,
+   "category": "soft_chime",
+   "gain_db": -20,
+   "align": "onset",
+   "why": "UI card 'Profitsit +' glides in"
+  },
+  {
+   "t": 51.377,
+   "category": "caption_tick",
+   "gain_db": -20,
+   "align": "onset",
+   "why": "caption accent 'muskul'"
+  },
+  {
+   "t": 53.45,
+   "category": "drop_hit",
+   "gain_db": -9,
+   "align": "peak",
+   "why": "drop 3 -> topic 3 'Uchinchisi esa, kreatin'"
+  },
+  {
+   "t": 53.45,
+   "category": "zip_up",
+   "gain_db": -16,
+   "align": "end",
+   "why": "short zip ends on topic 3 drop"
+  },
+  {
+   "t": 54.69,
+   "category": "caption_tick",
+   "gain_db": -20,
+   "align": "onset",
+   "why": "caption accent 'kreatin'"
+  },
+  {
+   "t": 56.825,
+   "category": "caption_tick",
+   "gain_db": -20,
+   "align": "onset",
+   "why": "caption accent 'chidamlilikni'"
+  },
+  {
+   "t": 58.66,
+   "category": "caption_tick",
+   "gain_db": -20,
+   "align": "onset",
+   "why": "caption accent 'Kreatin'"
+  },
+  {
+   "t": 59.67,
+   "category": "air_whoosh",
+   "gain_db": -12,
+   "align": "peak",
+   "why": "MG2 full-screen graphic glides in (whoosh peak on the beat it lands)"
+  },
+  {
+   "t": 59.79,
+   "category": "soft_chime",
+   "gain_db": -18,
+   "align": "onset",
+   "why": "MG2 card lands"
+  },
+  {
+   "t": 62.541,
+   "category": "air_whoosh",
+   "gain_db": -18,
+   "align": "peak",
+   "why": "MG2 card change: Muskul energiyasi"
+  },
+  {
+   "t": 65.269,
+   "category": "air_whoosh",
+   "gain_db": -18,
+   "align": "peak",
+   "why": "MG2 card change: Go'shtda ham bor"
+  },
+  {
+   "t": 67.541,
+   "category": "shimmer_transition",
+   "gain_db": -16,
+   "align": "onset",
+   "why": "MG2 exits back to speaker"
+  },
+  {
+   "t": 68.515,
+   "category": "caption_tick",
+   "gain_db": -20,
+   "align": "onset",
+   "why": "caption accent 'kreatinni'"
+  },
+  {
+   "t": 70.915,
+   "category": "soft_chime",
+   "gain_db": -20,
+   "align": "onset",
+   "why": "UI card '= 1,5 kg go'sht' glides in"
+  },
+  {
+   "t": 72.541,
+   "category": "drop_hit",
+   "gain_db": -9,
+   "align": "peak",
+   "why": "drop 4 -> CTA"
+  },
+  {
+   "t": 72.541,
+   "category": "riser",
+   "gain_db": -18,
+   "align": "end",
+   "why": "riser ends on the CTA drop"
+  },
+  {
+   "t": 74.781,
+   "category": "caption_tick",
+   "gain_db": -20,
+   "align": "onset",
+   "why": "caption accent 'layk'"
+  },
+  {
+   "t": 76.596,
+   "category": "caption_tick",
+   "gain_db": -20,
+   "align": "onset",
+   "why": "caption accent 'obuna'"
+  }
+ ],
+ "camera": [
+  {
+   "t": 2.995,
+   "type": "micro_shake",
+   "dur": 0.2,
+   "amp": "1.2% position, 0.4° rotation, decaying",
+   "why": "phonk drop"
+  },
+  {
+   "t": 6.161,
+   "type": "pulse",
+   "dur": 0.18,
+   "amp": "scale +1.5% then ease back",
+   "why": "cowbell hit"
+  },
+  {
+   "t": 9.574,
+   "type": "pulse",
+   "dur": 0.18,
+   "amp": "scale +1.5% then ease back",
+   "why": "cowbell hit"
+  },
+  {
+   "t": 13.208,
+   "type": "pulse",
+   "dur": 0.18,
+   "amp": "scale +1.5% then ease back",
+   "why": "cowbell hit"
+  },
+  {
+   "t": 16.615,
+   "type": "pulse",
+   "dur": 0.18,
+   "amp": "scale +1.5% then ease back",
+   "why": "cowbell hit"
+  },
+  {
+   "t": 19.344,
+   "type": "pulse",
+   "dur": 0.18,
+   "amp": "scale +1.5% then ease back",
+   "why": "cowbell hit"
+  },
+  {
+   "t": 31.632,
+   "type": "micro_shake",
+   "dur": 0.2,
+   "amp": "1.2% position, 0.4° rotation, decaying",
+   "why": "phonk drop"
+  },
+  {
+   "t": 33.437,
+   "type": "pulse",
+   "dur": 0.18,
+   "amp": "scale +1.5% then ease back",
+   "why": "cowbell hit"
+  },
+  {
+   "t": 49.799,
+   "type": "pulse",
+   "dur": 0.18,
+   "amp": "scale +1.5% then ease back",
+   "why": "cowbell hit"
+  },
+  {
+   "t": 53.45,
+   "type": "micro_shake",
+   "dur": 0.2,
+   "amp": "1.2% position, 0.4° rotation, decaying",
+   "why": "phonk drop"
+  },
+  {
+   "t": 54.57,
+   "type": "pulse",
+   "dur": 0.18,
+   "amp": "scale +1.5% then ease back",
+   "why": "cowbell hit"
+  },
+  {
+   "t": 58.209,
+   "type": "pulse",
+   "dur": 0.18,
+   "amp": "scale +1.5% then ease back",
+   "why": "cowbell hit"
+  },
+  {
+   "t": 72.541,
+   "type": "micro_shake",
+   "dur": 0.2,
+   "amp": "1.2% position, 0.4° rotation, decaying",
+   "why": "phonk drop"
+  },
+  {
+   "t": 73.204,
+   "type": "pulse",
+   "dur": 0.18,
+   "amp": "scale +1.5% then ease back",
+   "why": "cowbell hit"
+  },
+  {
+   "t": 75.953,
+   "type": "pulse",
+   "dur": 0.18,
+   "amp": "scale +1.5% then ease back",
+   "why": "cowbell hit"
+  }
+ ],
+ "music": {
+  "file": "Na Reliquia Dos Favela - DJ Biel Divulga.mp3",
+  "tempo_bpm": 131.999,
+  "beat_period_s": 0.45455,
+  "offset_s": 15.222,
+  "note": "track_time = out_time + offset for the first piece; later pieces are bar-free music edits on the beat grid so every topic opens on a drop",
+  "pieces": [
+   {
+    "out_start": 0.0,
+    "out_end": 2.995,
+    "track_in": 15.222,
+    "track_out": 18.217,
+    "what": "intro (cowbell/melody, no 808) under the hook question"
+   },
+   {
+    "out_start": 2.995,
+    "out_end": 17.995,
+    "track_in": 18.217,
+    "track_out": 33.217,
+    "what": "drop 1 (hook)"
+   },
+   {
+    "out_start": 17.995,
+    "out_end": 21.177,
+    "track_in": 25.49,
+    "track_out": 28.672,
+    "what": "loop 7 beats of drop 1 (extends section)"
+   },
+   {
+    "out_start": 21.177,
+    "out_end": 31.632,
+    "track_in": 33.217,
+    "track_out": 43.671,
+    "what": "break before drop 2"
+   },
+   {
+    "out_start": 31.632,
+    "out_end": 46.632,
+    "track_in": 43.671,
+    "track_out": 58.671,
+    "what": "drop 2 (gainer)"
+   },
+   {
+    "out_start": 46.632,
+    "out_end": 50.268,
+    "track_in": 50.944,
+    "track_out": 54.58,
+    "what": "loop 8 beats of drop 2 (extends section)"
+   },
+   {
+    "out_start": 50.268,
+    "out_end": 53.45,
+    "track_in": 58.671,
+    "track_out": 61.853,
+    "what": "break before drop 3"
+   },
+   {
+    "out_start": 53.45,
+    "out_end": 65.723,
+    "track_in": 61.853,
+    "track_out": 74.126,
+    "what": "drop 3 (creatine)"
+   },
+   {
+    "out_start": 65.723,
+    "out_end": 72.541,
+    "track_in": 76.854,
+    "track_out": 83.672,
+    "what": "last 15 beats of break before drop 4"
+   },
+   {
+    "out_start": 72.541,
+    "out_end": 80.231,
+    "track_in": 83.672,
+    "track_out": 91.362,
+    "what": "drop 4 under cta"
+   }
+  ],
+  "bed_gain_db": -17,
+  "duck_db": 12,
+  "fade_in_s": 0.25,
+  "fade_out_s": 1.4,
+  "drops_out": [
+   2.995,
+   31.632,
+   53.45,
+   72.541
+  ],
+  "beats_out": [
+   0.267,
+   0.722,
+   1.176,
+   1.631,
+   2.086,
+   2.54,
+   2.995,
+   3.449,
+   3.904,
+   4.358,
+   4.813,
+   5.267,
+   5.722,
+   6.177,
+   6.631,
+   7.086,
+   7.54,
+   7.995,
+   8.449,
+   8.904,
+   9.358,
+   9.813,
+   10.267,
+   10.722,
+   11.177,
+   11.631,
+   12.086,
+   12.54,
+   12.995,
+   13.449,
+   13.904,
+   14.358,
+   14.813,
+   15.268,
+   15.722,
+   16.177,
+   16.631,
+   17.086,
+   17.54,
+   18.449,
+   18.904,
+   19.358,
+   19.813,
+   20.267,
+   20.722,
+   21.176,
+   21.177,
+   21.631,
+   22.086,
+   22.54,
+   22.995,
+   23.45,
+   23.904,
+   24.359,
+   24.813,
+   25.268,
+   25.722,
+   26.177,
+   26.631,
+   27.086,
+   27.541,
+   27.995,
+   28.45,
+   28.904,
+   29.359,
+   29.813,
+   30.268,
+   30.722,
+   31.177,
+   31.632,
+   32.087,
+   32.542,
+   32.996,
+   33.451,
+   33.905,
+   34.36,
+   34.814,
+   35.269,
+   35.723,
+   36.178,
+   36.633,
+   37.087,
+   37.542,
+   37.996,
+   38.451,
+   38.905,
+   39.36,
+   39.814,
+   40.269,
+   40.723,
+   41.178,
+   41.633,
+   42.087,
+   42.542,
+   42.996,
+   43.451,
+   43.905,
+   44.36,
+   44.814,
+   45.269,
+   45.724,
+   46.178,
+   46.632,
+   47.087,
+   47.541,
+   47.996,
+   48.45,
+   48.905,
+   49.36,
+   49.814,
+   50.269,
+   50.723,
+   51.178,
+   51.632,
+   52.087,
+   52.541,
+   52.996,
+   53.45,
+   53.905,
+   54.36,
+   54.814,
+   55.269,
+   55.723,
+   56.178,
+   56.632,
+   57.087,
+   57.541,
+   57.996,
+   58.451,
+   58.905,
+   59.36,
+   59.814,
+   60.269,
+   60.723,
+   61.178,
+   61.632,
+   62.087,
+   62.541,
+   62.996,
+   63.451,
+   63.905,
+   64.36,
+   64.814,
+   65.269,
+   65.723,
+   66.177,
+   66.632,
+   67.086,
+   67.541,
+   67.995,
+   68.45,
+   68.904,
+   69.359,
+   69.814,
+   70.268,
+   70.723,
+   71.177,
+   71.632,
+   72.086,
+   72.541,
+   72.995,
+   73.45,
+   73.905,
+   74.359,
+   74.814,
+   75.268,
+   75.723,
+   76.177,
+   76.632,
+   77.086,
+   77.541,
+   77.995,
+   78.45,
+   78.905,
+   79.359,
+   79.814
+  ],
+  "downbeats_out": [
+   1.176,
+   2.995,
+   4.813,
+   6.631,
+   8.449,
+   10.267,
+   12.086,
+   13.904,
+   15.722,
+   17.54,
+   19.813,
+   22.54,
+   24.359,
+   26.177,
+   27.995,
+   29.813,
+   31.632,
+   33.451,
+   35.269,
+   37.087,
+   38.905,
+   40.723,
+   42.542,
+   44.36,
+   46.178,
+   46.632,
+   48.45,
+   51.632,
+   53.45,
+   55.269,
+   57.087,
+   58.905,
+   60.723,
+   62.541,
+   64.36,
+   67.086,
+   68.904,
+   70.723,
+   72.541,
+   74.359,
+   76.177,
+   77.995,
+   79.814
+  ],
+  "cowbell_out": [
+   2.53,
+   2.98,
+   6.161,
+   8.433,
+   9.574,
+   9.798,
+   10.253,
+   11.617,
+   12.07,
+   13.208,
+   13.89,
+   15.025,
+   15.707,
+   16.615,
+   16.842,
+   17.071,
+   19.344,
+   19.797,
+   20.935,
+   31.167,
+   31.616,
+   33.437,
+   34.799,
+   35.251,
+   38.435,
+   40.255,
+   40.708,
+   42.072,
+   44.104,
+   44.345,
+   45.03,
+   47.982,
+   48.435,
+   49.799,
+   52.985,
+   54.57,
+   56.163,
+   56.616,
+   58.209,
+   58.436,
+   59.8,
+   60.026,
+   60.253,
+   62.525,
+   64.345,
+   72.075,
+   73.204,
+   74.797,
+   75.024,
+   75.247,
+   75.479,
+   75.953
+  ]
+ },
+ "speech_mask": [
+  [
+   0.05,
+   4.85
+  ],
+  [
+   4.97,
+   7.535
+  ],
+  [
+   7.655,
+   11.915
+  ],
+  [
+   12.136,
+   13.321
+  ],
+  [
+   13.5,
+   17.6
+  ],
+  [
+   17.72,
+   18.28
+  ],
+  [
+   18.5,
+   27.07
+  ],
+  [
+   27.19,
+   31.46
+  ],
+  [
+   31.682,
+   36.212
+  ],
+  [
+   36.332,
+   37.462
+  ],
+  [
+   37.591,
+   42.351
+  ],
+  [
+   42.461,
+   43.111
+  ],
+  [
+   43.231,
+   46.566
+  ],
+  [
+   46.682,
+   47.642
+  ],
+  [
+   47.762,
+   48.102
+  ],
+  [
+   48.222,
+   51.742
+  ],
+  [
+   51.862,
+   53.342
+  ],
+  [
+   53.5,
+   58.48
+  ],
+  [
+   58.6,
+   59.95
+  ],
+  [
+   60.07,
+   60.84
+  ],
+  [
+   60.96,
+   65.005
+  ],
+  [
+   65.125,
+   67.105
+  ],
+  [
+   67.225,
+   68.445
+  ],
+  [
+   68.565,
+   72.375
+  ],
+  [
+   72.591,
+   78.761
+  ]
+ ],
+ "poster_t": 3.595,
+ "grade": {
+  "look": "premium soft-glow blue: lift shadows to deep midnight #0A1B3D, cobalt mids, icy highlights, keep skin warm-neutral; soft halation 8-12%; background DoF blur (segment mask) ~6 px at 1080p; avoid neon",
+  "shelf_light": "harmonise existing blue shelf LEDs, -10% saturation, +bloom"
+ },
+ "cut_log": [
+  {
+   "clip": "c1",
+   "src": [
+    0.0,
+    0.9
+   ],
+   "why": "silence/lead-in"
+  },
+  {
+   "clip": "c1",
+   "src": [
+    8.62,
+    9.6
+   ],
+   "why": "tail silence"
+  },
+  {
+   "clip": "c2",
+   "src": [
+    0.0,
+    1.58
+   ],
+   "why": "pre-roll noise ('Yantar'/clap)"
+  },
+  {
+   "clip": "c2",
+   "src": [
+    7.2,
+    13.72
+   ],
+   "why": "looking at notes + first attempt 'Kimga to'g'ri keladi?' (12.4 s) - replaced by second take"
+  },
+  {
+   "clip": "c2",
+   "src": [
+    18.5,
+    39.78
+   ],
+   "why": "reading pause, stumble 'qaray endi gi-gi-gi' (23-24.8 s), unclear 'farqi yo'q deyman lekin ...' (26.5-28.4 s), 'kunlik oqsilni to'ldirish uchun' (29.4-31.3 s, cut for length: R05 carries the same point), take 1 of the dosage line read off the phone (31.5-38.5 s; take 2 kept)"
+  },
+  {
+   "clip": "c2",
+   "src": [
+    48.44,
+    55.74
+   ],
+   "why": "off-script chatter (49-51.7 s) + false start 'ovqatdan ololmasangiz...' (52.6-54.9 s)"
+  },
+  {
+   "clip": "c2",
+   "src": [
+    59.95,
+    63.7
+   ],
+   "why": "'Tamom' + tail"
+  },
+  {
+   "clip": "c3",
+   "src": [
+    0.0,
+    3.8
+   ],
+   "why": "pre-roll"
+  },
+  {
+   "clip": "c3",
+   "src": [
+    8.43,
+    10.0
+   ],
+   "why": "'Edi, bo'ldimi?' off-script"
+  },
+  {
+   "clip": "c4",
+   "src": [
+    0.0,
+    2.34
+   ],
+   "why": "pre-roll + 'Bu narsalar ovqatda bor' (cut for pace)"
+  },
+  {
+   "clip": "c4",
+   "src": [
+    3.43,
+    23.94
+   ],
+   "why": "take 1 of the thin/weight-gain line (4.5-13 s, read), stumble 'to'g'ri o'qiyolmayapman' (13.7-17.3 s), silence, restart (21.3-23.7 s)"
+  },
+  {
+   "clip": "c4",
+   "src": [
+    34.93,
+    49.54
+   ],
+   "why": "three broken takes of the calorie line + 'aytolmayapman' (35.5-49.2 s)"
+  },
+  {
+   "clip": "c4",
+   "src": [
+    54.71,
+    56.0
+   ],
+   "why": "tail"
+  },
+  {
+   "clip": "c5",
+   "src": [
+    0.0,
+    5.17
+   ],
+   "why": "'Tamom' + false start 'kreatin...' while reading (2.6-4.7 s)"
+  },
+  {
+   "clip": "c5",
+   "src": [
+    10.09,
+    16.89
+   ],
+   "why": "silence while reading + first attempt of 'Kreatin nima ish beradi' (14.3-16.6 s)"
+  },
+  {
+   "clip": "c5",
+   "src": [
+    26.7,
+    32.19
+   ],
+   "why": "reading pause, fragment 'bo...' (30.8 s)"
+  },
+  {
+   "clip": "c5",
+   "src": [
+    37.48,
+    61.39
+   ],
+   "why": "silence, speaker leaves frame (41.5-45.5 s), 'Thank you for watching' = whisper hallucination on noise, off-script remarks, summary line retake 48.7-51.4 s (dropped: CTA take below is complete)"
+  },
+  {
+   "clip": "c5",
+   "src": [
+    67.64,
+    68.8
+   ],
+   "why": "tail"
+  }
+ ],
+ "sfx_categories": "original pack at scratchpad/sfx/pack (manifest.json, 'pick' = chosen variant)"
+}
