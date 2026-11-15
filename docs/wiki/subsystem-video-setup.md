@@ -18,3 +18,13 @@ Source: [audit 2026-11-15](../research/audit-2026-11-15.md), run against `ixtiyo
 - On 2026-11-15 Remotion downloaded a 102 MB browser per project. Using `/opt/pw-browsers` rendered in 5 s instead of 17.5 s.
 
 Related: [LFS and outputs](problem-lfs-and-outputs.md), [improvement backlog](backlog.md).
+
+## Fix (2026-11-15)
+
+Supersedes the pip and Remotion findings above. As of `ixtiyoruc-eng/Cloud@a2a5e5b`:
+
+- The script runs with `set -euo pipefail`, pins every Python package, and ends with a self-check that exits non-zero on failure.
+- On 2026-11-15 moviepy was dropped: it needs `pillow<12`, and no skill script imported it. scenedetect is installed `--no-deps` so only headless cv2 is present.
+- Fonts come from a pinned `google/fonts` commit; Inter Display comes from the apt package `fonts-inter`. Montserrat, Inter Tight and Inter Display have U+02BB.
+- Remotion is pinned to 4.0.543, and setup writes `~/motion/remotion.config.ts` to use the browser in `/opt/pw-browsers`.
+- On 2026-11-15 the chief of staff re-ran it: all checks passed in 5.6 s on a warm container. A fresh-container time was not measured.
