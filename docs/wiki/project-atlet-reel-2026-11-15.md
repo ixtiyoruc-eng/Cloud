@@ -13,3 +13,11 @@ Related: [reference styles](../research/reference-styles-2026-11-15.md), [editin
 - On 2026-11-15 the user gave the ground-truth script (Khorezm dialect, Cyrillic) and asked: captions word for word from it (in Uzbek Latin, keeping the dialect wording — chief-of-staff choice, easy to change), remove the duplicate "kunlik 5 gram" near 1:05, smooth face tracking on the hook shot, then a full render with graphics.
 - A render subagent was started on 2026-11-15. Expected outputs: scratchpad `edit/v2/` (edl.json, final_1080x1920.mp4, preview_540.mp4, changes.md); Remotion source in `tools/atlet-reel/remotion/`.
 - Handoff note (2026-11-15): the user may switch the session model when the current model's limit runs out. Everything needed to continue is in this page, `tools/atlet-reel/`, and the session scratchpad (`edit/`, `sfx/pack/`, `drive/f/`, `art/atlet-reel.html` = the published artifact source). If the scratchpad is lost, re-download the Drive folder with `gdown --folder` (link in the user's message of 2026-11-15).
+
+## Result v2 (2026-11-16)
+
+- On 2026-11-16 the v2 render finished: `edit/v2/final_1080x1920.mp4`, 80.6 s, 25 segments, 24 cuts, 94 caption chunks, 41 SFX, −15.0 LUFS, true peak −1.7 dBFS. Remotion render took 12 min on CPU.
+- The render subagent hit the model's usage limit while writing `changes.md`; the render itself had completed. The chief of staff checked it (16-frame contact sheet, loudness, captions) and finished the hand-off.
+- Checked on 2026-11-16: captions follow the user's script with ş ç ö ğ; "kunlik 5 gram" appears once; both MG slots, glass UI, dumbbell and grade are visible in the frames.
+- On 2026-11-16 artifact version 2 was published with the 540x960 preview and the v2 timeline; the 1080x1920 file was sent to the user.
+- Lesson (2026-11-16): long renders in subagents can be cut off by usage limits. Keep each step's output on disk (plates, mix, render log) so the next session or model can resume.
