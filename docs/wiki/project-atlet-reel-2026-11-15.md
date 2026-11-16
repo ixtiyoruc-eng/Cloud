@@ -40,3 +40,8 @@ Related: [reference styles](../research/reference-styles-2026-11-15.md), [editin
 - Supersedes "Footage and music are … not committed" (2026-11-15) in part: on 2026-11-16 the user asked for the final video on GitHub, and `videos/Atlet_reel_v3.mp4` was committed via Git LFS in `ixtiyoruc-eng/Cloud@6abc9dc`. The repo was public that day. Raw footage, the music track and SFX audio remain uncommitted.
 - Supersedes "Open as of 2026-11-15 … full render not done": full renders were done on 2026-11-16 (v2, v3; see above). Still open on 2026-11-16: the user's verdict on v3, and the ~67.4 s dumbbell overlap.
 - On 2026-11-16 v3 dropped the 3D dumbbell and background blur named in the 2026-11-15 brief line, at the user's request (see Revision 3).
+
+## Result v4 (2026-11-16)
+
+- On 2026-11-16 the user asked for a face filter (brighter, clearer, lighter face), then "colour", a cover and a post caption. v4 = v3 with a face retouch pass on the plate (`tools/atlet-reel/face_filter.py`, as of `ixtiyoruc-eng/Cloud@a7fbb47`: landmark face mask, brighten, light skin smoothing, blue cast reduced) and a mild final colour pass (ffmpeg `eq=contrast=1.07:saturation=1.14:gamma=1.03` + slight warm `colorbalance`). Done inline without subagents to save the user's usage limit.
+- Outputs in scratchpad `edit/v4/`: `Atlet_reel_v4.mp4`, `Atlet_reel_cover.jpg` (1080x1920, built with Pillow from the plate frame at 78 s), `Atlet_reel_izoh.txt` (post caption, written with ş ç ö ğ).
