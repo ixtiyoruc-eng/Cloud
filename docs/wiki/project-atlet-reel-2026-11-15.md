@@ -21,3 +21,8 @@ Related: [reference styles](../research/reference-styles-2026-11-15.md), [editin
 - Checked on 2026-11-16: captions follow the user's script with ş ç ö ğ; "kunlik 5 gram" appears once; both MG slots, glass UI, dumbbell and grade are visible in the frames.
 - On 2026-11-16 artifact version 2 was published with the 540x960 preview and the v2 timeline; the 1080x1920 file was sent to the user.
 - Lesson (2026-11-16): long renders in subagents can be cut off by usage limits. Keep each step's output on disk (plates, mix, render log) so the next session or model can resume.
+
+## Revision 3 (2026-11-16)
+
+- On 2026-11-16 the user said v2's animations and text effects were weak and the dumbbell "just sits there" and wasn't needed. They chose: remove the dumbbell; captions in reference-B style (word-by-word punchy pop, accent pill, text reacts on cuts/drops) in the blue palette; graphics more dynamic, B-style (zoom-through, whip, flash, punches). Plate, cuts and mix are reused.
+- Lesson (2026-11-16): the brief asked for slow Apple-style fades, but the user's taste follows reference B. When the brief and the user's favourite reference disagree on motion, show a short test clip before the full render.
