@@ -5,7 +5,7 @@ import {textW} from './theme';
 export const norm = (s: string) => s.replace(/[.,?!:—]/g, '').trim().toLowerCase();
 
 // ---------------- captions ----------------
-export const CAP = {top: 1175, size: 102, hero: 144, lh: 1.14, maxW: 880, gapEm: 0.26, padEm: 0.2};
+export const CAP = {top: 1120, size: 102, hero: 144, lh: 1.14, maxW: 880, gapEm: 0.26, padEm: 0.2};
 export type WBox = {w: Word; i: number; line: number; x0: number; x1: number; yc: number; size: number; accent: boolean};
 export type CapLayout = {hero: boolean; size: number; boxes: WBox[]; lines: number; bottom: number};
 
@@ -52,7 +52,11 @@ export const accentSpot = (b: WBox, all: WBox[] = []) => {
 // ---------------- UI cards ----------------
 export type Place = {left: number; top: number; w: number; h: number; ax: number; ay: number; s?: number; group?: string; idx?: number};
 export const pillW = (label: string, size = 40) => textW(label, size, 600) + 34 * 2 + 16 + 16;
-export const BADGE_COMPACT_TOP = 112;
+// Instagram Reels safe zone for text and UI (1080x1920): keep clear of the top 220 px (header), the bottom 450 px
+// (caption, audio) and the right 120 px of the lower half (action buttons).
+export const SAFE = {top: 224, bottom: 1470, left: 60, right: 960};
+export const BADGE_COMPACT_TOP = SAFE.top;
+const UNDER_BADGE_TOP = SAFE.top + 92;
 
 /** one placement per card (index in edl.ui_cards). ax/ay = where the guide lands to open it */
 export const uiPlaces = (cards: UiCard[]): Place[] => {
@@ -92,6 +96,13 @@ export const uiPlaces = (cards: UiCard[]): Place[] => {
       const w0 = textW(eq[0].label, 58, 700), w1 = textW(eq[1]?.label ?? '', 58, 700); const tot = w0 + 22 + w1 + 80; const left = 540 - tot / 2;
       out.push({left, top: 226, w: tot, h: 122, ax: i ? left + 40 + w0 + 11 : left - 62, ay: i ? 196 : 287, s: 0.7, idx: i});
     } else out.push({left: 0, top: 0, w: 0, h: 0, ax: 900, ay: 1100});
+  });
+  // push everything into the safe zone: cards shown under the compact section badge sit below it, the rest clear the header
+  out.forEach((p, i) => {
+    const k = cards[i].kind; if (k === 'section_badge' || !p.w) return;
+    const under = k === 'icon_chip' || k === 'donut_card' || k === 'bar_card';
+    const dy = under ? UNDER_BADGE_TOP - p.top : Math.max(0, SAFE.top - p.top);
+    p.top += dy; p.ay += dy;
   });
   return out;
 };

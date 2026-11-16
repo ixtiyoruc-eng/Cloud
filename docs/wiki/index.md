@@ -14,6 +14,7 @@ Chief-of-staff memory for this repo. Every claim is dated; claims about code cit
 - [Atlet reel 2026-11-15](project-atlet-reel-2026-11-15.md) — phonk-synced supplements reel: edit plan, SFX pack, rough-cut artifact.
 
 ## Preferences
+- [Instagram safe zones](preference-safe-zones.md) — keep text out of the top 220 / bottom 450 px; cover text in the centre 4:5.
 - [Uzbek alphabet on screen](preference-uzbek-alphabet.md) — use ş ç ö ğ for sh ch o' g' in captions and graphics.
 
 ## Backlog

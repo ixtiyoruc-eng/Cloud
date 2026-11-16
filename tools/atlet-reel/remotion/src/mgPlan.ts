@@ -25,7 +25,7 @@ export const wordTime = (caps: Caption[], re: RegExp, t0: number, t1: number) =>
 
 export const TILT: Tilt = {cx: 540, cy: 800, rx: 14, ry: -16, persp: 1700, scale: 1};
 export const RING = {cx: 540, cy: 770, r: 286};
-export const TITLE_Y = 232;
+export const TITLE_Y = 300; // inside the Reels safe zone (top 220)
 
 export const planMg = (slot: MgSlot, caps: Caption[], snap: (t: number, w?: number) => number, beatsAfter: (t: number, n: number) => number[]): MgInfo => {
   const c = slot.cards; const keys: GKey[] = []; const times: Record<string, number> = {};
