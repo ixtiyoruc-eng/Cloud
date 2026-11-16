@@ -1,11 +1,13 @@
 # Footage plate for the Remotion comp: per-segment 9:16 crop from the 3024x4032 (display) source,
 # smooth face-follow on the hook, camera push-in / pulse / micro-shake from edl.json, blue grade,
 # mild sharpening, person-segmented subtle background blur + gentle vignette. Writes plate.mp4 (1080x1920@30, no audio).
-# usage: plate.py EDIT_DIR DRIVE_DIR MODELS_DIR OUT_DIR [--only S01,S02] [--frames-only]
+# usage: plate.py EDIT_DIR DRIVE_DIR MODELS_DIR OUT_DIR [--only S01,S02] [--no-blur]
+# --no-blur (v3): skip the person-segmented background blur; grade, tracking, crops and camera moves unchanged.
 import json, sys, os, subprocess, math, numpy as np, cv2
 from multiprocessing import Pool
 E, DRV, MOD, O = sys.argv[1:5]
 ONLY = sys.argv[sys.argv.index('--only') + 1].split(',') if '--only' in sys.argv else None
+BLUR = '--no-blur' not in sys.argv
 EDL = json.load(open(f'{E}/v2/edl.json')); FPS = 30; W, H = 1080, 1920; SW, SH = 3024, 4032
 os.makedirs(O + '/segs', exist_ok=True)
 
@@ -154,7 +156,7 @@ def render_seg(idx):
         M = cv2.getRotationMatrix2D((ccx, ccy), rot, scl); M[0, 2] += W / 2 - ccx; M[1, 2] += H / 2 - ccy
         img = cv2.warpAffine(fr, M, (W, H), flags=cv2.INTER_CUBIC, borderMode=cv2.BORDER_REFLECT)
         x = sharpen(grade(img))
-        if True:
+        if BLUR:
             mk = person_mask(img)
             mk = mk if mprev is None else 0.55 * mk + 0.45 * mprev; mprev = mk
             keep = np.maximum(cv2.GaussianBlur(mk, (0, 0), 2.0), DESK)[..., None]
