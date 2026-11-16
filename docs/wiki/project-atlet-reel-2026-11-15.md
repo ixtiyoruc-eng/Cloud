@@ -45,3 +45,8 @@ Related: [reference styles](../research/reference-styles-2026-11-15.md), [editin
 
 - On 2026-11-16 the user asked for a face filter (brighter, clearer, lighter face), then "colour", a cover and a post caption. v4 = v3 with a face retouch pass on the plate (`tools/atlet-reel/face_filter.py`, as of `ixtiyoruc-eng/Cloud@a7fbb47`: landmark face mask, brighten, light skin smoothing, blue cast reduced) and a mild final colour pass (ffmpeg `eq=contrast=1.07:saturation=1.14:gamma=1.03` + slight warm `colorbalance`). Done inline without subagents to save the user's usage limit.
 - Outputs in scratchpad `edit/v4/`: `Atlet_reel_v4.mp4`, `Atlet_reel_cover.jpg` (1080x1920, built with Pillow from the plate frame at 78 s), `Atlet_reel_izoh.txt` (post caption, written with ş ç ö ğ).
+
+## Result v5 (2026-11-16)
+
+- On 2026-11-16 v5 was rendered with the safe-zone layout (`ixtiyoruc-eng/Cloud@2da3d93`, see [safe zones](preference-safe-zones.md)): same edit, face filter and colour pass as v4; 80.6 s, −15.0 LUFS. The cover was rebuilt with text in the centre 4:5 area, set in Oswald with an Instrument Serif italic line (chief-of-staff pick among three font options shown to the user; the user had not chosen yet).
+- Outputs in scratchpad `edit/v4/`: `Atlet_reel_v5.mp4`, `Atlet_reel_cover.jpg`. Both were sent to the user on 2026-11-16.
