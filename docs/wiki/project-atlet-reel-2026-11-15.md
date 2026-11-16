@@ -28,3 +28,9 @@ Related: [reference styles](../research/reference-styles-2026-11-15.md), [editin
 - Lesson (2026-11-16): the brief asked for slow Apple-style fades, but the user's taste follows reference B. When the brief and the user's favourite reference disagree on motion, show a short test clip before the full render.
 - On 2026-11-16, later, the user clarified: the dumbbell should work like reference A's small lime "flower/star" — a guide character on screen from first frame to last, flying on curved paths with a trail, leading every transition, landing in the typography and opening cards. Effects from both A and B; transitions varied and locked to the music. This supersedes "remove the dumbbell".
 - On 2026-11-16 the user asked to drop the background blur entirely ("doesn't look right, leave it as shot"). v3 re-renders the plate without segmentation blur.
+
+## Result v3 (2026-11-16)
+
+- On 2026-11-16 v3 was rendered (code at `ixtiyoruc-eng/Cloud@27ed088`): 80.6 s, −15.0 LUFS, peak −1.7 dBFS, 53 SFX. Plate re-rendered with `plate.py --no-blur`; a small vector dumbbell is a guide character on screen throughout; captions pop per word with accent pills (B); MG1/MG2 are tilted-panel, ring and dark↔light scenes (A); every cut has a move. Source: `edit/v3/changes.md` in the scratchpad.
+- Known flaw (2026-11-16): at ~67.4 s the dumbbell briefly touches the first letter of the "asosiy manba" pill.
+- On 2026-11-16 artifact version 3 was published and the 1080x1920 file sent to the user. The user's verdict on v3 was not yet known.
