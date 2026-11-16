@@ -1,42 +1,79 @@
+// Reference-B captions: word-by-word pop with overshoot landing on the spoken onset, accent word in a cobalt pill
+// that wipes in from the left (A highlight box) with a white flash, single accent words as hero words with
+// faded outline copies above and below (A ghost echo). The block jumps on cuts and drops.
 import React from 'react';
-import {interpolate, useCurrentFrame, useVideoConfig} from 'remotion';
+import {useCurrentFrame, useVideoConfig} from 'remotion';
 import {Caption} from './types';
-import {C, EASE_TEXT, EASE_OUT, FONT, prog} from './theme';
+import {CAP, capLayout} from './layout';
+import {C, EASE_EXPO, F, FONT, hit, popScale, prog} from './theme';
+import {TL} from './timeline';
 
-const EXIT = 0.12;
-const norm = (s: string) => s.replace(/[.,?!:—]/g, '').trim().toLowerCase();
+const lightAt = (tl: TL, t: number) => tl.mg.some((m) => m.scenes.some((s) => s.light && t >= s.a + 0.12 && t < s.b));
 
-export const Captions: React.FC<{captions: Caption[]}> = ({captions}) => {
+const Word: React.FC<{cap: Caption; i: number; t: number; size: number; accent: boolean; hero: boolean; onLight: boolean}> = ({cap, i, t, size, accent, hero, onLight}) => {
+  const w = cap.words[i];
+  const t0 = w.t - 2 * F;
+  if (t < t0) return <span style={{display: 'inline-block', opacity: 0}}>{w.w}</span>;
+  const op = prog(t, t0, 2 * F, (x) => x);
+  const sc = popScale(t, t0, accent ? 1.7 : 0.45, accent ? -0.1 : 0.14, 0.26);
+  const y = (1 - prog(t, t0, 0.14, EASE_EXPO)) * (accent ? -10 : 38);
+  const bl = (1 - prog(t, t0, 3 * F, (x) => x)) * 9;
+  const g = hit(t, t0 + 3 * F, 0.12);
+  const ink = onLight ? C.ink : C.white;
+  const pillP = prog(t, t0, 5 * F, EASE_EXPO);
+  const shadow = onLight
+    ? `0 0 ${18 + 26 * g}px rgba(61,123,255,${0.15 + 0.5 * g})`
+    : `0 4px 18px rgba(0,8,32,0.65), 0 0 ${16 + 34 * g}px rgba(90,150,255,${0.25 + 0.65 * g})`;
+  const ghost = hero && !accent ? null : hero ? prog(t, t0 + 4 * F, 0.32, EASE_EXPO) : 0;
+  return (
+    <span style={{display: 'inline-block', position: 'relative', opacity: op, scale: String(sc), translate: `0px ${y}px`, filter: bl > 0.3 ? `blur(${bl}px)` : undefined, transformOrigin: '50% 60%'}}>
+      {accent ? (
+        <span style={{position: 'absolute', left: 0, right: 0, top: '0.06em', bottom: '0.02em', borderRadius: '0.3em', transformOrigin: '0% 50%', scale: `${pillP} 1`,
+          background: g > 0.5 ? `linear-gradient(180deg, #FFFFFF, #CFE3FF)` : 'linear-gradient(180deg, #4C8DFF 0%, #2457D6 100%)',
+          boxShadow: `0 0 ${24 + 40 * g}px rgba(61,123,255,${0.55 + 0.4 * g}), inset 0 2px 0 rgba(255,255,255,0.45)`}} />
+      ) : null}
+      {ghost ? [-1, 1].map((d) => (
+        <span key={d} style={{position: 'absolute', left: accent ? `${0.2}em` : 0, top: 0, color: 'transparent', WebkitTextStroke: `3px rgba(156,203,255,${0.5 - 0.15 * ghost})`, background: 'none',
+          translate: `0px ${d * ghost * size * 0.86}px`, opacity: ghost, whiteSpace: 'nowrap'}}>{w.w}</span>
+      )) : null}
+      <span style={{position: 'relative', padding: accent ? `0 ${CAP.padEm}em` : 0, color: accent ? (g > 0.5 ? C.cobalt : C.white) : ink, textShadow: accent ? `0 2px 10px rgba(0,10,50,0.35)` : shadow, whiteSpace: 'nowrap'}}>{w.w}</span>
+    </span>
+  );
+};
+
+export const Captions: React.FC<{captions: Caption[]; tl: TL}> = ({captions, tl}) => {
   const frame = useCurrentFrame();
   const {fps} = useVideoConfig();
   const t = frame / fps;
-  const cap = captions.find((c) => t >= c.out_start - 0.001 && t < c.out_end + EXIT);
-  if (!cap) return null;
-  const out = prog(t, cap.out_end, EXIT, EASE_OUT);
+  // hit reaction on cuts/drops
+  let bump = 0;
+  for (const h of tl.hits) { const d = t - h.t; if (d >= 0 && d < 0.3) bump += h.k * Math.sin((Math.PI / 2) * Math.min(d / 0.05, 1)) * Math.exp(-d / 0.09); }
+  const onLight = lightAt(tl, t);
+  const live = captions.filter((c, i) => {
+    const nx = captions[i + 1];
+    const tight = nx && nx.out_start - c.out_end < 0.05;
+    const outEnd = tight ? nx.words[0].t - F : c.out_end + 5 * F;
+    return t >= c.words[0].t - 2 * F && t < outEnd;
+  });
   return (
-    <div
-      style={{
-        position: 'absolute', left: 70, right: 70, top: 1250, display: 'flex', flexWrap: 'wrap', justifyContent: 'center',
-        columnGap: 18, rowGap: 6, fontFamily: FONT, fontWeight: 600, fontSize: 68, lineHeight: 1.12, letterSpacing: -0.6,
-        opacity: 1 - out, filter: `blur(${out * 6}px)`,
-      }}
-    >
-      {cap.words.map((w, i) => {
-        const p = prog(t, w.t, 0.18, EASE_TEXT);
-        const acc = cap.accent && norm(w.w) === norm(cap.accent);
+    <div style={{position: 'absolute', inset: 0, scale: String(1 + 0.07 * bump), translate: `0px ${-16 * bump}px`, transformOrigin: '50% 1260px'}}>
+      {live.map((cap) => {
+        const idx = captions.indexOf(cap); const nx = captions[idx + 1];
+        const tight = nx && nx.out_start - cap.out_end < 0.05;
+        const xs = tight ? prog(t, nx.words[0].t - 3 * F, 2 * F, (x) => x) : prog(t, cap.out_end, 5 * F, (x) => x);
+        const L = capLayout(cap);
+        const lh = L.size * CAP.lh;
+        const lines = Array.from({length: L.lines}, (_, li) => L.boxes.filter((b) => b.line === li));
         return (
-          <span
-            key={i}
-            style={{
-              display: 'inline-block', color: acc ? C.accent : C.white, opacity: p, filter: `blur(${(1 - p) * 8}px)`,
-              scale: String(interpolate(p, [0, 1], [0.96, 1])),
-              textShadow: acc
-                ? '0 0 22px rgba(95,160,255,0.55), 0 2px 14px rgba(0,8,32,0.6)'
-                : '0 2px 14px rgba(0,8,32,0.62), 0 0 2px rgba(0,8,32,0.4)',
-            }}
-          >
-            {w.w}
-          </span>
+          <div key={idx} style={{position: 'absolute', inset: 0, opacity: 1 - xs, scale: String(1 - 0.1 * xs), translate: `0px ${-14 * xs}px`,
+            filter: xs > 0.05 ? `blur(${xs * 7}px)` : undefined, transformOrigin: `50% ${CAP.top + lh}px`}}>
+            {lines.map((bs, li) => (
+              <div key={li} style={{position: 'absolute', left: 0, right: 0, top: CAP.top + li * lh, height: lh, display: 'flex', justifyContent: 'center', alignItems: 'center',
+                columnGap: CAP.gapEm * L.size, fontFamily: FONT, fontWeight: 800, fontSize: L.size, letterSpacing: -0.02 * L.size, lineHeight: 1}}>
+                {bs.map((b) => <Word key={b.i} cap={cap} i={b.i} t={t} size={L.size} accent={b.accent} hero={L.hero} onLight={onLight} />)}
+              </div>
+            ))}
+          </div>
         );
       })}
     </div>

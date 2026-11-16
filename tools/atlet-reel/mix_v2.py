@@ -1,9 +1,10 @@
 # Audio for v2: voice stem (segments, 6 ms fades, HPF + gentle compression), beat-locked music edits from
 # edl.music.pieces (12 ms crossfades), ducking under speech, SFX picks from the pack manifest, then a
-# two-pass loudnorm master to -15 LUFS / -1.5 dBTP. usage: mix_v2.py EDIT_DIR MUSIC_MP3 SFX_DIR OUT_WAV
+# two-pass loudnorm master to -15 LUFS / -1.5 dBTP. usage: mix_v2.py EDIT_DIR MUSIC_MP3 SFX_DIR OUT_WAV [--edl EDL.json]
+# (v3 passes --edl edit/v3/pub/edl.json, which adds SFX for the new whip/blob/streak transitions)
 import json, sys, os, subprocess, numpy as np, soundfile as sf, librosa, scipy.signal as ss
 E, MP3, SFX, OUT = sys.argv[1:5]
-edl = json.load(open(E + '/v2/edl.json')); T = edl['output']['duration']; sr = 48000; N = int(round(T * sr))
+edl = json.load(open(sys.argv[sys.argv.index('--edl') + 1] if '--edl' in sys.argv else E + '/v2/edl.json')); T = edl['output']['duration']; sr = 48000; N = int(round(T * sr))
 tmp = os.path.dirname(OUT)
 # ---- voice
 voice = np.zeros(N); cache = {}; fd = int(0.006 * sr)

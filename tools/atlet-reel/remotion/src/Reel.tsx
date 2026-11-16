@@ -1,10 +1,12 @@
-import React, {useEffect, useState} from 'react';
-import {AbsoluteFill, Audio, OffthreadVideo, Sequence, continueRender, delayRender, staticFile, useVideoConfig} from 'remotion';
+import React, {useEffect, useMemo, useState} from 'react';
+import {AbsoluteFill, Audio, continueRender, delayRender, staticFile} from 'remotion';
 import {Edl} from './types';
 import {Captions} from './Captions';
 import {MotionGraphic} from './MotionGraphic';
 import {UiLayer} from './UiCards';
-import {Dumbbell} from './Dumbbell';
+import {Guide} from './Guide';
+import {CutWipes, Flashes, Plate} from './Fx';
+import {buildTimeline} from './timeline';
 
 export type ReelProps = {edl: Edl};
 
@@ -19,24 +21,19 @@ const useFont = () => {
   }, [handle]);
 };
 
+// layer order: plate (cut fx) > UI cards > blob wipes > full-screen MG > captions > guide > flash
 export const Reel: React.FC<ReelProps> = ({edl}) => {
   useFont();
-  const {fps} = useVideoConfig();
+  const tl = useMemo(() => buildTimeline(edl), [edl]);
   return (
     <AbsoluteFill style={{backgroundColor: '#050C1F'}}>
-      <OffthreadVideo src={staticFile('plate.mp4')} muted />
-      {edl.dumbbell.map((d, i) => (
-        <Sequence key={i} from={Math.round(d.t * fps)} durationInFrames={Math.round((d.out_end - d.t) * fps)} name={`Dumbbell ${i + 1}`}>
-          <Dumbbell cue={d} index={i} last={i === edl.dumbbell.length - 1} />
-        </Sequence>
-      ))}
-      <UiLayer cards={edl.ui_cards} />
-      {edl.mg_slots.map((m) => (
-        <Sequence key={m.id} from={Math.round(m.out_start * fps)} durationInFrames={Math.round((m.out_end - m.out_start) * fps)} name={m.id}>
-          <MotionGraphic slot={m} captions={edl.captions} />
-        </Sequence>
-      ))}
-      <Captions captions={edl.captions} />
+      <Plate tl={tl} />
+      <UiLayer cards={edl.ui_cards} tl={tl} />
+      <CutWipes tl={tl} />
+      {tl.mg.map((m) => <MotionGraphic key={m.slot.id} info={m} captions={edl.captions} tl={tl} />)}
+      <Captions captions={edl.captions} tl={tl} />
+      <Guide tl={tl} />
+      <Flashes tl={tl} />
       <Audio src={staticFile('mix.wav')} />
     </AbsoluteFill>
   );
