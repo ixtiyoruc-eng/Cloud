@@ -1,0 +1,18 @@
+{
+  "name": "atlet-reel",
+  "private": true,
+  "description": "Atlet supplements reel v2: Remotion composition over a pre-graded footage plate. Media lives in public/ (not committed).",
+  "scripts": {
+    "studio": "remotion studio src/index.ts",
+    "render": "remotion render src/index.ts AtletReel out/final.mp4"
+  },
+  "dependencies": {
+    "@react-three/fiber": "8.17.10",
+    "@remotion/cli": "4.0.543",
+    "@remotion/three": "4.0.543",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "remotion": "4.0.543",
+    "three": "0.170.0"
+  }
+}
