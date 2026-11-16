@@ -50,7 +50,7 @@ export const accentSpot = (b: WBox, all: WBox[] = []) => {
 };
 
 // ---------------- UI cards ----------------
-export type Place = {left: number; top: number; w: number; h: number; ax: number; ay: number; group?: string; idx?: number};
+export type Place = {left: number; top: number; w: number; h: number; ax: number; ay: number; s?: number; group?: string; idx?: number};
 export const pillW = (label: string, size = 40) => textW(label, size, 600) + 34 * 2 + 16 + 16;
 export const BADGE_COMPACT_TOP = 112;
 
@@ -60,24 +60,24 @@ export const uiPlaces = (cards: UiCard[]): Place[] => {
   const pills = cards.filter((c) => c.kind === 'glass_pill');
   const grp = (c: UiCard) => (c.t < 10 ? 'a' : c.t < 70 ? 'b' : 'cta');
   const chips = cards.filter((c) => c.kind === 'icon_chip');
-  const chipW = chips.map((c) => textW(c.label, 36, 500) + 28 * 2 + 14 + 14);
+  const chipW = chips.map((c) => textW(c.label, 36, 700) + 28 * 2 + 14 + 34);
   const chipTot = chipW.reduce((a, b) => a + b, 0) + 20 * (chips.length - 1);
   cards.forEach((c) => {
     if (c.kind === 'glass_pill') {
       const g = grp(c); const same = pills.filter((p) => grp(p) === g); const i = same.indexOf(c);
       const w = pillW(c.label, g === 'cta' ? 60 : 44) + (g === 'cta' ? 70 : 0), h = g === 'cta' ? 116 : 84;
-      if (g === 'cta') { const top = 214 + i * 146, left = 540 - w / 2; out.push({left, top, w, h, ax: left + 70, ay: top + h / 2, group: g, idx: i}); }
-      else { const top = 236 + i * 100, left = 1024 - w; out.push({left, top, w, h, ax: left + 42, ay: top + h / 2, group: g, idx: i}); }
+      if (g === 'cta') { const top = 214 + i * 146, left = 540 - w / 2; out.push({left, top, w, h, ax: left + 70, ay: top + h / 2, s: 0.72, group: g, idx: i}); }
+      else { const top = 236 + i * 100, left = 1024 - w; out.push({left, top, w, h, ax: left + 26, ay: top + h / 2, s: 0.62, group: g, idx: i}); }
     } else if (c.kind === 'section_badge') {
       out.push({left: 0, top: 230, w: 1080, h: 160, ax: 110, ay: 300});
     } else if (c.kind === 'icon_chip') {
       const i = chips.indexOf(c); const left = 540 - chipTot / 2 + chipW.slice(0, i).reduce((a, b) => a + b, 0) + 20 * i;
-      out.push({left, top: 300, w: chipW[i], h: 70, ax: left + 34, ay: 335, idx: i});
+      out.push({left, top: 300, w: chipW[i], h: 70, ax: left + 24, ay: 335, s: 0.6, idx: i});
     } else if (c.kind === 'analytics_card') {
       const second = cards.filter((k) => k.kind === 'analytics_card').indexOf(c) === 1;
-      out.push({left: 190, top: 220, w: 700, h: 260, ax: second ? 228 : 872, ay: second ? 410 : 236});
+      out.push({left: 190, top: 220, w: 700, h: 260, ax: second ? 150 : 872, ay: second ? 410 : 222, s: 0.8});
     } else if (c.kind === 'glass_card') {
-      const w = textW(c.label, 48, 600) + 84; out.push({left: 540 - w / 2, top: 236, w, h: 106, ax: 540 - w / 2 - 6, ay: 289});
+      const w = textW(c.label, 48, 600) + 84; out.push({left: 540 - w / 2, top: 236, w, h: 106, ax: 540 - w / 2 - 62, ay: 289, s: 0.8});
     } else if (c.kind === 'donut_card') {
       const i = cards.filter((k) => k.kind === 'donut_card').indexOf(c);
       const a = -Math.PI / 2 + [0.2, 0.62, 0.92][i] * Math.PI * 2;
@@ -90,7 +90,7 @@ export const uiPlaces = (cards: UiCard[]): Place[] => {
     } else if (c.kind === 'equation_card') {
       const eq = cards.filter((k) => k.kind === 'equation_card'); const i = eq.indexOf(c);
       const w0 = textW(eq[0].label, 58, 700), w1 = textW(eq[1]?.label ?? '', 58, 700); const tot = w0 + 22 + w1 + 80; const left = 540 - tot / 2;
-      out.push({left, top: 226, w: tot, h: 122, ax: i ? left + 40 + w0 + 11 : left - 8, ay: 287, idx: i});
+      out.push({left, top: 226, w: tot, h: 122, ax: i ? left + 40 + w0 + 11 : left - 62, ay: i ? 196 : 287, s: 0.7, idx: i});
     } else out.push({left: 0, top: 0, w: 0, h: 0, ax: 900, ay: 1100});
   });
   return out;

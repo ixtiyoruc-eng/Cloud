@@ -46,7 +46,7 @@ export const UiLayer: React.FC<{cards: UiCard[]; tl: TL}> = ({cards, tl}) => {
           <div style={{...glass(p.h / 2, true), position: 'absolute', inset: 0, transformOrigin: `${p.ax - p.left}px 50%`, scale: `${Math.max(0.001, u)} ${0.7 + 0.3 * Math.min(1, u)}`,
             boxShadow: `0 0 ${30 + 40 * g}px rgba(80,145,255,${0.4 + 0.5 * g}), 0 18px 40px rgba(2,8,28,0.5)`}} />
           <div style={{position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', gap: 16, paddingLeft: cta ? 34 : 34, ...txt(cta ? 60 : 44, 800)}}>
-            {cta ? <span style={{width: 86, flex: 'none'}} /> : <Dot g={g} />}
+            <span style={{width: cta ? 86 : 40, flex: 'none', display: 'flex', justifyContent: 'center'}}><Dot g={g} /></span>
             <span style={{opacity: tx, translate: `${(1 - tx) * -30}px 0px`, filter: tx < 0.9 ? `blur(${(1 - tx) * 6}px)` : undefined}}>{c.label}</span>
           </div>
         </div>);
@@ -56,7 +56,7 @@ export const UiLayer: React.FC<{cards: UiCard[]; tl: TL}> = ({cards, tl}) => {
       const e = pop(t, a, b, 0.2);
       els.push(
         <div key={'c' + i} style={at(p, {height: p.h, ...e.style, transformOrigin: '30px 50%'})}>
-          <div style={{...glass(35, true), height: p.h, display: 'flex', alignItems: 'center', gap: 14, padding: '0 28px', ...txt(36, 700)}}><Dot g={g} />{c.label}</div>
+          <div style={{...glass(35, true), height: p.h, display: 'flex', alignItems: 'center', gap: 14, padding: '0 28px', ...txt(36, 700)}}><span style={{width: 34, flex: 'none', display: 'flex', justifyContent: 'center'}}><Dot g={g} /></span>{c.label}</div>
         </div>);
     } else if (c.kind === 'analytics_card') {
       const an = cards.map((k, j) => [k, j] as const).filter(([k]) => k.kind === 'analytics_card');

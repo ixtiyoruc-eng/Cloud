@@ -84,7 +84,7 @@ export const buildTimeline = (edl: Edl): TL => {
       const t0 = cardAt[i];
       keys.push({t: Math.max(t0, (cuts.find((k) => k.kind === 'blob' && Math.abs(k.t - t0) < 0.5)?.t ?? 0) + 0.05), x: 110, y: 300, pri: 9, travel: 0.3, tag: 'hero-a'});
       keys.push({t: snap(t0 + 0.45, 0.1), x: 975, y: 300, pri: 9, travel: 0.42, spin: 1, tag: 'hero-b'});
-    } else keys.push({t: cardAt[i], x: p.ax, y: p.ay, pri: 7, travel: 0.3, tag: 'card-' + c.kind});
+    } else keys.push({t: cardAt[i], x: p.ax, y: p.ay, s: p.s, pri: 7, travel: 0.3, tag: 'card-' + c.kind});
   });
   // cut transitions led by the guide
   for (const c of cuts) {
