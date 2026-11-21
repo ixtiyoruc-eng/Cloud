@@ -2,6 +2,9 @@
 
 Chief-of-staff memory for this repo. Every claim is dated; claims about code cite a commit. See [conventions](conventions.md).
 
+## Start here
+- [handoff](handoff.md) — how a new session picks up the work (2026-11-21).
+
 ## Goal
 - [goal](goal.md) — the long-running goal: improve the video-editing environment.
 
