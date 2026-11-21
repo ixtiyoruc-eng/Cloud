@@ -19,6 +19,7 @@ Chief-of-staff memory for this repo. Every claim is dated; claims about code cit
 
 ## Preferences
 - [Instagram safe zones](preference-safe-zones.md) — keep text out of the top 220 / bottom 450 px; cover text in the centre 4:5.
+- [No colour work, nothing over the face](preference-no-grade-face-clear.md) — footage as shot; graphics avoid the speaker's face (2026-11-21).
 - [Uzbek alphabet on screen](preference-uzbek-alphabet.md) — use ş ç ö ğ for sh ch o' g' in captions and graphics.
 
 ## Backlog

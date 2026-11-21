@@ -1,11 +1,14 @@
 # Footage plate for the Gym brat reel: per-segment 9:16 crop from the 3024x4032 (display) source that follows the face
 # (smoothed), three framings (wide / med / close) alternating on jump cuts, slow push-in, Atlet blue grade (from
-# ../atlet-reel/plate.py), face retouch (from ../atlet-reel/face_filter.py). Writes plate.mp4 (1080x1920@30, no audio).
-# usage: plate.py EDL.json DRIVE_DIR FACE_LANDMARKER.task OUT_DIR [--only S01,S02] [--test OUT.jpg]
+# ../atlet-reel/plate.py), face retouch (from ../atlet-reel/face_filter.py). Writes plate.mp4 (1080x1920@30, no audio)
+# and face.json (per output frame: face box [x0, y0, x1, y1] in output px incl. hair, or null) so graphics can avoid the face.
+# usage: plate.py EDL.json DRIVE_DIR FACE_LANDMARKER.task OUT_DIR [--only S01,S02] [--no-grade]
+# --no-grade (v2, user: "no colour at all"): colours as shot - no grade, halation or vignette; face retouch only smooths skin.
 import json, sys, os, subprocess, math, numpy as np, cv2
 from multiprocessing import Pool
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), '..', 'atlet-reel'))
 EDLF, DRV, MODEL, O = sys.argv[1:5]
+NOGRADE = '--no-grade' in sys.argv
 ONLY = sys.argv[sys.argv.index('--only') + 1].split(',') if '--only' in sys.argv else None
 EDL = json.load(open(EDLF)); FPS = 30; W, H = 1080, 1920; SW, SH = 3024, 4032
 ZOOM = {'wide': 2268, 'med': 1850, 'close': 1480}   # crop width in source px
@@ -34,7 +37,7 @@ def halation(x):
     small = cv2.resize(x, (W // 4, H // 4), interpolation=cv2.INTER_AREA)
     br = cv2.GaussianBlur(np.clip((small - 0.85) / 0.15, 0, 1), (0, 0), 6)
     return np.clip(x + 0.045 * cv2.resize(br, (W, H)) * np.array([1.0, 0.85, 0.65], np.float32), 0, 1)
-def sharpen(x): b = cv2.GaussianBlur(x, (0, 0), 1.3); return np.clip(x + 0.4 * (x - b), 0, 1)
+def sharpen(x): b = cv2.GaussianBlur(x, (0, 0), 1.3); return np.clip(x + (0.25 if NOGRADE else 0.4) * (x - b), 0, 1)
 
 _lm = {}
 def landmarker(video):
@@ -76,7 +79,9 @@ def face_path(s):
     return out
 
 # face retouch (same recipe as atlet-reel/face_filter.py)
+import face_filter
 from face_filter import face_mask, retouch
+if NOGRADE: face_filter.LIFT, face_filter.DESAT = 0.0, 0.0   # smoothing only, no brightness or colour change
 
 def render_seg(idx):
     s = EDL['segments'][idx]; out_f = f"{O}/segs/{s['id']}.mp4"
@@ -92,7 +97,7 @@ def render_seg(idx):
     enc = subprocess.Popen(['ffmpeg', '-v', 'error', '-y', '-f', 'rawvideo', '-pix_fmt', 'bgr24', '-s', f'{W}x{H}', '-r', str(FPS), '-i', '-',
         '-c:v', 'libx264', '-preset', 'medium', '-crf', '13', '-pix_fmt', 'yuv420p', out_f], stdin=subprocess.PIPE)
     import mediapipe as mp
-    lm = landmarker(False); last = None; fr = None; mlast = None; miss = 0
+    lm = landmarker(False); last = None; fr = None; mlast = None; miss = 0; boxes = []
     for i in range(N):
         b = p.stdout.read(uw * uh * 3)
         if len(b) == uw * uh * 3: fr = np.frombuffer(b, np.uint8).reshape(uh, uw, 3)
@@ -102,14 +107,17 @@ def render_seg(idx):
         img = cv2.warpAffine(fr, M, (W, H), flags=cv2.INTER_CUBIC, borderMode=cv2.BORDER_REFLECT)
         r = lm.detect(mp.Image(image_format=mp.ImageFormat.SRGB, data=cv2.cvtColor(img, cv2.COLOR_BGR2RGB)))
         if r.face_landmarks:
+            L = r.face_landmarks[0]; xs = [q.x * W for q in L]; ys = [q.y * H for q in L]; fh = max(ys) - min(ys)
+            boxes.append([round(min(xs) - 0.12 * fh), round(min(ys) - 0.38 * fh), round(max(xs) + 0.12 * fh), round(max(ys) + 0.04 * fh)])
             m, pts = face_mask(r.face_landmarks[0], W, H)
             if mlast is not None and miss == 0: m = 0.6 * m + 0.4 * mlast[0]
             mlast = (m, pts); miss = 0
-        else: miss += 1
+        else: miss += 1; boxes.append(None)
         if mlast is not None and miss < 6: img = retouch(img, *mlast)
-        x = halation(sharpen(grade(img))) * VIG
+        x = np.clip(sharpen(img.astype(np.float32) / 255), 0, 1) if NOGRADE else halation(sharpen(grade(img))) * VIG
         enc.stdin.write((np.clip(x, 0, 1) * 255 + 0.5).astype(np.uint8).tobytes())
     p.stdout.close(); p.wait(); enc.stdin.close(); enc.wait()
+    json.dump(boxes, open(f"{O}/segs/{s['id']}.face.json", 'w'))
     return s['id']
 
 if __name__ == '__main__':
@@ -119,4 +127,5 @@ if __name__ == '__main__':
     if not ONLY:
         open(f'{O}/segs/list.txt', 'w').write(''.join(f"file '{O}/segs/{s['id']}.mp4'\n" for s in EDL['segments']))
         subprocess.run(['ffmpeg', '-v', 'error', '-y', '-f', 'concat', '-safe', '0', '-i', f'{O}/segs/list.txt', '-c', 'copy', f'{O}/plate.mp4'], check=True)
-        print('plate written')
+        face = sum((json.load(open(f"{O}/segs/{s['id']}.face.json")) for s in EDL['segments']), [])
+        json.dump(face, open(f'{O}/face.json', 'w')); print('plate written', len(face), 'face boxes')

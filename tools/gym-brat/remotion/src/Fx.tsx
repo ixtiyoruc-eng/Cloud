@@ -1,5 +1,6 @@
-// Cut transitions on the footage plate (whip with motion blur, punch-in), blob shape wipes, light streaks, flashes.
+// Cut transitions on the footage plate (whip with motion blur, punch-in), ring bursts, light streaks, flashes.
 // Same look as the Atlet reel (../../atlet-reel/remotion/src/Fx.tsx); the MG portal moves are replaced by a rise-in / whip-out.
+// v2: blob wipes -> ring bursts; wipes, streaks and flashes render inside FaceSafe so they never cover the face.
 import React from 'react';
 import {AbsoluteFill, OffthreadVideo, staticFile, useCurrentFrame, useVideoConfig} from 'remotion';
 import {TL} from './timeline';
@@ -24,7 +25,7 @@ export const Plate: React.FC<{tl: TL}> = ({tl}) => {
     }
     if (c.kind === 'punch' && d >= 0) sc *= popScale(t, c.t, 1.14, -0.025, 0.32);
     if (c.kind === 'streak' && d >= 0) sc *= popScale(t, c.t, 1.06, -0.01, 0.26);
-    if (c.kind === 'blob' && d >= 0) sc *= popScale(t, c.t, 1.1, -0.02, 0.34);
+    if (c.kind === 'ring' && d >= 0) sc *= popScale(t, c.t, 1.1, -0.02, 0.34);
   }
   // into the summary MG: the plate accelerates up and away; out of it: lands back from the right
   if (t >= tl.mgIn.a && t < tl.mgIn.b) { const e = EASE_ACC(clamp01((t - tl.mgIn.a) / (tl.mgIn.b - tl.mgIn.a))); y -= e * 700; by += e * 60; sc *= 1 + 0.15 * e; }
@@ -40,16 +41,14 @@ export const Plate: React.FC<{tl: TL}> = ({tl}) => {
   );
 };
 
-const blob = (cx: number, cy: number, r: number, t: number, inner = 0) => {
-  const ring = (rr: number, rev: boolean) => {
-    let s = ''; const n = 32;
-    for (let k = 0; k <= n; k++) {
-      const a = ((rev ? n - k : k) / n) * Math.PI * 2; const w = 1 + 0.1 * Math.sin(a * 3 + t * 6) + 0.05 * Math.sin(a * 5 - t * 8);
-      s += `${k ? 'L' : 'M'}${(cx + Math.cos(a) * rr * w).toFixed(1)} ${(cy + Math.sin(a) * rr * w).toFixed(1)} `;
-    }
-    return s + 'Z ';
-  };
-  return ring(r, false) + (inner > 0 ? ring(inner, true) : '');
+/** wraps effect layers so they never draw over the face: an elliptical hole (feathered) follows the face box */
+export const FaceSafe: React.FC<{tl: TL; children: React.ReactNode}> = ({tl, children}) => {
+  const frame = useCurrentFrame();
+  const {fps} = useVideoConfig();
+  const f = tl.faceAt(frame / fps);
+  const cx = (f.x0 + f.x1) / 2, cy = (f.y0 + f.y1) / 2, rx = (f.x1 - f.x0) / 2 + 60, ry = (f.y1 - f.y0) / 2 + 60;
+  const m = `radial-gradient(ellipse ${rx}px ${ry}px at ${cx}px ${cy}px, transparent 0%, transparent 88%, black 100%)`;
+  return <AbsoluteFill style={{WebkitMaskImage: m, maskImage: m}}>{children}</AbsoluteFill>;
 };
 
 export const CutWipes: React.FC<{tl: TL}> = ({tl}) => {
@@ -59,21 +58,25 @@ export const CutWipes: React.FC<{tl: TL}> = ({tl}) => {
   const els: React.ReactNode[] = [];
   tl.cuts.forEach((c, i) => {
     const d = t - c.t;
-    if (c.kind === 'blob' && d >= -0.22 && d < 0.28) {
+    if (c.kind === 'ring' && d >= -0.06 && d < 0.5) {
+      // ring burst from the chest: three glowing rings race outwards, a soft glow pulses behind them
       const cx = c.x!, cy = c.y!;
-      const R = d < 0 ? 2300 * Math.pow(clamp01((d + 0.22) / 0.22), 2) + 6 : 2400;
-      const inner = d < 0 ? 0 : 2400 * EASE_EXPO(clamp01(d / 0.28));
+      const g = d < 0 ? 0.4 : Math.exp(-d / 0.12);
       els.push(
-        <svg key={'b' + i} width={1080} height={1920} style={{position: 'absolute', inset: 0}}>
-          <defs><radialGradient id={'bg' + i} cx={cx} cy={cy} r={1400} gradientUnits="userSpaceOnUse"><stop offset="0" stopColor="#E6F1FF" /><stop offset="0.35" stopColor="#6FA8FF" /><stop offset="1" stopColor="#1B3F9E" /></radialGradient></defs>
-          <path d={blob(cx, cy, R, t, inner)} fill={`url(#bg${i})`} fillRule="evenodd" />
-          {inner > 0 ? <path d={blob(cx, cy, inner + 14, t)} fill="none" stroke="#FFFFFF" strokeWidth={6} opacity={0.8} /> : null}
-          {[0.55, 0.8].map((k) => <circle key={k} cx={cx} cy={cy} r={R * k} fill="none" stroke="rgba(255,255,255,0.35)" strokeWidth={3} />)}
+        <svg key={'r' + i} width={1080} height={1920} style={{position: 'absolute', inset: 0, mixBlendMode: 'screen'}}>
+          <defs><radialGradient id={'rg' + i}><stop offset="0" stopColor="#9CCBFF" stopOpacity={0.55 * g} /><stop offset="1" stopColor="#3D7BFF" stopOpacity="0" /></radialGradient></defs>
+          <circle cx={cx} cy={cy} r={520} fill={`url(#rg${i})`} />
+          {[0, 0.06, 0.12].map((lag, k) => {
+            const u = clamp01((d - lag + 0.06) / 0.44); if (u <= 0 || u >= 1) return null;
+            const r = 60 + 1300 * EASE_EXPO(u); const o = (1 - u) * (k === 0 ? 1 : 0.6);
+            return <circle key={k} cx={cx} cy={cy} r={r} fill="none" stroke={k === 0 ? '#FFFFFF' : '#9CCBFF'} strokeOpacity={o} strokeWidth={(k === 0 ? 16 : 8) * (1 - u) + 2}
+              style={{filter: 'drop-shadow(0 0 14px rgba(110,170,255,0.95))'}} />;
+          })}
         </svg>);
     }
     if (c.kind === 'streak' && d >= -3 * F && d < 6 * F) {
       const u = clamp01((d + 3 * F) / (3 * F)); const o = 1 - prog(t, c.t, 6 * F, (x) => x);
-      els.push(<div key={'s' + i} style={{position: 'absolute', left: (c.x ?? 952) - 9, width: 18, bottom: 0, height: 1920 * u, opacity: o, borderRadius: 9,
+      els.push(<div key={'s' + i} style={{position: 'absolute', left: (c.x ?? 120) - 9, width: 18, bottom: 0, height: 1920 * u, opacity: o, borderRadius: 9,
         background: 'linear-gradient(0deg, rgba(255,255,255,0.2), #fff 30%, #fff 80%, rgba(255,255,255,0))', boxShadow: '0 0 40px 14px rgba(110,170,255,0.85)'}} />);
     }
   });
@@ -92,5 +95,5 @@ export const Flashes: React.FC<{tl: TL}> = ({tl}) => {
     if (!best || o > best.o) best = {o, col: f.col};
   }
   if (!best || best.o < 0.01) return null;
-  return <AbsoluteFill style={{background: `radial-gradient(circle at 50% 55%, ${best.col} 0%, ${best.col} 40%, rgba(110,160,255,0.6) 100%)`, opacity: best.o, mixBlendMode: 'screen'}} />;
+  return <AbsoluteFill style={{background: `radial-gradient(circle at 50% 50%, ${best.col} 0%, ${best.col} 45%, rgba(110,160,255,0.6) 100%)`, opacity: best.o, mixBlendMode: 'screen'}} />;
 };

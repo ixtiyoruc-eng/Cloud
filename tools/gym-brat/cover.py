@@ -27,21 +27,21 @@ def ctext(txt, font, yc, fill, glow=None, dx=0):
     d.text((x, yc), txt, font=font, fill=fill, anchor='lm')
     return w
 ctext('ATLET.UZ  ·  XORAZM', vf('Montserrat[wght].ttf', 800, 36), 330, ICY)
-ctext('Sport ozuqa:', ImageFont.truetype(f'{FD}/InstrumentSerif-Italic.ttf', 88), 955, WHITE)
-ctext('OZIŞDA', vf('Oswald[wght].ttf', 700, 196), 1075, WHITE, glow=(90, 150, 255))
+ctext('Sport ozuqa:', ImageFont.truetype(f'{FD}/InstrumentSerif-Italic.ttf', 84), 992, WHITE)
+ctext('OZIŞDA', vf('Oswald[wght].ttf', 700, 188), 1106, WHITE, glow=(90, 150, 255))
 # "vs" badge between the two words
-f_vs = vf('Montserrat[wght].ttf', 900, 46); r = 42; cy = 1238
+f_vs = vf('Montserrat[wght].ttf', 900, 46); r = 40; cy = 1262
 d.ellipse([W / 2 - r, cy - r, W / 2 + r, cy + r], fill=(36, 87, 214), outline=(220, 235, 255), width=3)
 d.text((W / 2, cy), 'VS', font=f_vs, fill=WHITE, anchor='mm')
 d.line([(160, cy), (W / 2 - r - 24, cy)], fill=(111, 168, 255), width=3); d.line([(W / 2 + r + 24, cy), (W - 160, cy)], fill=(111, 168, 255), width=3)
-ctext('SAMIRIŞDA', vf('Oswald[wght].ttf', 700, 192), 1360, BLUE, glow=(61, 123, 255))
+ctext('SAMIRIŞDA', vf('Oswald[wght].ttf', 700, 180), 1380, BLUE, glow=(61, 123, 255))
 # pills: the six supplements in two rows
-fp = vf('Montserrat[wght].ttf', 800, 36)
+fp = vf('Montserrat[wght].ttf', 800, 34)
 rows = [['GEYNER', 'L-KARNITIN', 'BCAA'], ['KREATIN', 'YOXIMBE', 'PROTEIN']]
 for k, row in enumerate(rows):
-    ws = [d.textlength(t, font=fp) + 56 for t in row]; gap = 18; x = W / 2 - (sum(ws) + gap * (len(ws) - 1)) / 2; yc = 1528 + k * 72
+    ws = [d.textlength(t, font=fp) + 56 for t in row]; gap = 18; x = W / 2 - (sum(ws) + gap * (len(ws) - 1)) / 2; yc = 1534 + k * 64
     for t, w in zip(row, ws):
-        d.rounded_rectangle([x, yc - 29, x + w, yc + 29], radius=29, fill=NAVY, outline=BLUE, width=3)
+        d.rounded_rectangle([x, yc - 27, x + w, yc + 27], radius=27, fill=NAVY, outline=BLUE, width=3)
         d.text((x + w / 2, yc), t, font=fp, fill=WHITE, anchor='mm'); x += w + gap
 im.save(out, quality=93)
 print('cover', out)

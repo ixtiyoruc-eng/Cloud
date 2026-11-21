@@ -13,11 +13,18 @@ Run in order (W = scratch dir):
    script plus what the speaker says; takes are picked by hand in `build_edl.py` (`SEGS`).
 2. `build_edl.py W/asr W/gb/edl.json` - segments, captions with per-word onsets, items/verdicts/info chips, cuts, SFX,
    music offset (drop 1 lands on "Geyner").
-3. `plate.py W/gb/edl.json DRIVE MODELS/face_landmarker.task W/gb` - graded, face-following 9:16 plate with face retouch.
-   Needs `mediapipe` and `libegl1`.
-4. `../atlet-reel/mix_v2.py W/gb MUSIC.mp3 SFX_DIR W/gb/mix/mix.wav --edl W/gb/edl.json` (voice from `W/gb/audio/<clip>_48k.wav`).
-5. `remotion/`: copy (not symlink) `edl.json`, `plate.mp4`, `mix.wav`, `InterTight.ttf` into `public/`, then
+3. `plate.py W/gb/edl.json DRIVE MODELS/face_landmarker.task W/gb --no-grade` - face-following 9:16 plate, colours as shot
+   (v2: the user asked for no colour work), light skin smoothing, plus `face.json` (face box per frame). Needs `mediapipe` and `libegl1`.
+4. `mix.py W/gb/edl.json W/gb/audio MUSIC.mp3 SFX_DIR W/gb/mix/mix.wav` - speech-first mix (v2): music ducks under speech and
+   loses its 300 Hz-5 kHz band there, voice gets presence; prints voice-over-music level (about 22 dB). -14 LUFS.
+5. `remotion/`: copy (not symlink) `edl.json`, `plate.mp4`, `face.json`, `mix.wav`, `InterTight.ttf` into `public/`, then
    `npx remotion render src/index.ts GymBrat out.mp4 --codec h264 --crf 16 --audio-codec aac --audio-bitrate 256k`.
    `node stills.mjs OUT t1 t2 ...` renders check stills from one bundle.
-6. Final colour pass (same as Atlet v4/v5): `ffmpeg -i out.mp4 -vf "eq=contrast=1.07:saturation=1.14:gamma=1.03,colorbalance=rm=0.03:gm=0.01:bm=-0.03" -c:a copy`.
-7. `cover.py FRAME.png cover.jpg` - cover with text in the centre 4:5 area.
+6. `check_face.py out.mp4 W/gb/plate.mp4 W/gb/face.json W/gb/edl.json` - proves no graphic lands on the face (render vs plate
+   inside the face box; frames where the plate itself moves are skipped). No colour pass after the render (v2).
+7. `cover.py FRAME.png cover.jpg` - cover with text in the centre 4:5 area, below the chin.
+
+Rules from the user (2026-11-21): no colour grading; Instagram safe zone (top 260, bottom 480, right column x > 940 in the
+lower half, see `remotion/src/layout.ts` `SAFE`); no animation over the face (`remotion/src/face.ts`: the guide is pushed out
+of the face every frame, chips and hook words fly round the head, effects are masked off the face, the summary keeps the face
+in a round window).

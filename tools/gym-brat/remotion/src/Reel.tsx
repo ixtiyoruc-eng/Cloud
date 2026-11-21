@@ -5,10 +5,11 @@ import {Captions} from './Captions';
 import {Versus} from './Versus';
 import {Summary} from './Summary';
 import {Guide} from './Guide';
-import {CutWipes, Flashes, Plate} from './Fx';
+import {CutWipes, FaceSafe, Flashes, Plate} from './Fx';
+import {FaceTrack, makeFace} from './face';
 import {buildTimeline} from './timeline';
 
-export type ReelProps = {edl: Edl};
+export type ReelProps = {edl: Edl; face: FaceTrack};
 
 const useFont = () => {
   const [handle] = useState(() => delayRender('font'));
@@ -18,19 +19,19 @@ const useFont = () => {
   }, [handle]);
 };
 
-// layer order: plate (cut fx) > blob wipes > OZIŞ/SAMIRIŞ layer > summary MG > captions > guide > flash
-export const Reel: React.FC<ReelProps> = ({edl}) => {
+// layer order: plate (cut fx) > ring bursts (face-safe) > OZIŞ/SAMIRIŞ layer > summary MG > captions > guide > flash (face-safe)
+export const Reel: React.FC<ReelProps> = ({edl, face}) => {
   useFont();
-  const tl = useMemo(() => buildTimeline(edl), [edl]);
+  const tl = useMemo(() => buildTimeline(edl, makeFace(face, edl.output.fps)), [edl, face]);
   return (
     <AbsoluteFill style={{backgroundColor: '#050C1F'}}>
       <Plate tl={tl} />
-      <CutWipes tl={tl} />
+      <FaceSafe tl={tl}><CutWipes tl={tl} /></FaceSafe>
       <Versus edl={edl} tl={tl} />
       <Summary tl={tl} />
       <Captions captions={edl.captions} tl={tl} />
       <Guide tl={tl} />
-      <Flashes tl={tl} />
+      <FaceSafe tl={tl}><Flashes tl={tl} /></FaceSafe>
       <Audio src={staticFile('mix.wav')} />
     </AbsoluteFill>
   );

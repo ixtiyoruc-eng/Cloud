@@ -4,7 +4,7 @@
 import React from 'react';
 import {useCurrentFrame, useVideoConfig} from 'remotion';
 import {Caption} from './types';
-import {CAP, capLayout} from './layout';
+import {CAP, CAP_CX, capLayout} from './layout';
 import {C, EASE_EXPO, F, FONT, hit, popScale, prog} from './theme';
 import {TL} from './timeline';
 
@@ -62,7 +62,7 @@ export const Captions: React.FC<{captions: Caption[]; tl: TL}> = ({captions, tl}
           <div key={idx} style={{position: 'absolute', inset: 0, opacity: 1 - xs, scale: String(1 - 0.1 * xs), translate: `0px ${-14 * xs}px`,
             filter: xs > 0.05 ? `blur(${xs * 7}px)` : undefined, transformOrigin: `50% ${L.top + lh}px`}}>
             {lines.map((bs, li) => (
-              <div key={li} style={{position: 'absolute', left: 0, right: 0, top: L.top + li * lh, height: lh, display: 'flex', justifyContent: 'center', alignItems: 'center',
+              <div key={li} style={{position: 'absolute', left: 0, right: 0, translate: `${CAP_CX - 540}px 0px`, top: L.top + li * lh, height: lh, display: 'flex', justifyContent: 'center', alignItems: 'center',
                 columnGap: CAP.gapEm * L.size, fontFamily: FONT, fontWeight: 800, fontSize: L.size, letterSpacing: -0.02 * L.size, lineHeight: 1}}>
                 {bs.map((b) => <Word key={b.i} cap={cap} i={b.i} t={t} size={L.size} accent={b.accent} hero={L.hero} />)}
               </div>

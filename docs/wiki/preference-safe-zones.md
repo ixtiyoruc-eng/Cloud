@@ -7,3 +7,5 @@ On 2026-11-16 the user said "know the safe zones" after text on the v4 reel and 
 - Check every render with guide lines drawn on a contact sheet before sending.
 
 Related: [Atlet reel](project-atlet-reel-2026-11-15.md), [alphabet](preference-uzbek-alphabet.md).
+
+- On 2026-11-21 (Gym brat v2) the user asked again for safe zones; the stricter set used from then on: top 260 px, bottom 480 px, and x <= 940 below y 900 (`tools/gym-brat/remotion/src/layout.ts` `SAFE`).
