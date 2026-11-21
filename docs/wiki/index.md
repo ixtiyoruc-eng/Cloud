@@ -15,6 +15,7 @@ Chief-of-staff memory for this repo. Every claim is dated; claims about code cit
 
 ## Projects
 - [Atlet reel 2026-11-15](project-atlet-reel-2026-11-15.md) — phonk-synced supplements reel: edit plan, SFX pack, rough-cut artifact.
+- [Gym brat reel 2026-11-21](project-gym-brat-reel-2026-11-21.md) — "Ozişda vs samirişda" supplements reel in the Atlet style, with an OZIŞ/SAMIRIŞ tracker.
 
 ## Preferences
 - [Instagram safe zones](preference-safe-zones.md) — keep text out of the top 220 / bottom 450 px; cover text in the centre 4:5.

@@ -17,3 +17,7 @@ Written 2026-11-21 when the user moved to a new chat because this one grew too l
 **Open with the user on 2026-11-21:** cover font choice (A Montserrat / B Unbounded / C Oswald, C used), whether captions should switch font, whether to delete v3 from `videos/`.
 
 **Rules to keep:** [alphabet](preference-uzbek-alphabet.md), [safe zones](preference-safe-zones.md); motion style follows the user's references A and B (see [reference styles](../research/reference-styles-2026-11-15.md)); show a short test clip before a full render; prefer cheap inline work over subagents to save the user's usage limit.
+
+## Update 2026-11-21 (session 2)
+
+- Work moved to branch `claude/upbeat-hopper-2ful91`. The second reel is [Gym brat](project-gym-brat-reel-2026-11-21.md); its code is in `tools/gym-brat/`. Mediapipe also needs `apt-get install libegl1`. Remotion's `public/` must hold copies, not symlinks, or `edl.json` fails to load.
