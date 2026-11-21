@@ -1,6 +1,6 @@
 # Speech-first mix for the Gym brat reel (v2, user: "the speech is not clear").
 # Voice: segments with 8 ms fades, HPF, de-mud, presence and air lift, gentle compression, levelled.
-# Music: beat-locked bed that ducks under speech (-9 dB) and also loses its 300 Hz-5 kHz band there (where speech lives),
+# Music: beat-locked bed that ducks only a little under speech (-4 dB; v2 had -9 and the user could not hear the music) and also loses its 300 Hz-5 kHz band there (where speech lives),
 # so the 808 stays but nothing masks the words. SFX: -4 dB when they land inside speech. Master -14 LUFS / -1.5 dBTP.
 # usage: mix.py EDL.json AUDIO_DIR MUSIC.mp3 SFX_DIR OUT.wav   (AUDIO_DIR holds <clip>_48k.wav)
 import json, sys, os, subprocess, numpy as np, soundfile as sf, librosa, scipy.signal as ss
@@ -30,8 +30,8 @@ mu = edl['music']; m, _ = librosa.load(MP3, sr=sr, mono=False); m = m if m.ndim 
 p = mu['pieces'][0]; a0 = int(round(p['track_in'] * sr)); music = m[:, a0:a0 + N]
 if music.shape[1] < N: music = np.pad(music, ((0, 0), (0, N - music.shape[1])))
 band = ss.sosfiltfilt(ss.butter(2, [300, 5000], 'band', fs=sr, output='sos'), music, axis=1)
-music = music - band * (0.7 * sm)                                   # carve the speech band out of the music under words
-env = 10 ** (-18 / 20) * 10 ** ((-9 * sm) / 20)
+music = music - band * (0.45 * sm)                                  # carve the speech band out of the music under words
+env = 10 ** (-13 / 20) * 10 ** ((-4 * sm) / 20)
 fi = int(0.2 * sr); fo = int(1.6 * sr); env[:fi] *= np.linspace(0, 1, fi); env[-fo:] *= np.linspace(1, 0, fo) ** 1.5
 mix = np.vstack([voice, voice]) + music * env
 # ---- SFX
