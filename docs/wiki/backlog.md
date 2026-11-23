@@ -15,3 +15,10 @@ Ranked on 2026-11-15 from [audit 2026-11-15](../research/audit-2026-11-15.md) (s
 11. Consolidate the three graphics stacks; update stale skill guidance (L). 2026-11-15: open.
 
 Related: [goal](goal.md), [video-setup.sh](subsystem-video-setup.md).
+
+## Status update (2026-11-23 lint)
+
+- Item 5 partly done (2026-11-16): the Remotion project and Python helpers moved into the repo under `tools/atlet-reel/` (`ixtiyoruc-eng/Cloud@37dc38e` onwards). No lockfile was committed; `node_modules` was a symlink to `~/motion`.
+- Item 6: mediapipe was installed and used in the 2026-11-16 renders (face tracking, face filter); its models lived in the session scratchpad, not in setup. libEGL not checked.
+- Item 8: on 2026-11-16 the user asked for finished videos on GitHub, so finals go to `videos/` via LFS (see [LFS and outputs](problem-lfs-and-outputs.md)). How long they stay was not decided.
+- Item 3: whisper.cpp was built by hand in the 2026-11-15 sessions, not in `video-setup.sh`. Still open.
