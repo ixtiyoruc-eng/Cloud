@@ -100,6 +100,7 @@ export const Caption: React.FC<{b: Block}> = ({b}) => {
 
 // ---------- gold outline icons (pop + float, like the paper plane in the reference) ----------
 const PATHS: Record<string, string[]> = {
+  plane: ['M21.5 2.5L10.5 13.5', 'M21.5 2.5l-7 19-4-8-8-4 19-7z'],
   car: ['M5 17h14v-4l-2-5H7l-2 5v4z', 'M5 13h14', 'M7.5 17v2M16.5 17v2', 'M8 15h.01M16 15h.01'],
   shield: ['M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z', 'M8.5 12l2.5 2.5 4.5-5'],
   doc: ['M7 3h7l4 4v14H7z', 'M14 3v4h4', 'M9.5 12h6M9.5 15.5h6M9.5 8.5h3'],
@@ -247,6 +248,27 @@ const buildBlocks = (): RB[] => GROUPS.map((gr, gi) => {
   return {top: g.slice(0, bi), topR: aft.slice(0, nR), big: g[bi], bot: aft.slice(nR), t0: g[0].t, out};
 });
 const RBS = buildBlocks();
+
+const BIG_ICON: [RegExp, string][] = [
+  [/^avariya/i, 'crash'], [/^pul/i, 'money'], [/^tekin/i, 'check'], [/^polisini|^polisidan/i, 'doc'], [/^609/i, 'shield'],
+  [/^zararni/i, 'car'], [/^28/i, 'money'], [/^qoplab/i, 'check'], [/^chala/i, 'warn'], [/^bizga|^murojaat|^aloqaga/i, 'plane'],
+  [/^24/i, 'clock'], [/^qo‘ng‘iroq/i, 'phone'], [/^xizmatlarimiz/i, 'plane'], [/^kelishuvi/i, 'check'],
+];
+const FlyIcon: React.FC<{type: string; t0: number; size: number}> = ({type, t0, size}) => {
+  const t = useT();
+  if (t < t0) return null;
+  const p = prog(t, t0, 0.5);
+  const d = prog(t, t0, 0.55, easeIO);
+  const fl = Math.sin((t - t0) * 2.4) * size * 0.05;
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={C.gold} strokeWidth={1.9} strokeLinecap="round" strokeLinejoin="round"
+      style={{display: 'inline-block', verticalAlign: 'middle', marginRight: size * 0.18, overflow: 'visible', opacity: Math.min(1, p * 1.6),
+        transform: `translate(${(1 - p) * -size * 1.6}px, ${(1 - p) * size * 1.1 + fl}px) rotate(${(1 - p) * -40}deg) scale(${0.6 + 0.4 * p})`,
+        filter: `drop-shadow(0 0 8px ${C.gold}) drop-shadow(0 0 20px ${C.gold}88)`}}>
+      {PATHS[type].map((pp, k) => <path key={k} d={pp} pathLength={1} strokeDasharray={`${d} 2`} />)}
+    </svg>
+  );
+};
 const SmallW: React.FC<{x: RW; size: number}> = ({x, size}) => {
   const t = useT();
   if (t < x.t - 0.03) return <span style={{opacity: 0, margin: `0 ${size * 0.12}px`}}>{x.w}</span>;
@@ -283,6 +305,7 @@ const RefCaptions: React.FC = () => {
           ) : null}
         </div>
         <div style={{alignSelf: 'flex-end', fontSize: ss, lineHeight: 1, letterSpacing: -1, marginTop: -bs * 0.06, paddingRight: bs * 0.04}}>
+          {(() => { const ic = BIG_ICON.find(([r]) => r.test(b.big.w)); return ic ? <FlyIcon type={ic[1]} t0={b.big.t + 0.18} size={ss * 1.25} /> : null; })()}
           {b.bot.map((x, k) => <SmallW key={k} x={x} size={ss} />)}
         </div>
       </div>
@@ -290,11 +313,15 @@ const RefCaptions: React.FC = () => {
   );
 };
 
+const WHIP = [2.0, 11.6, 45.36, 49.38, 59.24, 73.06];
 export const Reel: React.FC = () => {
   useFonts();
   const t = useT();
+  const wb = Math.max(0, ...WHIP.map((w) => 1 - Math.abs(t - w) / 0.17));
+  const whip = wb > 0 ? `blur(${wb * 24}px)` : undefined;
   return (
     <AbsoluteFill style={{background: C.navyDeep}}>
+      <AbsoluteFill style={{filter: whip, transform: `scale(${1 + wb * 0.04})`}}>
       <Video />
       {/* navy grade for legibility */}
       <AbsoluteFill style={{background: 'linear-gradient(180deg, rgba(5,10,26,0.55) 0%, rgba(5,10,26,0) 14%, rgba(5,10,26,0) 50%, rgba(5,10,26,0.55) 72%, rgba(5,10,26,0.82) 100%)'}} />
@@ -302,8 +329,8 @@ export const Reel: React.FC = () => {
       {/* TopBar olib tashlandi */}
       <Lower />
       {/* teglar olib tashlandi */}
-      {ICONS.map((i, k) => <Icon key={k} i={i} />)}
       <RefCaptions />
+      </AbsoluteFill>
       <EndCard />
       <Audio src={staticFile('talk.wav')} />
       {t < 0 ? null : null}
