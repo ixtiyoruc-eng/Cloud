@@ -273,30 +273,30 @@ const SmallW: React.FC<{x: RW; size: number}> = ({x, size}) => {
   const t = useT();
   if (t < x.t - 0.03) return <span style={{opacity: 0, margin: `0 ${size * 0.12}px`}}>{x.w}</span>;
   const p = prog(t, x.t - 0.03, 0.12);
-  return <span style={{opacity: p, margin: `0 ${size * 0.12}px`, color: C.white, textShadow: '0 3px 14px rgba(5,10,26,0.85)'}}>{x.w}</span>;
+  return <span style={{opacity: p, margin: `0 ${size * 0.1}px`, color: '#F4F4F4', textShadow: '0 2px 10px rgba(0,0,0,0.55), 0 0 18px rgba(255,255,255,0.18)'}}>{x.w}</span>;
 };
 const RefCaptions: React.FC = () => {
   const t = useT();
   const b = RBS.find((x) => t >= x.t0 - 0.03 && t < x.out);
   if (!b) return null;
   const bigText = b.big.w.toUpperCase() === b.big.w ? b.big.w : b.big.w.charAt(0).toUpperCase() + b.big.w.slice(1);
-  const bs = Math.min(190, 940 / Math.max(1, bigText.length * 0.66));
+  const bs = Math.min(270, 920 / Math.max(1, bigText.length * 0.47));
   const len = (a: RW[]) => a.map((x) => x.w).join(' ').length;
-  const topLen = len(b.top) + len(b.topR) + (b.topR.length ? 3 : 0);
-  const ss = Math.min(Math.max(52, Math.min(70, bs * 0.42)), 960 / Math.max(1, Math.max(topLen, len(b.bot)) * 0.56));
+  const topLen = len(b.top) + len(b.topR) + (b.topR.length ? 4 : 0);
+  const ss = Math.min(Math.max(50, bs * 0.34), 900 / Math.max(1, Math.max(topLen, len(b.bot) + 2) * 0.5));
   const pb = prog(t, b.big.t - 0.03, 0.16);
   const showBig = t >= b.big.t - 0.03;
   const strike = /^chala/i.test(b.big.w) ? prog(t, b.big.t + 0.35, 0.3, easeIO) : 0;
   return (
-    <div style={{position: 'absolute', left: 0, right: 0, top: 1250, display: 'flex', justifyContent: 'center'}}>
+    <div style={{position: 'absolute', left: 0, right: 0, top: 1140, transform: 'translateY(-50%)', display: 'flex', justifyContent: 'center'}}>
       <div style={{display: 'inline-flex', flexDirection: 'column', fontFamily: F.small, fontWeight: 900, whiteSpace: 'nowrap'}}>
-        <div style={{display: 'flex', justifyContent: 'space-between', fontSize: ss, lineHeight: 1, letterSpacing: -1, marginBottom: -bs * 0.12, padding: `0 ${bs * 0.04}px`, position: 'relative', zIndex: 2}}>
+        <div style={{display: 'flex', justifyContent: 'space-between', fontSize: ss, lineHeight: 1, letterSpacing: -ss * 0.035, marginBottom: -bs * 0.17, padding: `0 ${bs * 0.06}px`, position: 'relative', zIndex: 2}}>
           <span>{b.top.map((x, k) => <SmallW key={k} x={x} size={ss} />)}</span>
           <span>{b.topR.map((x, k) => <SmallW key={k} x={x} size={ss} />)}</span>
         </div>
-        <div style={{position: 'relative', fontFamily: F.big, fontSize: bs, lineHeight: 1, letterSpacing: -bs * 0.035, color: C.gold,
+        <div style={{position: 'relative', fontFamily: F.small, fontWeight: 900, fontSize: bs, lineHeight: 1, letterSpacing: -bs * 0.055, color: C.gold,
           opacity: showBig ? pb : 0, transform: `scale(${1.2 - 0.2 * pb})`, transformOrigin: '50% 60%',
-          textShadow: '0 0 18px rgba(246,196,69,0.65), 0 0 50px rgba(246,196,69,0.35), 0 6px 22px rgba(5,10,26,0.7)'}}>
+          color: '#FFD43F', textShadow: '0 0 8px rgba(255,212,63,0.95), 0 0 28px rgba(255,212,63,0.75), 0 0 70px rgba(255,212,63,0.45), 0 4px 16px rgba(0,0,0,0.4)'}}>
           {bigText}
           {strike > 0 ? (
             <svg style={{position: 'absolute', left: 0, top: '50%', overflow: 'visible', filter: 'drop-shadow(0 0 6px rgba(229,72,77,0.7))'}} width="100%" height={20} viewBox="0 0 100 20" preserveAspectRatio="none">
@@ -304,7 +304,7 @@ const RefCaptions: React.FC = () => {
             </svg>
           ) : null}
         </div>
-        <div style={{alignSelf: 'flex-end', fontSize: ss, lineHeight: 1, letterSpacing: -1, marginTop: -bs * 0.06, paddingRight: bs * 0.04}}>
+        <div style={{alignSelf: 'flex-end', display: 'flex', alignItems: 'center', fontSize: ss, lineHeight: 1, letterSpacing: -ss * 0.035, marginTop: -bs * 0.13, paddingRight: bs * 0.06, position: 'relative', zIndex: 2}}>
           {(() => { const ic = BIG_ICON.find(([r]) => r.test(b.big.w)); return ic ? <FlyIcon type={ic[1]} t0={b.big.t + 0.18} size={ss * 1.25} /> : null; })()}
           {b.bot.map((x, k) => <SmallW key={k} x={x} size={ss} />)}
         </div>
@@ -324,7 +324,6 @@ export const Reel: React.FC = () => {
       <AbsoluteFill style={{filter: whip, transform: `scale(${1 + wb * 0.04})`}}>
       <Video />
       {/* navy grade for legibility */}
-      <AbsoluteFill style={{background: 'linear-gradient(180deg, rgba(5,10,26,0.55) 0%, rgba(5,10,26,0) 14%, rgba(5,10,26,0) 50%, rgba(5,10,26,0.55) 72%, rgba(5,10,26,0.82) 100%)'}} />
       <AbsoluteFill style={{background: 'radial-gradient(ellipse at 50% 40%, rgba(0,0,0,0) 55%, rgba(5,10,26,0.45) 100%)'}} />
       {/* TopBar olib tashlandi */}
       <Lower />
