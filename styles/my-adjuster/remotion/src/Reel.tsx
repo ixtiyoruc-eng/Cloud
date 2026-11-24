@@ -284,15 +284,15 @@ const BlockView: React.FC<{b: RB}> = ({b}) => {
   const t = useT();
   const ex = prog(t, Math.max(b.t0 + 0.3, b.out - EX), EX, Easing.bezier(0.4, 0, 1, 1));
   const bigText = b.big.w.toUpperCase() === b.big.w ? b.big.w : b.big.w.charAt(0).toUpperCase() + b.big.w.slice(1);
-  const bs = Math.min(230, 840 / Math.max(1, bigText.length * 0.47));
+  const bs = Math.min(160, 620 / Math.max(1, bigText.length * 0.47));
   const len = (a: RW[]) => a.map((x) => x.w).join(' ').length;
   const topLen = len(b.top) + len(b.topR) + (b.topR.length ? 4 : 0);
-  const ss = Math.min(Math.max(50, bs * 0.34), 820 / Math.max(1, Math.max(topLen, len(b.bot) + 2) * 0.5));
+  const ss = Math.min(Math.max(40, bs * 0.36), 620 / Math.max(1, Math.max(topLen, len(b.bot) + 2) * 0.5));
   const pb = prog(t, b.big.t - 0.03, 0.16);
   const showBig = t >= b.big.t - 0.03;
   const strike = /^chala/i.test(b.big.w) ? prog(t, b.big.t + 0.35, 0.3, easeIO) : 0;
   return (
-    <div style={{position: 'absolute', left: 60, right: 140, top: 1300, transform: `translateY(-50%) scale(${1 + ex * 0.08})`, opacity: 1 - ex, filter: ex > 0 ? `blur(${ex * 16}px)` : undefined, display: 'flex', justifyContent: 'center'}}>
+    <div style={{position: 'absolute', left: 60, right: 140, top: 1330, transform: `translateY(-50%) scale(${1 + ex * 0.08})`, opacity: 1 - ex, filter: ex > 0 ? `blur(${ex * 16}px)` : undefined, display: 'flex', justifyContent: 'center'}}>
       <div style={{display: 'inline-flex', flexDirection: 'column', fontFamily: F.small, fontWeight: 900, whiteSpace: 'nowrap'}}>
         <div style={{display: 'flex', justifyContent: 'space-between', fontSize: ss, lineHeight: 1, letterSpacing: -ss * 0.035, marginBottom: -bs * 0.17, padding: `0 ${bs * 0.06}px`, position: 'relative', zIndex: 2}}>
           <span>{b.top.map((x, k) => <SmallW key={k} x={x} size={ss} />)}</span>
