@@ -28,6 +28,8 @@ Chrome: gold progress bar on top. **No handle pill / "MY ADJUSTER" label at the 
 
 Cover: 4K frame (prefer him holding the yevroprotokol form), navy gradient bottom, mono "— YTH BO'LDIMI?", Archivo white line + gold serif line (question hook), Inter subline. Keep text inside centre 1080×1350.
 
+**No blur filters on text ("Textlar o'chib yonyapti, filter berma"):** words appear with scale/opacity only, no blur-in/out; each caption block stays until the next one starts (gaps < 1.2 s are bridged) and swaps instantly — no fade-out between blocks. No blur on icons, name card, end card.
+
 ## Pipeline
 1. Drive folder: list with `https://drive.google.com/embeddedfolderview?id=<ID>` (grep `file/d/` + titles), download each with `scripts/gdrive_dl.sh <id> <out>`.
 2. `bash scripts/setup.sh` (Remotion + fonts into `~/motion/adj`). Remotion can't download its browser here: always pass `--browser-executable=/opt/pw-browsers/chromium-1243/chrome-linux64/chrome` (check the folder name) and `--public-dir=$HOME/motion/adj/public`.

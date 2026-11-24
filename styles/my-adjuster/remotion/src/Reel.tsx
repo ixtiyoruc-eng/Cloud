@@ -53,7 +53,7 @@ const Word: React.FC<{wd: Wd; k: Line['k']; size: number}> = ({wd, k, size}) => 
   return (
     <span style={{display: 'inline-block', margin: `0 ${size * (big ? 0.09 : 0.14)}px`, color: col, opacity: pb,
       transform: big ? `translateY(${(1 - p) * size * 0.35}px) scale(${0.55 + 0.45 * p})` : `translateY(${(1 - p) * size * 0.6}px)`,
-      filter: `blur(${(1 - pb) * (big ? 16 : 9)}px)`, textShadow: glow, transformOrigin: '50% 80%'}}>{wd.w}</span>
+      textShadow: glow, transformOrigin: '50% 80%'}}>{wd.w}</span>
   );
 };
 
@@ -70,12 +70,12 @@ const Strike: React.FC<{t0: number; width: number}> = ({t0, width}) => {
 export const Caption: React.FC<{b: Block}> = ({b}) => {
   const t = useT();
   const first = b.lines[0].words[0].t;
-  if (t < first - 0.15 || t > b.out + 0.5) return null;
-  const o = prog(t, b.out, 0.35, easeIO);
+  if (t < first - 0.06 || t >= b.out) return null;
+  const o = 0;
   const y = b.y ?? 1240;
   return (
     <div style={{position: 'absolute', left: 30, right: 30, top: y, display: 'flex', flexDirection: 'column', alignItems: 'center',
-      opacity: 1 - o, transform: `translateY(${-o * 30}px) scale(${1 + o * 0.04})`, filter: `blur(${o * 18}px)`}}>
+      }}>
       {b.lines.map((ln, i) => {
         const text = ln.words.map((w) => w.w).join(' ');
         const size = fit(text, SIZE[ln.k], ln.k);
@@ -121,7 +121,7 @@ export const Icon: React.FC<{i: Ico}> = ({i}) => {
   const fl = Math.sin(t * 2.2 + i.x) * 8;
   return (
     <svg style={{position: 'absolute', left: i.x - s / 2, top: i.y - s / 2, overflow: 'visible', opacity: Math.min(1, p * 2) * (1 - o),
-      transform: `translateY(${fl - o * 30}px) rotate(${(i.rot ?? -10) + (1 - p) * -25}deg) scale(${0.3 + 0.7 * p})`, filter: `blur(${o * 10}px) drop-shadow(0 0 10px ${C.gold}) drop-shadow(0 0 26px ${C.gold}88)`}}
+      transform: `translateY(${fl - o * 30}px) rotate(${(i.rot ?? -10) + (1 - p) * -25}deg) scale(${0.3 + 0.7 * p})`, filter: `drop-shadow(0 0 10px ${C.gold}) drop-shadow(0 0 26px ${C.gold}88)`}}
       width={s} height={s} viewBox="0 0 24 24" fill="none" stroke={C.gold} strokeWidth={1.7} strokeLinecap="round" strokeLinejoin="round">
       {PATHS[i.type].map((pp, k) => <path key={k} d={pp} pathLength={1} strokeDasharray={`${d} 2`} />)}
     </svg>
@@ -171,7 +171,7 @@ const Lower: React.FC = () => {
   const bar = prog(t, t0 + 0.1, 0.5, easeIO);
   const o = prog(t, out, 0.45, easeIO);
   return (
-    <div style={{position: 'absolute', left: 60, top: 300, opacity: (1 - o), transform: `translateX(${(1 - p) * -80 - o * 60}px)`, filter: `blur(${(1 - p) * 8 + o * 8}px)`}}>
+    <div style={{position: 'absolute', left: 60, top: 300, opacity: (1 - o), transform: `translateX(${(1 - p) * -80 - o * 60}px)`}}>
       <div style={{display: 'flex', alignItems: 'stretch', gap: 0, borderRadius: 22, overflow: 'hidden', boxShadow: '0 20px 60px rgba(0,0,0,0.5)'}}>
         <div style={{width: 14 * bar + 2, background: C.gold}} />
         <div style={{background: 'linear-gradient(120deg, rgba(10,20,48,0.95), rgba(16,31,69,0.88))', padding: '22px 34px 22px 28px'}}>
@@ -201,7 +201,7 @@ const Video: React.FC = () => {
   const z = zoomAt(Math.min(t, VEND));
   const endBlur = prog(t, VEND - 0.5, 0.7, easeIO);
   return (
-    <AbsoluteFill style={{transform: `scale(${z * (1 + 0.06 * endBlur)})`, transformOrigin: '50% 38%', filter: endBlur > 0 ? `blur(${endBlur * 26}px) brightness(${1 - endBlur * 0.45})` : undefined}}>
+    <AbsoluteFill style={{transform: `scale(${z * (1 + 0.06 * endBlur)})`, transformOrigin: '50% 38%', filter: endBlur > 0 ? `brightness(${1 - endBlur * 0.6})` : undefined}}>
       {t < VEND ? <OffthreadVideo src={staticFile('talk.mp4')} muted style={{width: '100%', height: '100%'}} />
         : <Img src={staticFile('last.jpg')} style={{width: '100%', height: '100%'}} />}
     </AbsoluteFill>
@@ -220,8 +220,8 @@ const EndCard: React.FC = () => {
     <AbsoluteFill style={{background: `radial-gradient(ellipse at 50% 45%, rgba(16,31,69,${0.55 * bg}) 0%, rgba(5,10,26,${0.9 * bg}) 80%)`, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'}}>
       <div style={{opacity: l1, transform: `scale(${0.5 + 0.5 * l1})`, width: 150, height: 150, borderRadius: 40, background: C.gold, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: `0 0 60px ${C.gold}88`}}><Shield s={96} /></div>
       <div style={{marginTop: 40, fontFamily: F.mono, fontSize: 30, letterSpacing: 6, color: C.gold, opacity: l2}}>— TEKIN KONSULTATSIYA</div>
-      <div style={{fontFamily: F.big, fontSize: 132, color: C.white, letterSpacing: -4, lineHeight: 1, marginTop: 18, opacity: l2, transform: `translateY(${(1 - l2) * 40}px)`, filter: `blur(${(1 - l2) * 12}px)`}}>Qo‘ng‘iroq</div>
-      <div style={{fontFamily: F.serif, fontSize: 140, color: C.gold, lineHeight: 1, opacity: l2, transform: `translateY(${(1 - l2) * 40}px)`, filter: `blur(${(1 - l2) * 12}px)`, textShadow: `0 0 40px ${C.gold}66`}}>qiling</div>
+      <div style={{fontFamily: F.big, fontSize: 132, color: C.white, letterSpacing: -4, lineHeight: 1, marginTop: 18, opacity: l2, transform: `translateY(${(1 - l2) * 40}px)`}}>Qo‘ng‘iroq</div>
+      <div style={{fontFamily: F.serif, fontSize: 140, color: C.gold, lineHeight: 1, opacity: l2, transform: `translateY(${(1 - l2) * 40}px)`, textShadow: `0 0 40px ${C.gold}66`}}>qiling</div>
       <div style={{marginTop: 50, display: 'flex', alignItems: 'center', gap: 20, padding: '26px 48px', borderRadius: 70, background: C.gold, opacity: l3,
         transform: `scale(${(0.6 + 0.4 * l3) * pulse})`, boxShadow: `0 0 50px ${C.gold}99, 0 20px 50px rgba(0,0,0,0.5)`, fontFamily: F.big, fontSize: 64, color: C.navy, letterSpacing: -1}}>
         <svg width="54" height="54" viewBox="0 0 24 24" fill="none" stroke={C.navy} strokeWidth={2.4} strokeLinecap="round" strokeLinejoin="round"><path d={PATHS.phone[0]} /></svg>{PHONE}
@@ -245,7 +245,7 @@ export const Reel: React.FC = () => {
       <Lower />
       {/* teglar olib tashlandi */}
       {ICONS.map((i, k) => <Icon key={k} i={i} />)}
-      {BLOCKS.map((b, i) => <Caption key={i} b={b} />)}
+      {BLOCKS.map((b, i) => { const nx = BLOCKS[i + 1]?.lines[0].words[0].t ?? b.out; const out = nx - b.out < 1.2 ? nx - 0.06 : b.out; return <Caption key={i} b={{...b, out}} />; })}
       <EndCard />
       <Audio src={staticFile('talk.wav')} />
       {t < 0 ? null : null}
