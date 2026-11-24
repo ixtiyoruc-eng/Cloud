@@ -1,7 +1,7 @@
 import React from 'react';
 import {AbsoluteFill, OffthreadVideo, Audio, Img, staticFile, useCurrentFrame, interpolate, Easing, delayRender, continueRender} from 'remotion';
 import {BLOCKS, ICONS, PUNCH, TAGS, VEND, END, LOWER, HANDLE, PHONE} from './cues';
-import {WORDS, PAUSES} from './words';
+import {GROUPS, PAUSES} from './words';
 
 export const FPS = 30;
 export const TOTAL = Math.round(END * FPS);
@@ -233,23 +233,59 @@ const EndCard: React.FC = () => {
 };
 
 
-// ---------- one-word captions (1 by 1, smooth) ----------
-const OneWord: React.FC = () => {
+// ---------- reference-exact captions: small words (top-left / bottom-right) around one huge glowing word ----------
+type RW = {w: string; t: number; hl: boolean};
+type RB = {top: RW[]; topR: RW[]; big: RW; bot: RW[]; t0: number; out: number};
+const buildBlocks = (): RB[] => GROUPS.map((gr, gi) => {
+  const g: RW[] = gr.map(([t, w, h]) => ({t, w, hl: !!h}));
+  let bi = g.findIndex((x) => x.hl); if (bi < 0) bi = 0;
+  const lastT = g[g.length - 1].t;
+  const nextT = GROUPS[gi + 1]?.[0][0] ?? VEND - 0.2;
+  const pause = PAUSES.find(([a]) => a > lastT && a < nextT);
+  const out = pause ? pause[0] + 0.3 : nextT;
+  const aft = g.slice(bi + 1); const nR = aft.length >= 3 ? 1 : aft.length === 2 && bi > 0 ? 1 : 0;
+  return {top: g.slice(0, bi), topR: aft.slice(0, nR), big: g[bi], bot: aft.slice(nR), t0: g[0].t, out};
+});
+const RBS = buildBlocks();
+const SmallW: React.FC<{x: RW; size: number}> = ({x, size}) => {
   const t = useT();
-  if (t >= VEND - 0.2) return null;
-  let i = -1;
-  for (let k = 0; k < WORDS.length; k++) { if (WORDS[k][0] <= t + 0.02) i = k; else break; }
-  if (i < 0) return null;
-  const [t0, w, hl] = WORDS[i];
-  const nxt = WORDS[i + 1]?.[0] ?? t0 + 0.8;
-  for (const [a, b] of PAUSES) if (t0 < a && a < nxt && t >= a + 0.25) return null;
-  const p = prog(t, t0 - 0.02, 0.16);
-  const size = Math.min(hl ? 150 : 118, 960 / Math.max(1, w.length * (hl ? 0.72 : 0.62)));
+  if (t < x.t - 0.03) return <span style={{opacity: 0, margin: `0 ${size * 0.12}px`}}>{x.w}</span>;
+  const p = prog(t, x.t - 0.03, 0.12);
+  return <span style={{opacity: p, margin: `0 ${size * 0.12}px`, color: C.white, textShadow: '0 3px 14px rgba(5,10,26,0.85)'}}>{x.w}</span>;
+};
+const RefCaptions: React.FC = () => {
+  const t = useT();
+  const b = RBS.find((x) => t >= x.t0 - 0.03 && t < x.out);
+  if (!b) return null;
+  const bigText = b.big.w.toUpperCase() === b.big.w ? b.big.w : b.big.w.charAt(0).toUpperCase() + b.big.w.slice(1);
+  const bs = Math.min(190, 940 / Math.max(1, bigText.length * 0.66));
+  const len = (a: RW[]) => a.map((x) => x.w).join(' ').length;
+  const topLen = len(b.top) + len(b.topR) + (b.topR.length ? 3 : 0);
+  const ss = Math.min(Math.max(52, Math.min(70, bs * 0.42)), 960 / Math.max(1, Math.max(topLen, len(b.bot)) * 0.56));
+  const pb = prog(t, b.big.t - 0.03, 0.16);
+  const showBig = t >= b.big.t - 0.03;
+  const strike = /^chala/i.test(b.big.w) ? prog(t, b.big.t + 0.35, 0.3, easeIO) : 0;
   return (
-    <div style={{position: 'absolute', left: 0, right: 0, top: 1300, height: 220, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-      <span style={{fontFamily: hl ? F.big : F.small, fontWeight: 900, fontSize: size, letterSpacing: hl ? -size * 0.03 : -1, whiteSpace: 'nowrap',
-        color: hl ? C.gold : C.white, opacity: 0.35 + 0.65 * p, transform: `scale(${0.94 + 0.06 * p})`,
-        textShadow: hl ? '0 0 24px rgba(246,196,69,0.6), 0 0 60px rgba(246,196,69,0.3), 0 6px 24px rgba(5,10,26,0.8)' : '0 4px 22px rgba(5,10,26,0.9), 0 0 2px rgba(5,10,26,0.6)'}}>{w}</span>
+    <div style={{position: 'absolute', left: 0, right: 0, top: 1250, display: 'flex', justifyContent: 'center'}}>
+      <div style={{display: 'inline-flex', flexDirection: 'column', fontFamily: F.small, fontWeight: 900, whiteSpace: 'nowrap'}}>
+        <div style={{display: 'flex', justifyContent: 'space-between', fontSize: ss, lineHeight: 1, letterSpacing: -1, marginBottom: -bs * 0.12, padding: `0 ${bs * 0.04}px`, position: 'relative', zIndex: 2}}>
+          <span>{b.top.map((x, k) => <SmallW key={k} x={x} size={ss} />)}</span>
+          <span>{b.topR.map((x, k) => <SmallW key={k} x={x} size={ss} />)}</span>
+        </div>
+        <div style={{position: 'relative', fontFamily: F.big, fontSize: bs, lineHeight: 1, letterSpacing: -bs * 0.035, color: C.gold,
+          opacity: showBig ? pb : 0, transform: `scale(${1.2 - 0.2 * pb})`, transformOrigin: '50% 60%',
+          textShadow: '0 0 18px rgba(246,196,69,0.65), 0 0 50px rgba(246,196,69,0.35), 0 6px 22px rgba(5,10,26,0.7)'}}>
+          {bigText}
+          {strike > 0 ? (
+            <svg style={{position: 'absolute', left: 0, top: '50%', overflow: 'visible', filter: 'drop-shadow(0 0 6px rgba(229,72,77,0.7))'}} width="100%" height={20} viewBox="0 0 100 20" preserveAspectRatio="none">
+              <path d="M-2,14 L102,4" stroke={C.red} strokeWidth={4} fill="none" strokeLinecap="round" pathLength={1} strokeDasharray={`${strike} 2`} vectorEffect="non-scaling-stroke" style={{strokeWidth: 12}} />
+            </svg>
+          ) : null}
+        </div>
+        <div style={{alignSelf: 'flex-end', fontSize: ss, lineHeight: 1, letterSpacing: -1, marginTop: -bs * 0.06, paddingRight: bs * 0.04}}>
+          {b.bot.map((x, k) => <SmallW key={k} x={x} size={ss} />)}
+        </div>
+      </div>
     </div>
   );
 };
@@ -267,7 +303,7 @@ export const Reel: React.FC = () => {
       <Lower />
       {/* teglar olib tashlandi */}
       {ICONS.map((i, k) => <Icon key={k} i={i} />)}
-      <OneWord />
+      <RefCaptions />
       <EndCard />
       <Audio src={staticFile('talk.wav')} />
       {t < 0 ? null : null}
