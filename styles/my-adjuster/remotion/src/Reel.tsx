@@ -1,6 +1,7 @@
 import React from 'react';
 import {AbsoluteFill, OffthreadVideo, Audio, Img, staticFile, useCurrentFrame, interpolate, Easing, delayRender, continueRender} from 'remotion';
 import {BLOCKS, ICONS, PUNCH, TAGS, VEND, END, LOWER, HANDLE, PHONE} from './cues';
+import {WORDS, PAUSES} from './words';
 
 export const FPS = 30;
 export const TOTAL = Math.round(END * FPS);
@@ -114,7 +115,7 @@ export type Ico = {t0: number; out: number; x: number; y: number; s?: number; ro
 export const Icon: React.FC<{i: Ico}> = ({i}) => {
   const t = useT();
   if (t < i.t0 || t > i.out + 0.4) return null;
-  const p = prog(t, i.t0, 0.55, back);
+  const p = prog(t, i.t0, 0.6, ease);
   const d = prog(t, i.t0, 0.7, easeIO);
   const o = prog(t, i.out, 0.35, easeIO);
   const s = i.s ?? 150;
@@ -231,6 +232,28 @@ const EndCard: React.FC = () => {
   );
 };
 
+
+// ---------- one-word captions (1 by 1, smooth) ----------
+const OneWord: React.FC = () => {
+  const t = useT();
+  if (t >= VEND - 0.2) return null;
+  let i = -1;
+  for (let k = 0; k < WORDS.length; k++) { if (WORDS[k][0] <= t + 0.02) i = k; else break; }
+  if (i < 0) return null;
+  const [t0, w, hl] = WORDS[i];
+  const nxt = WORDS[i + 1]?.[0] ?? t0 + 0.8;
+  for (const [a, b] of PAUSES) if (t0 < a && a < nxt && t >= a + 0.25) return null;
+  const p = prog(t, t0 - 0.02, 0.16);
+  const size = Math.min(hl ? 150 : 118, 960 / Math.max(1, w.length * (hl ? 0.72 : 0.62)));
+  return (
+    <div style={{position: 'absolute', left: 0, right: 0, top: 1300, height: 220, display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+      <span style={{fontFamily: hl ? F.big : F.small, fontWeight: 900, fontSize: size, letterSpacing: hl ? -size * 0.03 : -1, whiteSpace: 'nowrap',
+        color: hl ? C.gold : C.white, opacity: 0.35 + 0.65 * p, transform: `scale(${0.94 + 0.06 * p})`,
+        textShadow: hl ? '0 0 24px rgba(246,196,69,0.6), 0 0 60px rgba(246,196,69,0.3), 0 6px 24px rgba(5,10,26,0.8)' : '0 4px 22px rgba(5,10,26,0.9), 0 0 2px rgba(5,10,26,0.6)'}}>{w}</span>
+    </div>
+  );
+};
+
 export const Reel: React.FC = () => {
   useFonts();
   const t = useT();
@@ -240,12 +263,11 @@ export const Reel: React.FC = () => {
       {/* navy grade for legibility */}
       <AbsoluteFill style={{background: 'linear-gradient(180deg, rgba(5,10,26,0.55) 0%, rgba(5,10,26,0) 14%, rgba(5,10,26,0) 50%, rgba(5,10,26,0.55) 72%, rgba(5,10,26,0.82) 100%)'}} />
       <AbsoluteFill style={{background: 'radial-gradient(ellipse at 50% 40%, rgba(0,0,0,0) 55%, rgba(5,10,26,0.45) 100%)'}} />
-      <Progress />
       {/* TopBar olib tashlandi */}
       <Lower />
       {/* teglar olib tashlandi */}
       {ICONS.map((i, k) => <Icon key={k} i={i} />)}
-      {BLOCKS.map((b, i) => { const nx = BLOCKS[i + 1]?.lines[0].words[0].t ?? b.out; const out = nx - b.out < 1.2 ? nx - 0.06 : b.out; return <Caption key={i} b={{...b, out}} />; })}
+      <OneWord />
       <EndCard />
       <Audio src={staticFile('talk.wav')} />
       {t < 0 ? null : null}

@@ -30,6 +30,8 @@ Cover: 4K frame (prefer him holding the yevroprotokol form), navy gradient botto
 
 **No blur filters on text ("Textlar o'chib yonyapti, filter berma"):** words appear with scale/opacity only, no blur-in/out; each caption block stays until the next one starts (gaps < 1.2 s are bridged) and swaps instantly — no fade-out between blocks. No blur on icons, name card, end card.
 
+**Approved caption format (user: "captionsni 1 1 qil", "siliq qil"):** ONE word on screen at a time, every spoken word captioned 1:1 in literary Uzbek (`words.ts`: `[start, word, highlight?]`, `PAUSES` hide text in long pauses). Normal words white Inter Display Black ~118 px, key words gold Archivo Black ~150 px with glow; centred at y≈1300–1520. Word swaps instantly with a soft 0.16 s fade/scale 0.94→1 — no blur, no overshoot. **No top progress line**, no handle/labels/tags. Punch-ins gentle (×1.04). Icons ease in without bounce.
+
 ## Pipeline
 1. Drive folder: list with `https://drive.google.com/embeddedfolderview?id=<ID>` (grep `file/d/` + titles), download each with `scripts/gdrive_dl.sh <id> <out>`.
 2. `bash scripts/setup.sh` (Remotion + fonts into `~/motion/adj`). Remotion can't download its browser here: always pass `--browser-executable=/opt/pw-browsers/chromium-1243/chrome-linux64/chrome` (check the folder name) and `--public-dir=$HOME/motion/adj/public`.
