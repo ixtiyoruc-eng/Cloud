@@ -275,10 +275,14 @@ const SmallW: React.FC<{x: RW; size: number}> = ({x, size}) => {
   const p = prog(t, x.t - 0.03, 0.12);
   return <span style={{opacity: p, margin: `0 ${size * 0.1}px`, color: '#F4F4F4', textShadow: '0 2px 10px rgba(0,0,0,0.55), 0 0 18px rgba(255,255,255,0.18)'}}>{x.w}</span>;
 };
+const EX = 0.16; // exit: blur + fade + slight zoom, overlapping the next block's entrance (reference)
 const RefCaptions: React.FC = () => {
   const t = useT();
-  const b = RBS.find((x) => t >= x.t0 - 0.03 && t < x.out);
-  if (!b) return null;
+  return <>{RBS.filter((x) => t >= x.t0 - 0.03 && t < x.out).map((b, i) => <BlockView key={b.t0} b={b} />)}</>;
+};
+const BlockView: React.FC<{b: RB}> = ({b}) => {
+  const t = useT();
+  const ex = prog(t, Math.max(b.t0 + 0.3, b.out - EX), EX, Easing.bezier(0.4, 0, 1, 1));
   const bigText = b.big.w.toUpperCase() === b.big.w ? b.big.w : b.big.w.charAt(0).toUpperCase() + b.big.w.slice(1);
   const bs = Math.min(270, 920 / Math.max(1, bigText.length * 0.47));
   const len = (a: RW[]) => a.map((x) => x.w).join(' ').length;
@@ -288,7 +292,7 @@ const RefCaptions: React.FC = () => {
   const showBig = t >= b.big.t - 0.03;
   const strike = /^chala/i.test(b.big.w) ? prog(t, b.big.t + 0.35, 0.3, easeIO) : 0;
   return (
-    <div style={{position: 'absolute', left: 0, right: 0, top: 1140, transform: 'translateY(-50%)', display: 'flex', justifyContent: 'center'}}>
+    <div style={{position: 'absolute', left: 0, right: 0, top: 1140, transform: `translateY(-50%) scale(${1 + ex * 0.08})`, opacity: 1 - ex, filter: ex > 0 ? `blur(${ex * 16}px)` : undefined, display: 'flex', justifyContent: 'center'}}>
       <div style={{display: 'inline-flex', flexDirection: 'column', fontFamily: F.small, fontWeight: 900, whiteSpace: 'nowrap'}}>
         <div style={{display: 'flex', justifyContent: 'space-between', fontSize: ss, lineHeight: 1, letterSpacing: -ss * 0.035, marginBottom: -bs * 0.17, padding: `0 ${bs * 0.06}px`, position: 'relative', zIndex: 2}}>
           <span>{b.top.map((x, k) => <SmallW key={k} x={x} size={ss} />)}</span>
